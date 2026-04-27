@@ -1,0 +1,2612 @@
+[
+  {
+    "brand": "DOMCET",
+    "generic": "PARACETAMOL 325 MG + DOMPERIDONE MALEATE IP 10 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "DOMPAR",
+    "generic": "DOMPERIDONE IP10 MG + PARACETAMOL IP 325 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "ACI FREE (LEMON)",
+    "generic": "SVARJIKSARA 2.904G + NIMBUKAMLAM 2.015G + SODIUM SACCHARIN 12 MG/5G",
+    "form": "POWDER"
+  },
+  {
+    "brand": "ACI FREE (PUDINA)",
+    "generic": "SVARJIKSARA 2.913G + NIMBUKAMLAM 2.041G + SODIUM SACCHARIN 15 MG/5G",
+    "form": "POWDER"
+  },
+  {
+    "brand": "ACI FREE (REGULAR)",
+    "generic": "SVARJIKSARA 2.90G + NIMBUKAMLAM 2.10G",
+    "form": "POWDER"
+  },
+  {
+    "brand": "ACI FREE (ZEERA)",
+    "generic": "SVARJIKSARA 2.7764 G + NIMBUKAMLAM 2.0286 G + JEERA 0.01 G + EXCIPIENTS Q.S + SODIUM SACCHARIN IP 20 MG/5G",
+    "form": "POWDER"
+  },
+  {
+    "brand": "ACIGENE GEL 170ML MINT",
+    "generic": "MAGNESIUM HYDROXIDE IP 200 MG + SIMETHICONE 50 MG + DRIED AL. HYDROXIDE IP 250 MG / 10ML",
+    "form": "SUSPENSION"
+  },
+  {
+    "brand": "DIGUSIL MPS (MINT)",
+    "generic": "DRIED ALUMINIUM HYDROXIDE GEL I.P. 250MG + MAGNESIUM HYDROXIDE IP 200MG + SIMETHICONE IP 50MG",
+    "form": "SYRUP"
+  },
+  {
+    "brand": "OXECAINE 170ML",
+    "generic": "DRIED ALUMINIUM + HYDROXIDE GEL IP 291 MG + MAGNESIUM HYDROXIDE IP 98 MG + OXETACAINE BP 10 MG",
+    "form": "GEL"
+  },
+  {
+    "brand": "ALERGIN",
+    "generic": "CETIRIZINE HYDROCHLORIDE IP 10 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "ALERGIN - L",
+    "generic": "LEVOCETIRIZINE HYDROCHLORIDE IP 5 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "BILACIP TABS",
+    "generic": "BILASTINE 20 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "BILACIP-M",
+    "generic": "BILASTINE 20 MG + MONTELUKAST SODIUM IP 10 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "CETCIP",
+    "generic": "CEITRIZINE HYDROCHLORIDE IP 10 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "CETCIP - L",
+    "generic": "LEVOCETIRIZINE HYDROCHLORIDE IP 5MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "CETCIP 30 ML",
+    "generic": "CETIRIZINE HCL BP 5 MG/5 ML",
+    "form": "SYRUP"
+  },
+  {
+    "brand": "EMIN",
+    "generic": "PROMETHAZINE THEOCLATE IP 25 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "FEXIGRA 120 TABS",
+    "generic": "FEXOFENADINE HYDROCHLORIDE IP 120 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "FEXIGRA 180 TABS",
+    "generic": "FEXOFENADINE HYDROCHLORIDE IP 180 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "FEXIGRA-M TABS",
+    "generic": "MONTELUKAST SODIUM IP 10 MG + FEXOFENADINE HYDROCHLORIDE IP 120 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "LORATIN",
+    "generic": "LORATADINE IP 10 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "MONTECIP BL TABS",
+    "generic": "BILASTINE 20 MG + MONTELUKAST SODIUM IP 10 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "MONTECIP LC JUNIOR SYRUP",
+    "generic": "MONTELUKAST SODIUM IP 4 MG + LEVOCETIRIZINE DIHYDROCHLORIDE IP 2.5 MG",
+    "form": "SYRUP"
+  },
+  {
+    "brand": "MONTECIP LC TABS",
+    "generic": "MONTELUKAST SODIUM IP 10 MG + LEVOCETIRIZINE HYDROCHLORIDE IP 5 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "MONTECIP-FX TABS",
+    "generic": "MONTELUKAST SODIUM IP 10 MG + FEXOFENADINE HYDROCHLORIDE IP 120 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "NEW OKACET",
+    "generic": "CETIRIZINE 10 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "OKACET 10 MG",
+    "generic": "CETRIZINE HYDROCHLORIDE IP 10 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "OKACET - L",
+    "generic": "LEVOCETIRIZINE HYDROCHLORIDE IP 5MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "OKACET - L 30ML",
+    "generic": "LEVOCETIRIZINE DIHYDROCHLORIDE 2.5 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "OKACET SYRUP",
+    "generic": "CETRIZINE HCL IP 5 MG / 5 ML",
+    "form": "SYRUP"
+  },
+  {
+    "brand": "VERTIRON",
+    "generic": "CINNARIZINE IP 25 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "DERICIP",
+    "generic": "THEOPHYLLINE IP 23 MG + ETOPHYLLINE 77 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "DERICIP 150 RETARD",
+    "generic": "ETOFHYLINE IP 115 MG + THEOPHYLLINE IP 35 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "DERICIP 300 RETARD",
+    "generic": "ETOPHYLLINE 231 MG + THEOPHYLLINE IP 69 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "DOXOCIP",
+    "generic": "DOXOFYLLINE 400 mg + EXCIPIENTS Q.S.",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "AZICIP 100 ORAL SUSPN",
+    "generic": "AZITHROMYCIN 100 MG PER 5 ML",
+    "form": "SUSPENSION"
+  },
+  {
+    "brand": "AZICIP 200 ORAL SUSPN",
+    "generic": "AZITHROMYCIN 200 MG PER 5 ML",
+    "form": "SUSPENSION"
+  },
+  {
+    "brand": "AZICIP 250",
+    "generic": "AZITHROMYCIN 250 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "AZICIP 500",
+    "generic": "AZITHROMYCIN 500 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "AZIPRO 250",
+    "generic": "AZITHROMYCIN 250 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "AZIPRO 500",
+    "generic": "AZITHROMYCIN 500 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "AZOMYCIN 100",
+    "generic": "AZITHROMYCIN 100 MG",
+    "form": "SUSPENSION"
+  },
+  {
+    "brand": "AZOMYCIN 200",
+    "generic": "AZITHROMYCIN 200 MG",
+    "form": "SUSPENSION"
+  },
+  {
+    "brand": "AZOMYCIN 250 TABS",
+    "generic": "AZITHROMYCIN 250 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "AZOMYCIN 500",
+    "generic": "AZITHROMYCIN 500 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "CEFASYN 250 4'S",
+    "generic": "CEFUROXIME AXETIL IP 250 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "CEFASYN 250 10'S",
+    "generic": "CEFUROXIME AXETIL IP 250 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "CEFASYN 500 4'S",
+    "generic": "CEFUROXIME AXETIL IP 500 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "CEFASYN 500 10'S",
+    "generic": "CEFUROXIME AXETIL IP 500 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "CEFIX 100",
+    "generic": "CEFIXIME IP 100 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "CEFIX 200",
+    "generic": "CEFIXIME I.P. 200 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "CEFIX 200 (O)",
+    "generic": "CEFIXIME IP 200 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "CEFIX DS 30ML",
+    "generic": "CEFIXIME 50 MG",
+    "form": "SYRUP"
+  },
+  {
+    "brand": "CEFIX DS STRAWBERRY",
+    "generic": "CEFIXIME IP 50 MG",
+    "form": "SYRUP"
+  },
+  {
+    "brand": "CEFIX - O",
+    "generic": "CEFIXIME IP 200MG + OFLOXACIN IP 200MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "CEFRAX 100",
+    "generic": "CEFIXIME IP 100 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "CEFRAX 200",
+    "generic": "CEFIXIME IP 200 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "CEFRAX CV",
+    "generic": "CEFIXIME IP 200 MG + POTASSIUM CLAVULANATE DILUTED IP 125 MG + EXCIPIENTS Q.S.",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "CEFRAX DS 30 ML",
+    "generic": "CEFIXIME IP 50 MG",
+    "form": "SYRUP"
+  },
+  {
+    "brand": "CEFRAX O 10'S",
+    "generic": "CEFIXIME IP 200 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "CEFTAZ-1000MG",
+    "generic": "CEFTAZIDIME 1 GM",
+    "form": "INJECTION"
+  },
+  {
+    "brand": "CEPHADEX 125DT",
+    "generic": "CEPHALEXIN IP 125MG DT",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "CEPHADEX 250",
+    "generic": "CEPHALEXIN 250 MG",
+    "form": "CAPSULES"
+  },
+  {
+    "brand": "CEPHADEX 250 DT",
+    "generic": "CEPHALEXIN IP DT",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "CEPHADEX 500",
+    "generic": "CEPHALEXIN IP 500MG",
+    "form": "CAPSULES"
+  },
+  {
+    "brand": "CEPHADEX DS",
+    "generic": "CEPHALEXIN IP 125MG / 5ML",
+    "form": "SYRUP"
+  },
+  {
+    "brand": "CIPDOXIVID - LB CAPS",
+    "generic": "DOXYCYCLINE HYDROCHLORIDE IP 100MG ( AS PELLETS ) + LACTIC ACID BACILLUS 5 BILLION SPORES ( AS ENTERIC COATED PELLETS )",
+    "form": "CAPSULES"
+  },
+  {
+    "brand": "CIPLOX IV (POUCH) 100 ML",
+    "generic": "CIPROFLOXACIN IP 200MG + SODIUM CHLORIDE IP 0.9 % + WATER FOR INJECTION IP 100 ML",
+    "form": "INFUSION"
+  },
+  {
+    "brand": "CIPMOX 250 DT",
+    "generic": "AMOXYCILLIN TRIHYDRATE I.P. 250MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "CIPMOX 500 YELLOW 15'S",
+    "generic": "AMOXYCILLIN TRIHYDRATE I.P. 500MG",
+    "form": "CAPSULES"
+  },
+  {
+    "brand": "CIPMOX CV",
+    "generic": "EACH 5 ML CONTAINS AMOXYCILLIN TRIHYDRATE IP 200 MG + POTASSIUM CLAVULANATE DIL IP 28.5MG",
+    "form": "DRY SYRUP"
+  },
+  {
+    "brand": "CIPMOX CV 625 10'S",
+    "generic": "AMOXYCILLIN TRIHYDRATE I.P. 500MG + POTASSIUM CLAVULANATE DILUTED I.P. 125MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "ETOZOX- T TABS",
+    "generic": "ETORICOXIB IP 60 MG + THIOCOLCHICOXIB IP 4 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "L QUIN 250",
+    "generic": "LEVOFLOXACIN HEMIHYDRATE I.P. 250MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "L QUIN 500",
+    "generic": "LEVOFLOXACIN HEMIHYDRATE I.P. 500MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "L QUIN 750",
+    "generic": "LEVOFLOXACIN HEMIHYDRATE I.P. 750MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "LEVOQUIN 250",
+    "generic": "LEVFLOXACIN 250 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "LEVOQUIN 500",
+    "generic": "LEVOFLOXACIN HEMIHYDRADE I.P. 500 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "MEGACLOX",
+    "generic": "AMPICILLIN TRIHYDRATE 250 MG + DICLOXACILLIN SODIUM 250 MG",
+    "form": "CAPSULES"
+  },
+  {
+    "brand": "MEGACLOX DT (NEW)",
+    "generic": "AMPICILLIN TRIHYDRATE I.P. 125MG + DICLOXACILLIN SODIUM I.P. 125MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "MUPICIP 5GM",
+    "generic": "MUPIROCIN 2.0%",
+    "form": "OINTMENT"
+  },
+  {
+    "brand": "MUPICIP 10GM",
+    "generic": "MUPIROCIN 2.0%",
+    "form": "OINTMENT"
+  },
+  {
+    "brand": "MUPICIP 15GM",
+    "generic": "MUPIROCIN 2.0% W/W",
+    "form": "OINTMENT"
+  },
+  {
+    "brand": "NOVACLOX-LB",
+    "generic": "AMOXYCILLIN TRIHYDRATE 250 MG + DICLOXACILLIN SODIUM 250 MG + LACTIC ACID BACILLUS",
+    "form": "CAPSULES"
+  },
+  {
+    "brand": "NOVACLAV 625 6'S",
+    "generic": "AMOXYCILLIN TRIHYDRATE IP 500MG + POTASSIUM CLAVULANATE DILUTED IP 125MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "NOVACLAV 625 10'S",
+    "generic": "AMOXYCILLIN TRIHYDRATE IP 500MG + POTASSIUM CLAVULANATE DILUTED IP 125MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "NOVACLAV DRY",
+    "generic": "AMOXYCILLIN TRIHYDRATE IP 200MG + POTASSIUM CLAVULANATE DILUTED IP 28.5MG/ 5ML",
+    "form": "SYRUP"
+  },
+  {
+    "brand": "NOVACLOX NF",
+    "generic": "AMOXYCILLIN TRIHYDRATE IP 250MG + CLOXACILLIN SODIUM IP 250MG + EXCIPIENT Q.S.",
+    "form": "CAPSULES"
+  },
+  {
+    "brand": "OLOX 200",
+    "generic": "OFLOXACIN IP 200MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "OLOX OZ",
+    "generic": "OFLOXACIN 200MG + ORNIDAZOLE 500MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "OMNICLAV 375",
+    "generic": "AMOXYCILLIN TRIHYDRATE IP 250MG + POTASSIUM CLAVULANATE DILUTED IP 125MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "OMNICLAV 625",
+    "generic": "AMOXYCILLIN TRIHYDRATE IP 500MG + POTASSIUM CLAVULANATE DILUTED IP 125MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "OMNICLAV DS 30ML",
+    "generic": "AMOXYCILLIN 200MG + CLAVULANIC ACID 28.5MG",
+    "form": "SYRUP"
+  },
+  {
+    "brand": "PODOCIP 200 10'S",
+    "generic": "CEFPODOXIME PROXETIL IP 200MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "PODOCIP CV",
+    "generic": "CEFPODOXIME PROXETIL IP 200MG + POTASSIUM CLAVULANATE DILUTED IP 125MG + EXCIPIENTSQ.S.",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "POWERGYL OZ",
+    "generic": "OFLOXACIN IP 200MG + ORNIDAZOLE IP 500MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "ROXEE 150",
+    "generic": "ROXYTHROMYCIN 150 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "TARIFLOX 200",
+    "generic": "OFLOXACIN IP 200MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "TARIFLOX OZ",
+    "generic": "OFLOXACIN 200MG + ORNIDAZOLE 500MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "ZOCLAR 250",
+    "generic": "CLARITHROMYCIN IP 250MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "ZOCLAR 500",
+    "generic": "CLARITHROMYCIN IP 500MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "ALERGIN COLD AND FLU NF",
+    "generic": "PARACETAMOL 500 MG + PHENYLEPHRINE HYDROCHLORIDE 5 MG + CAFFEINE 30 MG + DIPHENHYDRAMINE HYDROCHLORIDE 25 MG + EXCIPIENTS Q .S",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "ALERGIN COLD TOTAL",
+    "generic": "LEVOCETIRIZINE HYDROCHLORIDE IP 5MG + PARACETAMOL IP 325MG + PHENYLEPHRINE HYDROCHLORIDE IP 5MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "CHESTON COLD",
+    "generic": "CETIRIZINE DIHYDROCHLORIDE IP 5MG PHENYLEPHRINE HYDROCHLORIDE IP 10 MG + PARACETAMOL IP 325 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "CHESTON COLD (AMBER)",
+    "generic": "CETIRIZINE DIHYDROCHLORIDE IP 5MG + PHENYLEPHRINE HYDROCLORIDE IP 10MG + PARACETAMOLD IP 325 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "CHESTON COLD & FLU NF",
+    "generic": "PARACETAMOL 500 MG + PHENYLEPHRINE HYDROCHLORIDE 5 MG + CAFFEINE 30 MG + DIPHENHYDRAMINE HYDROCHLORIDE 25 MG + EXCIPIENTS Q .S",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "CHESTON COLD DS 60 ML",
+    "generic": "PARACETAMOL IP 250 MG + PHENYLEPHRINE HYDROCHLORIDE IP 5 MG + CETIRIZINE DIHYDROCHLORIDE IP 2 MG",
+    "form": "SUSPENSION"
+  },
+  {
+    "brand": "CHESTON COLD NEW (SILVER)",
+    "generic": "CETIRIZINE DIHYDROCHLORIDE IP 5 MG + PHENYLEPHRINE HYDROCHLORIDE IP 10 MG PARACETAMOL IP325 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "CHESTON COLD TOTAL",
+    "generic": "LEVOCETIRIZINE HYDROCHLORIDE IP 5 MG + PARACETAMOL IP 325 MG + PHENYLEPHRINE HYDROCHLORIDE IP 5 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "CHESTON COLD 20'S",
+    "generic": "CETIRIZINE DIHYDROUCHLORIDE IP 5MG + PHENYLEPHRINE HYDROCHLORIDE IP 10MG + PARACETAMOL IP 325MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "CHESTON COLD 60ML",
+    "generic": "PARACETAMOL 125 MG + PHENYLEPHRINE HYDROCLORIDE IP + 5MG CETERIZINE DIHYDROCLORIDE IP 2MG",
+    "form": "SUSPENSION"
+  },
+  {
+    "brand": "EASI BREATHE SOFTGEL",
+    "generic": "CAMPHOR IP 66MG + CHLOROTHYMOL 5MG + EUCALYPTOL USP 125MG + MENTHOL IP 55MG + TERPINEOL BP 120MG",
+    "form": "CAPSULES"
+  },
+  {
+    "brand": "NICIP COLD & FLU NF",
+    "generic": "PARACETAMOL IP 500 MG + PHENYLEPHRINE HYDROCHLORIDE IP 5 MG + CAFFEINE IP 30 MG + DIPHENHYDRAMINE HYDROCHLORIDE IP 25 MG + EXCIPIENTS Q.S.",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "NIMUPAIN COLD & FLU NF",
+    "generic": "PARACETAMOL 500 MG + PHENYLEPHRINE HYDROCHLORIDE 5 MG + CAFFEINE 30 MG + DIPHENHYDRAMINE HYDROCHLORIDE 25 MG + EXCIPIENTS Q .S",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "NOCOLD",
+    "generic": "PHENYLEPHRINE HYDROCHLORIDE IP .5.00MG + CHLORPHENIRANMINE MALEATE IP 2.00MG",
+    "form": "DROPS"
+  },
+  {
+    "brand": "NOCOLD PLUS",
+    "generic": "PARACETAMOL 125 MG + CPM 1 MG + SODIUM CITRATE 60 MG",
+    "form": "SYRUP"
+  },
+  {
+    "brand": "NOCOLD PLUS",
+    "generic": "TRIPROLIDINE HYDROCHLORIDE IP 2.5MG + PHENYLEPHRINE HYDROCHLORIDE IP 10MG + PARACETAMOL IP 325MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "NOCOLD 60ML",
+    "generic": "PHENYLEPHRINE HYDROCHLORIDE IP 2.00MG + CHLORPHENIRAMINE MALEATE IP 2.00 MG",
+    "form": "SYRUP"
+  },
+  {
+    "brand": "OKACET COLD",
+    "generic": "CETIRIZINE DIHYDROCHLORIDE IP 5 MG + PHENYLEPHRINE HYDROCHLORIDE IP 10 MG + PARACETAMOL IP 325MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "OKACET COLD TOTAL",
+    "generic": "LEVOCETIRIZINE HYDROCHLORIDE IP 5 MG + PARACETAMOL IP 325 MG + PHENYLEPHRINE HYDROCHLORIDE IP 5 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "ACARCIP-25 TABS",
+    "generic": "ACARBOSE IP 25 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "ACARCIP-50 TABS",
+    "generic": "ACARBOSE IP 50 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "CIPDAPLA 10",
+    "generic": "DAPAGLIFLOZIN PROPANEDIOL MONOHYDRATE 10 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "CIPDAPLA 5",
+    "generic": "DAPAGLIFLOZIN PROPANEDIOL MONOHYDRATE 5 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "CIPDAPLA-M 10/1000 TABS",
+    "generic": "DAPAGLIFLOZIN PROPANEDIOL MONOHYDRATE 10 MG + METFORMIN HYDROCHLORIDE IP 1000 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "CIPDAPLA-M 10/500 TABS",
+    "generic": "DAPAGLIFLOZIN PROPANEDIOL MONOHYDRATE 10 MG + METFORMIN HYDROCHLORIDE IP 500 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "CIPVILDIN 50 TABS",
+    "generic": "VILDAGLIPTIN IP 50 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "CIPVILDIN-M TABS 50/1000",
+    "generic": "VILDAGLIPTIN 50 MG + METFORMIN HYDROCHLORIDE IP 1000 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "CIPVILDIN-M TABS 50/500",
+    "generic": "VILDAGLIPTIN 50 MG + METFORMIN HYDROCHLORIDE IP 500 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "ETHAMCIP 250",
+    "generic": "ETHAMSULATE B.P. 250MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "ETHAMCIP 500",
+    "generic": "ETHAMSYLATE B.P. 500MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "GLIMDA 1",
+    "generic": "GLIMEPRIDE 1MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "GLIMDA 2",
+    "generic": "GLIMEPRIDE 2MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "GLIMDA 3 TAB",
+    "generic": "GLIMEPIRIDE IP 3 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "GLIMDA-MV 1",
+    "generic": "METFORMIN HYDROCHLORIDE 500MG + GLIMEPIRIDE 1MG + VOGLIBOSE 0.2MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "GLIMDA-MV 2",
+    "generic": "METFORMIN HYDROCHLORIDE 500MG + GLIMEPIRIDE 2MG + VOGLIBOSE 0.2MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "GLINIL",
+    "generic": "GLIBENCLAMIDE 5MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "GLINIL M",
+    "generic": "GLIBENCLAMIDE IP 5MG + METFORMIN HCL 500MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "GLYGARD",
+    "generic": "GLICLAZIDE 80MG + EXCIPIENTS Q.S.",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "GLYGARD M",
+    "generic": "GLICLAZIDE 80MG + METFORMIN HYDROCHLORIDE 500MG + EXCIPIENTS Q.S.",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "METFOR 500",
+    "generic": "METFORMIN HYDROCHLORIDE IP 500MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "OKAMET 500",
+    "generic": "METFORMIN HYDROCHLORIDE IP 500MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "OKAMET 500 SR",
+    "generic": "METFORMIN HYDROCHLORIDE IP 500 MG (AS PROLONGED RELEASED)",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "OKAMET GM 1002 TABS",
+    "generic": "METFORMIN HYDROCHLORIDE IP 1000 MG., GLIMEPIRIDE IP 2 MG.",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "OKAMET GM 501 TABS",
+    "generic": "METFORMIN HYDROCHLORIDE IP 500 MG (AS PROLONGED RELEASED) + GLIMEPIRIDE IP 1 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "OKAMET GM 502 TABS",
+    "generic": "METFORMIN HYDROCHLORIDE IP 500 MG (AS PROLONGED RELEASED) + GLIMEPIRIDE IP 2 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "OKAMET GMP 1 TABS",
+    "generic": "PIOGLITAZONE 15MG + METFORMIN HYDROCHLORIDE IP 500MG (SR) + GLIMEPIRIDE IP 1 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "OKAMET GMP 2 TABS",
+    "generic": "PIOGLITAZONE 15MG + METFORMIN HYDROCHLORIDE IP 500MG (SR) +GLIMEPIRIDE IP 2 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "TENEPLA",
+    "generic": "TENELIGLIPTIN HYDROBROMIDE HYDRATE 20MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "TENEPLA M 500",
+    "generic": "TENELIGLIPTIN HYDROBROMIDE HYDRATE 20MG + METFORMIN HYDROCHLORIDE 500MG + EXCIPIENTS Q.S.",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "TENEPLA M 1000",
+    "generic": "TENELIGLIPTIN HYDROBROMIDE HYDRATE 20MG + METFORMIN HYDROCHLORIDE 500MG + EXCIPIENTS Q.S.",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "TENEPLA M 1000 TABS",
+    "generic": "TENELIGLIPTIN 20 MG, METFORMIN HYDROCHLORIDE IP 1000 MG.",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "VOGLICIP 0.2",
+    "generic": "VOGLIBOSE 0.2MG + EXCIPIENTS Q.S.",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "VOGLICIP M 0.2 TABS",
+    "generic": "METFORMIN HYDROCHLORIDE IP 500MG + VOGLIBOSE IP 0.2 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "VOGLICIP 0.3",
+    "generic": "VOGLIBOSE 0.3MG + EXCIPIENTS Q.S.",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "OFLOX OZ NF 30 ML",
+    "generic": "OFLOXACIN 50 MG + METRONIDAZOLE BENZOATE IP 100 MG",
+    "form": "SUSPENSION"
+  },
+  {
+    "brand": "POWERGYL 30 ML",
+    "generic": "OFLOXACIN 50 MG/5ML + METRONIDAZOLE BENZOATE 100 MG/5 ML",
+    "form": "SUSPENSION"
+  },
+  {
+    "brand": "ROKO",
+    "generic": "LOPERAMIDE HCL IP 2MG",
+    "form": "CAPSULES"
+  },
+  {
+    "brand": "VERTIGIL",
+    "generic": "CINNARIZINE IP 20MG + DOMPERIDONE MALEATE IP 15MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "VOMETIL",
+    "generic": "PROCHLORPERAZINE MALEATE IP 5MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "VOMETIL MD",
+    "generic": "PROCHLORPERAZINE MALEATE 5MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "VOMISHUNT INJN 2 ML",
+    "generic": "ONDANSETRON. 2 MG, METHYLPARABEN IP 0.18% + PROPYLPARABEN IP 0.02%",
+    "form": "INJECTION"
+  },
+  {
+    "brand": "VOMISHUNT INJN 4 ML",
+    "generic": "ONDANSETRON. 2 MG. + METHYLPARABEN IP 0.18% + PROPYLPARABEN IP 0.02%",
+    "form": "INJECTION"
+  },
+  {
+    "brand": "VOMISHUNT MD 8 TABS",
+    "generic": "ONDANSETRON IP 8 MG.",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "VOMISHUNT SYRUP*",
+    "generic": "ONDANSETRON 2MG.",
+    "form": "SYRUP"
+  },
+  {
+    "brand": "VOMISHUNT-MD 4 TABS",
+    "generic": "ONDANSETRON IP 4 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "VOMISTOP 10 DT",
+    "generic": "DOMPERIDONE IP 10MG DISPERSIBLE",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "VOMISTOP 10'S",
+    "generic": "DOMPERIDONE IP 10MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "VOMISTOP 30 ML",
+    "generic": "DOMPERIDONE 1MG",
+    "form": "SUSPENSION"
+  },
+  {
+    "brand": "DANFREE 100ML - 1%",
+    "generic": "KETOCONAZOLE IP 1%",
+    "form": "SHAMPOO"
+  },
+  {
+    "brand": "DANFREE 100ML - 2%",
+    "generic": "Ketoconazole IP 2%",
+    "form": "SHAMPOO"
+  },
+  {
+    "brand": "FLUKA 150",
+    "generic": "FLUCONAZOLE IP 150 MG",
+    "form": "CAPSULES"
+  },
+  {
+    "brand": "FUNGICIP 150",
+    "generic": "FLUCONAZOLE IP 150 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "FUNGICIP 200",
+    "generic": "FLUCONAZOLE 200 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "KETOCIP",
+    "generic": "KETOCONAZOLE IP 200 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "KETOCIP 100ML - 1%",
+    "generic": "KETOCONAZOLE IP 1%",
+    "form": "SHAMPOO"
+  },
+  {
+    "brand": "KETOCIP 100ML - 2%",
+    "generic": "KETOCONAZOLE IP 2%",
+    "form": "SHAMPOO"
+  },
+  {
+    "brand": "BENDEX - 400",
+    "generic": "ALBENDAZOLE IP 400MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "BENDEX 10ML",
+    "generic": "ALBENDAZOLE IP 200MG",
+    "form": "SUSPENSION"
+  },
+  {
+    "brand": "BENDEX PLUS",
+    "generic": "IVERMECTIN IP 6MG + ALBENDAZOLE IP 400MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "MEBEX",
+    "generic": "MEBENDAZOLE 100MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "MEBEX 30ML",
+    "generic": "MEBENDAZOLE 100MG",
+    "form": "SUSPENSION"
+  },
+  {
+    "brand": "X-WORM 400MG",
+    "generic": "ALBENDAZOLE IP 400MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "CILOGARD 5 MG",
+    "generic": "CILNIDIPINE 5MG + EXCIPIENTS Q.S.",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "CILOGARD 10 MG",
+    "generic": "CILNIDIPINE 10MG + EXCIPIENTS Q.S.",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "CILOGARD 20 MG",
+    "generic": "CILNIDIPINE 20MG + EXCIPIENTS Q.S.",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "COSART-25",
+    "generic": "LOSARTAN POTASSIUM IP 25MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "COSART-50",
+    "generic": "LOSARTAN POTASSIUM IP 50 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "COSART-H",
+    "generic": "LLOSARTAN POTASSIUM IP 50MG + HYDROCHLOROTHAIZE IP 12.5MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "OLMED 20 TABS",
+    "generic": "OLMESARTAN MEDOXOMIL IP 20 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "OLMED 40 TABS",
+    "generic": "OLMESARTAN MEDOXOMIL IP 40 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "PRESOLAR",
+    "generic": "ATENOLOL IP 50MG + NIFEDIPINE IP 20MG",
+    "form": "CAPSULES"
+  },
+  {
+    "brand": "PRESOLAR",
+    "generic": "ATENOLOL IP .50 MG NIFEDIPINE IP .20 MG (SUSTAINED RELEASE)",
+    "form": "CAPSULES"
+  },
+  {
+    "brand": "PRILACE 2.5",
+    "generic": "RAMIPRIL IP 2.5MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "PRILACE 5",
+    "generic": "RAMIPRIL IP 5MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "PRILACE 10",
+    "generic": "RAMIPRIL IP 10MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "TELGARD 40 TABS",
+    "generic": "TELMISARTAN IP 40 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "TELGARD H TABS",
+    "generic": "TELMISARTAN IP 40 MG + HYDROCHLOROTHIAZIDE IP 12.5 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "AMICIP 250MG INJECTION",
+    "generic": "AMIKACIN SULPHATE IP 250 MG + METHYLPARABEN IP 0.08% + PROPYLPARABEN IP 0.02% + WATER FOR INJECTIONS",
+    "form": "INJECTION"
+  },
+  {
+    "brand": "AMICIP 500MG INJECTION",
+    "generic": "AMIKACIN SULPHATE IP 500 MG. + METHYLPARABEN IP 0.04 % + PROPYLPARABEN IP 0.01 % + WATER FOR INJECTIONS",
+    "form": "INJECTION"
+  },
+  {
+    "brand": "AZIMAX 100 DRY SYP 15ML",
+    "generic": "AZITHYROMYCIN IP 100 MG / 5ML",
+    "form": "SYRUP"
+  },
+  {
+    "brand": "AZIMAX 200 DRY SYP 15ML",
+    "generic": "AZITHYROMYCIN IP 200 MG / 5ML",
+    "form": "SYRUP"
+  },
+  {
+    "brand": "AZIMAX 200 DT 3'S",
+    "generic": "AZITHROMYCIN 200 MG AS AZITHROMYCIN DIHYDRATE IP",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "AZIMAX 250 10'S TAB",
+    "generic": "AZITHROMYCIN 250 MG AS AZITHROMYCIN DIHYDRATE IP",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "AZIMAX 250 6'S TAB",
+    "generic": "AZITHROMYCIN 250 MG AS AZITHROMYCIN DIHYDRATE IP",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "AZIMAX 500 TABLETS 3'S",
+    "generic": "AZITHROMYCIN 500 MG AS AZITHROMYCIN DIHYDRATE IP",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "AZIMAX 500 TABLETS 5'S",
+    "generic": "AZITHROMYCIN 500 MG AS AZITHROMYCIN DIHYDRATE IP",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "AZIMAX XL DRY SYRUP 200MG/30 ML",
+    "generic": "AZITHYROMYCIN IP 200 MG / 5ML",
+    "form": "SYRUP"
+  },
+  {
+    "brand": "CEFASYN 1.5 INJN",
+    "generic": "CEFUROXIME SODIUM IP 1.5G",
+    "form": "INJECTION"
+  },
+  {
+    "brand": "CIPLACEF 0.5G INJN",
+    "generic": "CEFTRIAXONE SODIUM IP (STERILE) 500 MG",
+    "form": "INJECTION"
+  },
+  {
+    "brand": "CIPLACEF 1G INJN*",
+    "generic": "CEFTRIAXONE SODIUM IP (STERILE) 1000 MG",
+    "form": "INJECTION"
+  },
+  {
+    "brand": "CIPLACEF-S 1.5 G INJN",
+    "generic": "CEFTRIAXONE SODIUM IP (STERILE) 1G + SULBACTAM SODIUM IP (STERILE) 500MG",
+    "form": "INJECTION"
+  },
+  {
+    "brand": "CIPLACEF-T 1.125G INJN",
+    "generic": "CEFTRIAXONE SODIUM IP 1000 MG + TAZOBACTAM SODIUM IP 125 MG",
+    "form": "INJECTION"
+  },
+  {
+    "brand": "CIPMOX 250 R/W 15'S",
+    "generic": "AMOXYCILLIN TRIHYDRATE I.P. 250 MG",
+    "form": "CAPSULES"
+  },
+  {
+    "brand": "CIPMOX 250 Y/G 15'S",
+    "generic": "AMOXYCILLIN TRIHYDRATE I.P 250 MG",
+    "form": "CAPSULES"
+  },
+  {
+    "brand": "CIPMOX 500-O 15'S",
+    "generic": "AMOXYCILLIN TRIHYDRATE I.P 500 MG",
+    "form": "CAPSULES"
+  },
+  {
+    "brand": "GENTACIP INJN 2 ML",
+    "generic": "GENTAMICIN SULPHATE IP 40 MG + METHYLPARABEN IP 0.18% + PROPYLPARABEN IP 0.02% + WATER FOR INJECTIONS",
+    "form": "INJECTION"
+  },
+  {
+    "brand": "LEVOQUIN IV 100 ML",
+    "generic": "LEVOFLOXACIN HEMIHYDRATE IP 500 MG + SODIUM CHLORIDE IP 900 MG + WATER FOR INJECTIONS",
+    "form": "SYRUP"
+  },
+  {
+    "brand": "MERONIC 0.5G INJN",
+    "generic": "MEROPENEM 500 MG + SODIUM 45.1 MG",
+    "form": "INJECTION"
+  },
+  {
+    "brand": "MERONIC 1G INJN",
+    "generic": "MEROPENEM 1000 MG + SODIUM 90.2 MG",
+    "form": "INJECTION"
+  },
+  {
+    "brand": "NOVACEF 1.5 GM INJECTION",
+    "generic": "CEFUROXIME 1.5 GM",
+    "form": "INJECTION"
+  },
+  {
+    "brand": "NOVACEF 500 TAB",
+    "generic": "CEFUROXIME 500 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "NOVACLAV 1.2 G INJECTION",
+    "generic": "AMOXYCILLIN 1000 MG + CLAVULANIC ACID 200 MG",
+    "form": "INJECTION"
+  },
+  {
+    "brand": "RACTITAZO 4.5G INJECTION",
+    "generic": "PIPERACILLIN 4 GM + TAZOBACTAM 500 MG",
+    "form": "INJECTION"
+  },
+  {
+    "brand": "IVERCOVIT TABS",
+    "generic": "IVERMECTIN IP 12 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "SPASMONIL",
+    "generic": "DICYCLOMINE HYDROCHLORIDE IP 20 MG + PARACETAMOL IP 325 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "SPASMONIL FORTE",
+    "generic": "PARACETAMOL IP 250 MG + MEFENAMIC ACID IP 100 MG",
+    "form": "SUSPENSION"
+  },
+  {
+    "brand": "SPASMONIL PLUS",
+    "generic": "DICYCLOMINE HYDROCHLORIDE IP 10 MG + MEFENAMIC ACID IP 250 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "SPASMORID",
+    "generic": "DICYCLOMINE HYDROCHLORIDE 20 MG + PARACETAMOL 325 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "TUELA",
+    "generic": "DROTAVERINE HYDROCHLORIDE 80MG + MEFENAMIC ACID 250MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "LANZOL - 30",
+    "generic": "LANSOPRAZOLE IP 30MG",
+    "form": "CAPSULES"
+  },
+  {
+    "brand": "LOMAC 20",
+    "generic": "OMEPRAZOLE 20MG",
+    "form": "CAPSULES"
+  },
+  {
+    "brand": "LOMAC-D",
+    "generic": "DOMPERIDONE IP 10MG + OMEPRAZOLE IP 20MG",
+    "form": "CAPSULES"
+  },
+  {
+    "brand": "NEW PANTOSEC D SR 10'S",
+    "generic": "PANTOPRAZOLE SODIUM IP 40MG + DOMPERIDONE MALEATE 30MG",
+    "form": "CAPSULES"
+  },
+  {
+    "brand": "OKACID",
+    "generic": "OMEPRAZOLE 20MG",
+    "form": "CAPSULES"
+  },
+  {
+    "brand": "OKACID D",
+    "generic": "DOMPERIDONE 10MG + OMEPRAZOLE 20MG",
+    "form": "CAPSULES"
+  },
+  {
+    "brand": "OMECIP 20",
+    "generic": "OMEPRAZOLE IP 20MG",
+    "form": "CAPSULES"
+  },
+  {
+    "brand": "OMECIP D",
+    "generic": "DOMPERIDONE 10MG + OMEPRAZOLE 20MG",
+    "form": "CAPSULES"
+  },
+  {
+    "brand": "OMECIP D SR",
+    "generic": "OMEPRAZOLE 20MG + DOMPERIDONE 30MG",
+    "form": "CAPSULES"
+  },
+  {
+    "brand": "PANTOCIP IV",
+    "generic": "PANTOPRAZOLE SODIUM 40MG",
+    "form": "INJECTION"
+  },
+  {
+    "brand": "PANTOSEC",
+    "generic": "PANTOPRAZOLE SODIUM IP 40MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "PANTOSEC D",
+    "generic": "PANTOPRAZOLE 40MG + DOMPERIDONE 10MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "PANTOSEC IV",
+    "generic": "PANTOPRAZOLE 40MG",
+    "form": "INJECTION"
+  },
+  {
+    "brand": "PANTOSEC - LS",
+    "generic": "PANTOPRAZOLE SODIUM SESQUIHYDRATE IP 40MG + LEVOSULPIRIDE 75MG",
+    "form": "CAPSULES"
+  },
+  {
+    "brand": "RABESEC 20",
+    "generic": "RABEPRAZOLE 20MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "RABESEC AP 200 SR",
+    "generic": "ACECLOFENAC 200MG + RABEPRAZOLE SODIUM 20MG + EXCIPIENTS Q.S.",
+    "form": "CAPSULES"
+  },
+  {
+    "brand": "RABESEC D",
+    "generic": "RABEPRAZOLE 20MG + DOMPERIDON 10MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "RABESEC D SR",
+    "generic": "RABEPRAZOLE SODIUM IP 20MG + DOMPERIDONE IP 30MG",
+    "form": "CAPSULES"
+  },
+  {
+    "brand": "RABESEC LS",
+    "generic": "RABEPRAZOLE SODIUM IP 20MG + LEVOSULPIRIDE 75MG",
+    "form": "CAPSULES"
+  },
+  {
+    "brand": "CIPLORIC 100",
+    "generic": "ALLOPURINOL 100MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "CIPLORIC 300",
+    "generic": "ALLOPURINOL 300MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "FEBUTEC 40",
+    "generic": "FEBUXOSTAT 40MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "FEBUTEC 80",
+    "generic": "FEBUXOSTAT 80MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "ZYRIK 100",
+    "generic": "ALLOPURINOL IP 100 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "ZYRIK 300",
+    "generic": "ALLOPURINOL IP 300 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "CIPVIR 200 TABS",
+    "generic": "FAVIPIRAVIR 200 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "CIPLORIC 300",
+    "generic": "ALLOPURINOL 300 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "CIPVIR 400 TABS",
+    "generic": "FAVIPIRAVIR 400 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "CIPVIR 800 TABS",
+    "generic": "FAVIPIRAVIR 800 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "ACI FREE (LEMON)",
+    "generic": "SVARJIKSARA 2.904G + NIMBUKAMLAM 2.015G + SODIUM SACCHARIN 12 MG/5G",
+    "form": "POWDER"
+  },
+  {
+    "brand": "ACI FREE (PUDINA)",
+    "generic": "SVARJIKSARA 2.913G + NIMBUKAMLAM 2.041G + SODIUM SACCHARIN 15 MG/5G",
+    "form": "POWDER"
+  },
+  {
+    "brand": "ACI FREE (REGULAR)",
+    "generic": "SVARJIKSARA 2.90G + NIMBUKAMLAM 2.10G",
+    "form": "POWDER"
+  },
+  {
+    "brand": "ACI FREE (ZEERA)",
+    "generic": "SVARJIKSARA 2.7764 G + NIMBUKAMLAM 2.0286 G + JEERA 0.01 G + EXCIPIENTS Q.S + SODIUM SACCHARIN IP 20 MG/5G",
+    "form": "POWDER"
+  },
+  {
+    "brand": "CURCUCIP PLUS POWDER SACHETS",
+    "generic": "CURCUMIN 300 MG + PIPERINE 3 MG + INULIN 150 MG",
+    "form": "POWDER"
+  },
+  {
+    "brand": "CURCUCIP TABS",
+    "generic": "CURCUMIN 500MG + PIPERINE 5 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "LIVETONE 100ML",
+    "generic": "LIVER TONIC AYURVEDIC",
+    "form": "SYRUP"
+  },
+  {
+    "brand": "LIVETONE 200ML",
+    "generic": "LIVER TONIC AYURVEDIC",
+    "form": "SYRUP"
+  },
+  {
+    "brand": "LIVETONE 225ML",
+    "generic": "HIMSRA 34MG + KASANI 34MG + KAKAMACHI 16MG + ARJUNA 16MG + KASAMARDA 8MG + BIRANJASIPHA 8MG + JHAVUKA 8MG",
+    "form": "SYRUP"
+  },
+  {
+    "brand": "LIVETONE DS 100ML",
+    "generic": "EACH 5 ML CONTAINS EXTRACT OF HIMSRA 68MG + KASANI 68MG + KAKAMACHI 32MG + ARJUNA 32MG + KASAMARDA 16MG + BIRANJASPHA 16MG + JHAVUKA 16MG",
+    "form": "SYRUP"
+  },
+  {
+    "brand": "NO DARAR",
+    "generic": "DURAHARIDRA + KAMPILAK + PAKHANBED + MAJISTHA + DODISHAK AND SARJARAS + 35.4% + RAKTAPRAKA 3.6^ BASE",
+    "form": "CREAM"
+  },
+  {
+    "brand": "AMLIP 2.5",
+    "generic": "AMLODIPINE BESILATE IP 2.5MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "AMLIP 2.5 (BLISTER)",
+    "generic": "AMLODIPINE BESILATE IP 2.5MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "AMLIP 5",
+    "generic": "AMLODIPINE BESILATE IP 5MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "AMLIP 5 (BLISTER)",
+    "generic": "AMLODIPINE BESILATE IP 5MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "AMLIP 10",
+    "generic": "AMLODIPINE BESILATE IP 10MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "AMLIP 10 (BLISTER)",
+    "generic": "AMLODIPINE BESILATE IP 10MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "AMLIP AT TAB",
+    "generic": "AMLODIPINE BESILATE IP 5 MG + ATENOLOL IP 50 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "AMLIP AT (BLISTER)",
+    "generic": "AMLODIPINE BESILATE IP 5MG + ATENOLOL 50MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "AMLIP TL TABS",
+    "generic": "TELMISARTAN 40 MG + AMLODIPINE BESILATE 5 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "CILOGARD 5 MG",
+    "generic": "CILNIDIPINE 5 MG + EXCIPIENTS",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "CILOGARD 10 MG",
+    "generic": "CILNIDIPINE 10 MG + EXCIPIENTS",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "CILOGARD 20 MG",
+    "generic": "CILNIDIPINE 20 MG + EXCIPIENTS",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "CLOPICARD 15'S",
+    "generic": "CLOPIDOGREL BISULPHATE IP 75MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "CLOPICARD AP 75 15'S",
+    "generic": "CLOPIDOGREL BISULPHATE IP 75MG + ASPIRIN IP 75MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "COSART-25",
+    "generic": "LOSARTAN POTASSIUM IP 25 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "COSART-50",
+    "generic": "LOSARTAN POTASSIUM IP 50 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "COSART-AM TABS",
+    "generic": "LOSARTAN POTASSIUM IP 50 MG + AMLODIPINE BESILATE IP 5 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "COSART-H",
+    "generic": "LOSARTAN POTASSIUM IP 50 MG + HYDROCHLOROTHIAZIDE I.P. 12.5 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "DILVAS 2.5",
+    "generic": "ENALAPRIL MALEATE IP 2.5MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "DILVAS 5",
+    "generic": "ENALAPRIL MALEATE IP 5MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "DILVAS 10",
+    "generic": "ENALAPRIL MALEATE IP 10MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "HIPRES 25MG",
+    "generic": "ATENOLOL IP 25 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "HIPRES 50",
+    "generic": "ATENOLOL IP 50MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "ISOMIN 20",
+    "generic": "ISOSORBIDE MONONITRATE 20MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "LIPVAS 10",
+    "generic": "ATORVASTATIN CALCIUM 10MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "LIPVAS 20MG",
+    "generic": "ATORVASTAIN CALCIUM IP 20MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "LIPVAS 40",
+    "generic": "ATORVASTATIN CALCIUM IP 40MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "LIPVAS F 10 TABS",
+    "generic": "ATORVASTATIN CALCIUM IP 10 MG + FENOFIBRATE IP 160 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "LIPVAS GOLD 10 CAPS",
+    "generic": "ATORVASTATIN CALCIUM 10 MG + CLOPIDOGREL BISULPHATE 75 MG + ASPIRIN 75 MG",
+    "form": "CAPSULES"
+  },
+  {
+    "brand": "LIPVAS-ASP 10 CAPS",
+    "generic": "ASPIRIN IP 75 MG + ATORVASTATIN CALCIUM IP 10 MG",
+    "form": "CAPSULES"
+  },
+  {
+    "brand": "LIPVAS-ASP 20 CAPS",
+    "generic": "ASPIRIN IP 75 MG + ATORVASTATIN CALCIUM IP 20 MG",
+    "form": "CAPSULES"
+  },
+  {
+    "brand": "OLMED 20 TABS",
+    "generic": "OLMESARTAN MEDOXOMIL IP 20 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "OLMED 40 TABS",
+    "generic": "OLMESARTAN MEDOXOMIL IP 40 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "OLMED-AM 20 TABS",
+    "generic": "OLMESARTAN MEDOXOMIL IP 20 MG + AMLODIPINE 5 MG.",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "OMNITOR 10",
+    "generic": "ATORVASTATION CALCIUM 10MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "OMNITOR 20",
+    "generic": "ATORVASTATION CALCIUM 20MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "PRESOLAR",
+    "generic": "ATENOLOL IP .50 MG NIFEDIPINE IP .20 MG (SUSTAINED RELEASE)",
+    "form": "CAPSULES"
+  },
+  {
+    "brand": "PRILACE 2.5",
+    "generic": "RAMIPRIL IP 2.5 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "PRILACE 5",
+    "generic": "RAMIPRIL IP 5 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "PRILACE 10",
+    "generic": "RAMIPRIL IP 10 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "ROSUGARD 10 TABS",
+    "generic": "ROSUVASTATIN 10 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "ROSUGARD 20 TABS",
+    "generic": "ROSUVASTATIN 20 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "ROSUGARD 40 TABS",
+    "generic": "ROSUVASTATIN 40 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "ROSUGARD F 10 TABS",
+    "generic": "ROSUVASTATIN CALCIUM IP 10 MG + FENOFIBRATE IP 160 MG.",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "TELGARD 40 TABS",
+    "generic": "TELMISARTAN IP 40 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "TELGARD AM TABS",
+    "generic": "TELMISARTAN 40 MG + AMLODIPINE BESILATE 5 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "TELGARD H TABS",
+    "generic": "TELMISARTAN IP 40 MG + HYDROCHLOROTHIAZIDE IP 12.5 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "TELGARD M 25 TABS",
+    "generic": "TELMISARTAN IP 40 MG + METOPROLOL TARTRATE 25 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "TELGARD M 50 TABS",
+    "generic": "TELMISARTAN IP 40 MG + METOPROLOL TARTRATE 50 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "ZAART-25 TAB",
+    "generic": "LOSARTAN POTASSIUM IP 25MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "ZAART-50 TAB",
+    "generic": "LOSARTAN POTASSIUM IP 50MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "ZAART - H",
+    "generic": "LOSARTAN POTASSIUM 50 MG. HYDROCHLOROTHIAZIDE IP 12.5 MG.",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "DEXACIP INJN",
+    "generic": "DEXAMETHASONE SODIUM PHOSPHATE IP 4 MG + METHYLPARABEN IP 0.15% + PROPYLPARABEN IP 0.02% + WATER FOR INJECTIONS",
+    "form": "INJECTION"
+  },
+  {
+    "brand": "HYLLERGIC 0.1G INJN",
+    "generic": "PART-I- HYDROCORTISONE SODIUM SUCCINATE USP 100MG PART-II-STERILE WATER FOR INJECTIONS IP 5 ML",
+    "form": "INJECTION"
+  },
+  {
+    "brand": "PREDCIP-M INJN",
+    "generic": "METHYLPREDNISOLONE 40 MG",
+    "form": "INJECTION"
+  },
+  {
+    "brand": "STRAMIPLA 40 INJN",
+    "generic": "TRIAMCINOLONE ACETONIDE IP 40 MG, BENZYL ALCOHOL IP 0.9%",
+    "form": "INJECTION"
+  },
+  {
+    "brand": "ALERGIN COLD AND FLU NF",
+    "generic": "PARACETAMOL 500 MG + PHENYLEPHRINE HYDROCHLORIDE 5 MG + CAFFEINE 30 MG + DIPHENHYDRAMINE HYDROCHLORIDE 25 MG + EXCIPIENTS Q.S",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "ALERGIN COLD TOTAL",
+    "generic": "LEVOCETIRIZINE HYDROCHLORIDE IP 5 MG + PARACETAMOL IP 325 MG + PHENYLEPHRINE HYDROCHLORIDE IP 5 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "BRO-COFDEX 100 ML",
+    "generic": "TERBUTALINE SULPHATE IP 1.25MG + BROMHEXINE HYDROCHLORIDE IP 4MG + GUAPHENESIN IP 50MG + MENTHOL IP 2.5MG (IN A FLAVOURED SYRUPY BASE Q.S.)",
+    "form": "SYRUP"
+  },
+  {
+    "brand": "CHESTON AF SYRUP",
+    "generic": "PHENYLEPHRINE HYDROCHLORIDE IP 5 MG + CHLORPHENIRAMINE MALEATE IP 2 MG",
+    "form": "SYRUP"
+  },
+  {
+    "brand": "CHESTON COLD",
+    "generic": "CETIRIZINE DIHYDROCHLORIDE IP 5MG PHENYLEPHRINE HYDROCHLORIDE IP 10 MG + PARACETAMOL IP 325 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "CHESTON COLD 60ML",
+    "generic": "PARACETAMOL 125 MG + PHENYLEPHRINE HYDROCLORIDE IP + 5MG CETERIZINE DIHYDROCLORIDE IP 2MG",
+    "form": "SUSPENSION"
+  },
+  {
+    "brand": "CHESTON COLD - (AMBER)",
+    "generic": "CETIRIZINE DIHYDROCHLORIDE IP 5MG + PHENYLEPHRINE HYDROCLORIDE IP 10MG + PARACETAMOLD IP 325 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "CHESTON COLD & FLU NF",
+    "generic": "PARACETAMOL 500 MG + PHENYLEPHRINE HYDROCHLORIDE 5 MG + CAFFEINE 30 MG + DIPHENHYDRAMINE HYDROCHLORIDE 25 MG + EXCIPIENTS Q.S",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "CHESTON COLD DS 60 ML",
+    "generic": "PARACETAMOL IP 250 MG + PHENYLEPHRINE HYDROCHLORIDE IP 5 MG + CETIRIZINE DIHYDROCHLORIDE IP 2 MG",
+    "form": "SUSPENSION"
+  },
+  {
+    "brand": "CHESTON COLD TOTAL",
+    "generic": "LEVOCETIRIZINE HYDROCHLORIDE IP 5 MG + PARACETAMOL IP 325 MG + PHENYLEPHRINE HYDROCHLORIDE IP 5 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "COF - Q D SYP",
+    "generic": "DEXTROMETHRPHAN HYDROROMINE IP 10MG + PHENYLEPHRINE HYDROCLORIDE IP 5MG",
+    "form": "SYRUP"
+  },
+  {
+    "brand": "COF - Q DX",
+    "generic": "DEXTROMEHORPHAN HYDROBROMIDE 10MG + CHLORPHENIRAMINE MALEATE 2MG + PHENYLEPHRINE HYDROCHLORIDE 5MG + EXCIPIENTS Q.S.",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "COF-RYL 60ML",
+    "generic": "DIPHENHYDRAMINE HCL IP 14.08MG + AMONIUM CLORIDE IP 138MG + SODIUM CITRET 57.03MG",
+    "form": "SYRUP"
+  },
+  {
+    "brand": "COF-RYL 100ML",
+    "generic": "DIPHENHYDRAMINE HCL IP 14.08MG + AMONIUM CLORIDE IP 138MG + SODIUM CITRET 57.03MG",
+    "form": "SYRUP"
+  },
+  {
+    "brand": "COF - VYN",
+    "generic": "BROMHEXINE HYDROCHLORIDE IP 8.00MG + PHENYLEPHRINE HYDROCHLORIDE IP 5.00MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "EASI BREATHE SOFTGEL",
+    "generic": "CAMPHOR IP 66MG + CHLOROTHYMOL 5MG + EUCALYPTOL USP 125MG + MENTHOL IP 55MG + TERPINEOL BP 120MG",
+    "form": "CAPSULES"
+  },
+  {
+    "brand": "MUCOLINC AX 100ML",
+    "generic": "TERBUTALINE SULPHATE 1.5MG + GUAIPHENESIN 50MG + AMBROXOL HYDROCHLORIDE 15MG",
+    "form": "SYRUP"
+  },
+  {
+    "brand": "MUCOLINC EXPECTORANT",
+    "generic": "TERBUTALINE SULPHATE IP 1.25MG + BROMHEXINE HYDROCHLORIDE IP 4MG + GUAIPHENESIN IP 50MG + MENTHOL IP 2.5 MG",
+    "form": "EXPECTORANT"
+  },
+  {
+    "brand": "NEW COFDEX PAED",
+    "generic": "DEXTROMETHORPHAN HYDROBROMIDE IP 5MG + BROMHEXINE HYDROCHLORIDE IP 4MG + PHENYLEPHRINE HYDROCHLORIDE IP 5MG + MENTHOL IP 2.5MG",
+    "form": "SYRUP"
+  },
+  {
+    "brand": "NICIP COLD & FLU NF",
+    "generic": "PARACETAMOL IP 500 MG + PHENYLEPHRINE HYDROCHLORIDE IP 5 MG + CAFFEINE IP 30 MG + DIPHENHYDRAMINE HYDROCHLORIDE IP 25 MG + EXCIPIENTS Q.S.",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "NIMUPAIN COLD & FLU NF",
+    "generic": "PARACETAMOL 500 MG + PHENYLEPHRINE HYDROCHLORIDE 5 MG + CAFFEINE 30 MG + DIPHENHYDRAMINE HYDROCHLORIDE 25 MG + EXCIPIENTS Q .S",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "NOCOLD",
+    "generic": "PHENYLEPHRINE HYDROCHLORIDE IP .5.00MG + CHLORPHENIRANMINE MALEATE IP 2.00MG",
+    "form": "DROPS"
+  },
+  {
+    "brand": "NOCOLD 60ML",
+    "generic": "PHENYLEPHRINE HYDROCHLORIDE IP 2.00MG + CHLORPHENIRAMINE MALEATE IP 2.00 MG",
+    "form": "SYRUP"
+  },
+  {
+    "brand": "NOCOLD PLUS",
+    "generic": "PARACETAMOL 125 MG + CPM 1 MG + SODIUM CITRATE 60 MG",
+    "form": "SYRUP"
+  },
+  {
+    "brand": "OKACET COLD",
+    "generic": "CETIRIZINE DIHYDROCHLORIDE IP 5 MG + PHENYLEPHRINE HYDROCHLORIDE IP 10 MG + PARACETAMOL IP 325MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "OKACET COLD TOTAL",
+    "generic": "LEVOCETIRIZINE HYDROCHLORIDE IP 5 MG + PARACETAMOL IP 325 MG + PHENYLEPHRINE HYDROCHLORIDE IP 5 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "REXCOF DX NF 60ML",
+    "generic": "DEXTROMETHORPHAN HYDROBROMIDE 10 MG + CHLORPHENIRAMINE MALEATE 2 MG",
+    "form": "SYRUP"
+  },
+  {
+    "brand": "REXCOF DX NF 100ML",
+    "generic": "DEXTROMETHORPHAN HYDROBROMIDE IP 10 MG + CHLORPHENIRAMINE MALEATE IP 2 MG",
+    "form": "SYRUP"
+  },
+  {
+    "brand": "REXCOF LS SYRUP",
+    "generic": "AMBROXOL HYDROCHLORIDE IP 30 MG + LEVOSALBUTAMOL SULPHATE IP 1 MG + GUAIPHENESIN IP 50 MG",
+    "form": "SYRUP"
+  },
+  {
+    "brand": "REXCOF SOFTGELS",
+    "generic": "CHLORPHENIRAMINE MALEATE IP 2 MG + DEXTROMETHORPHAN HYDROBROMIDE IP 10 MG + PHENYLEPHRINE HYDROCHLORIDE IP 5 MG + EXCIPIENTS Q.S.",
+    "form": "CAPSULES"
+  },
+  {
+    "brand": "REXCOF T SYRUP 100 ML",
+    "generic": "TERBUTALINE SULPHATE IP 1.5 MG + GUAIPHENESIN IP 50 MG + AMBROXOL HYDROCHLORIDE IP 15 MG.",
+    "form": "SYRUP"
+  },
+  {
+    "brand": "BETASALIC 20GM",
+    "generic": "BECLOMETHASONE DIPROPIONATE 0.1% + SALICYLIC ACID IP BASE QS. 3%",
+    "form": "OINTMENT"
+  },
+  {
+    "brand": "BURNHEAL 15GM",
+    "generic": "SILVER NITRATE 0.20 % + CHLORHEXIDINE GLUCONATE SOLUTION IP 0.20% + CHLOROCRESOL 0.12 %",
+    "form": "CREAM"
+  },
+  {
+    "brand": "CIPDERM 25 GM",
+    "generic": "BETAMETHASONE DIPROPIONATE IP 0.05% + GENTAMICIN SULPHATE IP 0.1% + MICONAZOLE NITRATE IP 2.0% + CHLOROCRESOL IP 0.1% W/W",
+    "form": "CREAM"
+  },
+  {
+    "brand": "CIPSULF 10GM",
+    "generic": "CLOBETASOL PROPIONATE IP 0.05% + NEOMYCIN SULPHATE 0.5% + BENZYL ALCOHOL 1.0%",
+    "form": "POWDER"
+  },
+  {
+    "brand": "CLODERM-S 20 GM",
+    "generic": "CLOBETASOL PROPIONATE IP 0.05 % + SALICYLIC ACID IP 3 % W/W",
+    "form": "OINTMENT"
+  },
+  {
+    "brand": "FORACNE 20GM",
+    "generic": "CLINDAMYCIN PHOSPHATE 1.0 % + NICOTINAMIDE 4.0 % + ALOE",
+    "form": "GEL"
+  },
+  {
+    "brand": "FORACNE PLUS",
+    "generic": "ADAPALENE BP 0.1 % + CLINDAMYCIN PHOSPHATE USP 1% + METHYL PARABEN IP 0.1 % + PHENOXYETHANOL BP 0.25 %",
+    "form": "GEL"
+  },
+  {
+    "brand": "FOURDERM 15GM",
+    "generic": "CLOBETASOL PROPIONATE BP 0.05 % + NEOMYCIN SULPHATE IP 0.50 % + MICONAZOLE NITRATE IP 2.00 % + CHLORHEXIDINE GLUCONATE SOLUTION IP 0.20 % + CHLOROCRESOL IP 0.10 %",
+    "form": "CREAM"
+  },
+  {
+    "brand": "FOURDERM (NEW)20 GMS",
+    "generic": "CLOBETASOL PROPPIONATE BP 0.05 % + NEOMYCIN SULHATE IP 0.50 % + MICONAZOLE NITRATE IP 2.00 % + CHLORHEXIDINE GLUCONATE SOLUTIONIP 0.20 % + CHLOROCRESOL IP 0.10 % W/W",
+    "form": "CREAM"
+  },
+  {
+    "brand": "FOURDERM 10GM",
+    "generic": "CLOBETASOL PROPIONATE BP 0.05% + NEOMYCIN SULPHATE IP 0.50% + MICONAZOLE NITRATE 2.00% + CHLORHEXIDINE GLUCONATE SOLUTION 0.20% + CHLOROCRESOL 0.10%",
+    "form": "CREAM"
+  },
+  {
+    "brand": "FOURDERM AF 5GM",
+    "generic": "CLOBETASOL PROPIONATE 0.05% + NEOMYCIN SULPHATE 0.5% + MICONAZOLE NITRATE 2.0% + CHLOROCRESOL 0.1%",
+    "form": "CREAM"
+  },
+  {
+    "brand": "FOURDERM CREAM 10GM",
+    "generic": "CLOBETASOL PROPIONATE IP 0.05% + NEOMYCIN SULPHATE IP 0.50% + MICONAZOLE NITRATE IP 2.0% + CHLORHEXIDINE GLUCONATE SOLUTION IP 0.20% + CHLOROCRESOL IP 0.1%",
+    "form": "CREAM"
+  },
+  {
+    "brand": "FOURDERM CREAM 5GM",
+    "generic": "CLOBETASOL PROPIONATE BP 0.05% + NEOMYCIN SULPHATE IP 0.50% + MICONAZOLE NITRATE 2.00% + CHLORHEXIDINE GLUCONATE SOLUTION 0.20% + CHLOROCRESOL 0.10%",
+    "form": "CREAM"
+  },
+  {
+    "brand": "FOURDERM N/F PLUS 15GM",
+    "generic": "CLOBETASOL PROPIONATE 0.05% + NEOMYCIN 0.1% + MICONAZOLE NITRATE 2.0%",
+    "form": "CREAM"
+  },
+  {
+    "brand": "FOURDERM RF 15GM",
+    "generic": "BECLOMETHASONE DIPROPIONATE IP 0.025% + CLOTRIMAZOLE IP 1% + CHLOROCRESOL IP 0.1%",
+    "form": "CREAM"
+  },
+  {
+    "brand": "ITRACIP 100",
+    "generic": "ITRACONAZOLE USP 100 MG",
+    "form": "CAPSULES"
+  },
+  {
+    "brand": "ITRACIP 200 4'S",
+    "generic": "ITRACONAZOLE 200 MG",
+    "form": "CAPSULES"
+  },
+  {
+    "brand": "ITRACIP 200 10'S",
+    "generic": "ITRACONAZOLE USP 200 MG",
+    "form": "CAPSULES"
+  },
+  {
+    "brand": "ITRANOX 100",
+    "generic": "ITRACONAZOLE 100 MG",
+    "form": "CAPSULES"
+  },
+  {
+    "brand": "ITRANOX 200",
+    "generic": "ITRACONAZOLE 200 MG",
+    "form": "CAPSULES"
+  },
+  {
+    "brand": "KETOCIP CT SOAP",
+    "generic": "KETOCONAZOLE IP 2.0 % W/W + CETRIMIDE IP 0.5 %",
+    "form": "SOAP"
+  },
+  {
+    "brand": "KETOCIP SOAP",
+    "generic": "KETOCONAZOLE IP 2.00% W/W",
+    "form": "SOAP"
+  },
+  {
+    "brand": "LULITEC CREAM 1 X 20 GMS",
+    "generic": "LULICONAZOLE 1.0 % + METHYLPARABEN IP 0.14 % + BENZYL ALCOHOL IP 1.0 %",
+    "form": "CREAM"
+  },
+  {
+    "brand": "LULITEC CREAM 1 X 30 GMS",
+    "generic": "LULICONAZOLE 1.0 % + METHYLPARABEN IP 0.14 % + BENZYL ALCOHOL IP 1.0 %",
+    "form": "CREAM"
+  },
+  {
+    "brand": "LULITEC CREAM 10 GM",
+    "generic": "LULICONAZOLE 1.0 % + METHYLPARABEN IP 0.14 % + BENZYL ALCOHOL IP 1.0 %",
+    "form": "CREAM"
+  },
+  {
+    "brand": "LULITEC SPRAY 30 ML.",
+    "generic": "LULICONAZOLE 1 %",
+    "form": "SPRAY"
+  },
+  {
+    "brand": "MICOGEL",
+    "generic": "MICONAZOLE NITRATE IP 2 % + CHLOROCRESOL IP 0.1 %",
+    "form": "CREAM"
+  },
+  {
+    "brand": "MICOGEL-F",
+    "generic": "MICONAZOLE NITRATE IP 2% + FLUCINOLONE ACETONIDE 0.01%",
+    "form": "OINTMENT"
+  },
+  {
+    "brand": "SILVERTEC 1*10 GMS",
+    "generic": "SILVER NITRATE 0.2% + ETHANOL IP 4.0%",
+    "form": "GEL"
+  },
+  {
+    "brand": "TERCAN 250 TABS",
+    "generic": "TERBINAFINE HYDROCHLORIDE 250 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "TERCAN CREAM 10 GM",
+    "generic": "TERBINAFINE HYDROCHLORIDE IP\u2026..1 % W/W + BENZYL ALCOHOL IP 1 % W/W",
+    "form": "CREAM"
+  },
+  {
+    "brand": "TOCODERM N/F PLUS 15GM",
+    "generic": "CLOBETASOL PROPIONATE 0.05% + NEOMYCIN SULPHATE 0.1% + MICONAZOLE NITRATE 2.0%",
+    "form": "CREAM"
+  },
+  {
+    "brand": "NUTROZYME 200ML",
+    "generic": "EACH 5 ML CONTAINS DIASTASE IP 50 MG + PEPSIN IP 10 MG",
+    "form": "SYRUP"
+  },
+  {
+    "brand": "NUTROZYME PLUS SYRUP CARDAMOM",
+    "generic": "ALPHA AMYLASE IP (1:2000) 18.75 MG + PEPSIN IP (1:3000) 12.50 MG",
+    "form": "SYRUP"
+  },
+  {
+    "brand": "NUTROZYME PLUS SYRUP MANGO",
+    "generic": "ALPHA AMYLASE IP (1:2000) 18.75 MG + PEPSIN IP (1:3000) 12.50 MG",
+    "form": "SYRUP"
+  },
+  {
+    "brand": "NUTROZYME PLUS SYRUP MIXEDFRUIT",
+    "generic": "ALPHA AMYLASE IP (1:2000) 18.75 MG + PEPSIN IP (1:3000) 12.50 MG",
+    "form": "SYRUP"
+  },
+  {
+    "brand": "NUTROZYME PLUS SYRUP PINEAPPLE",
+    "generic": "ALPHA AMYLASE IP (1:2000) 18.75 MG + PEPSIN IP (1:3000) 12.50 MG",
+    "form": "SYRUP"
+  },
+  {
+    "brand": "ORTHAL FORTE",
+    "generic": "TRYPSIN AND CHYMOTRYPSIN",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "ES-LOMAC 20 TABS",
+    "generic": "ESOMEPRAZOLE MAGNESIUM TRIHYDRATE IP 20 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "ES-LOMAC 40 TABS",
+    "generic": "ESOMEPRAZOLE MAGNESIUM TRIHYDRATE IP 40 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "ES-LOMAC DSR CAPS",
+    "generic": "ESOMEPRAZOLE MAGNESIUM TRIHYDRATE IP 40 MG + DOMPERIDONE IP 30 MG",
+    "form": "CAPSULES"
+  },
+  {
+    "brand": "ES-LOMAC L CAPS",
+    "generic": "MAGNESIUM TRIHYDRATE IP 40 MG + LEVOSULPIRIDE 75 MG",
+    "form": "CAPSULES"
+  },
+  {
+    "brand": "ES-OMECIP DSR CAPS",
+    "generic": "ESOMEPRAZOLE MAGNESIUM TRIHYDRATE IP 40 MG + DOMPERIDONE IP 30 MG",
+    "form": "CAPSULES"
+  },
+  {
+    "brand": "ES-OMECIP INJN",
+    "generic": "PART-I: ESOMEPRAZOLE SODIUM POWDER FOR INJECTION (LYOPHILIZED) + ESOMEPRAZOLE 40 MG, PART-II (FOR RECONSTITUTION): SODIUM CHLORIDE INJECTION IP 0.9%, 5ML",
+    "form": "INJECTION"
+  },
+  {
+    "brand": "ES-OMECIP L CAPS",
+    "generic": "MAGNESIUM TRIHYDRATE IP 40 MG + LEVOSULPIRIDE 75 MG",
+    "form": "CAPSULES"
+  },
+  {
+    "brand": "LIVETONE-UD 150 TABS",
+    "generic": "URSODEOXYCHOLIC ACID IP 150 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "LIVETONE-UD 300 TABS",
+    "generic": "URSODEOXYCHOLIC ACID IP 300 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "BOLAX",
+    "generic": "BISACODYL IP 5MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "EASYLAX 170 ML",
+    "generic": "LIQUID PARAFFIN 3.75ML + MILK OF MAGNESIA 11.25ML",
+    "form": "EMULSION"
+  },
+  {
+    "brand": "EASYLAX PLUS 170 ML",
+    "generic": "LIQUID PARAFFIN 3.75ML + MILK OF MAGNESIA 1.25ML + SODIUM PICOSULFATE 3.33MG",
+    "form": "EMULSION"
+  },
+  {
+    "brand": "EASYLAX-L SOLUTION 100 ML",
+    "generic": "LACTULOSE CONCENTRATE 10GM",
+    "form": "EMULSION"
+  },
+  {
+    "brand": "EASYLAX-L SOLUTION 200 ML",
+    "generic": "LACTULOSE CONCENTRATE 10GM",
+    "form": "EMULSION"
+  },
+  {
+    "brand": "XYMOS",
+    "generic": "READY MIX COMBI BAR FLAKES + LEMON GRASS OIL + GLYCERIN + CITRONELLA OIL + PERFUME",
+    "form": "SOAP"
+  },
+  {
+    "brand": "GABACIP-M",
+    "generic": "GABAPENTIN IP 300 MG + METHYLCOBALAMIN IP 500 MCG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "MECOVIT PLUS",
+    "generic": "ALPHA LIPOIC ACID USP 100 MG + PYRIDOXINE HYDROCHLORIDE IP 3 MG + METHYLCOBALAMIN IP 1500 MCG + FOLIC ACID IP 1.5 MG",
+    "form": "CAPSULES"
+  },
+  {
+    "brand": "FERICIP XT TAB",
+    "generic": "ELEMENTAL IRON 100MG + FOLIC ACID IP 1.5 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "HB SET TABS 1 X 10'S IP",
+    "generic": "FERROUS ASCORBATE IP 100 MG + FOLIC ACID IP 1.5 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "CIPROVIEW EYE DROPS",
+    "generic": "CIPROFLOXACIN HYDROCHLORIDE IP 0.3% + BENZALKONIUM CHLORIDE IP 0.01% + AQUEOUS VEHICLE",
+    "form": "DROPS"
+  },
+  {
+    "brand": "NEPLAWATCH EYE DROPS 5 ML",
+    "generic": "NEPAFENAC 0.1% + BENZALKONIUM CHLORIDE SOLUTION IP 0.01%",
+    "form": "DROPS"
+  },
+  {
+    "brand": "TARIFLOX D EYE DROPS",
+    "generic": "OFLOXACIN IP 0.3%, DEXAMETHASONE 0.1%, BENZALKONIUM CHLORIDE IP 0.01%",
+    "form": "DROPS"
+  },
+  {
+    "brand": "NANDROLIN 25 INJ",
+    "generic": "NANDROLONE DECANOATE IP 25 MG",
+    "form": "INJECTION"
+  },
+  {
+    "brand": "NANDROLIN 50 INJ",
+    "generic": "NANDROLONE DECANOATE IP 50 MG",
+    "form": "INJECTION"
+  },
+  {
+    "brand": "CLEARWAX",
+    "generic": "PARA DICHLOROBENZENE 2% + BENZOCAINE 2.7% + CHLORBUTOL 5% + TURPENTINE OIL 15%.",
+    "form": "DROPS"
+  },
+  {
+    "brand": "CIPMOL 500 (O) TABS",
+    "generic": "PARACETAMOL IP 500 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "CIPMOL DROPS 15ML",
+    "generic": "PARACETAMOL IP 150 MG / ML",
+    "form": "DROPS"
+  },
+  {
+    "brand": "CIPMOL IV INFUSION",
+    "generic": "PARACETAMOL IP 1000 MG",
+    "form": "INFUSION"
+  },
+  {
+    "brand": "CIPMOL SUSPN 250 MG",
+    "generic": "PARACETAMOL ORAL SUSP B.P. PARACETAMOL IP 250 MG",
+    "form": "SUSPN."
+  },
+  {
+    "brand": "CIPMOL SYRUP",
+    "generic": "PARACETAMOL IP 125 MG / 5ML",
+    "form": "SYRUP"
+  },
+  {
+    "brand": "IBUGESIC ASP TAB 10'S",
+    "generic": "ACECLOFENAC IP 100 MG + SERRATIOPEPTIDASE IP 15 MG + PARACETAMOL IP 325 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "CIPMOL 500",
+    "generic": "PARACETAMOL IP 500 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "CIPMOL 650",
+    "generic": "PARACETAMOL IP 650 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "PARANORM",
+    "generic": "PARACETAMOL IP 325MG + METACLOPRAMIDE HYDROCHLORIDE IP 5 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "CIPZEN D",
+    "generic": "SERRATIOPEPTIDSE IP 10 MG + DICLOFENAC SODIUM IP 50 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "CIPZEN FORTE",
+    "generic": "SERRATIOPEPTIDAS IP 10MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "CIP-ZOX",
+    "generic": "DICLOFENAC SODIUM IP 50 MG + PARACETAMOL IP 325 MG + CHLOROZOXAZONE USP 500 MG + EXCIPIENT QS",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "COBIX 100",
+    "generic": "CELECOXIB 100 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "COBIX 200",
+    "generic": "CELECOXIB 200 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "COFENAC PLUS (W)",
+    "generic": "DICLOFENAC SODIUM IP 50 MG + PARACETAMOL IP 325 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "ETOZOX 60",
+    "generic": "ETORICOXIB 60MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "ETOZOX 90",
+    "generic": "ETORICOXIB 90MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "MOBICAM DT",
+    "generic": "PIROXICAM IP 20 MG DISPERSIBLE",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "MOVEXX MR",
+    "generic": "ACECLOFENAC I.P. 100 MG + PARACETAMOL I.P. 325 MG + CHLORZOXAZONE USP 250 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "MOVEXX PLUS - AMBER",
+    "generic": "PPARACETAMOL IP 325MG + ACECLOFENAC IP 100MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "MOVEXX PLUS - ORANGE",
+    "generic": "PARACETAMOL IP 325MG + ACECLOFENAC IP 100MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "MOVEXX SP",
+    "generic": "ACECLOFENAC IP 100 MG + PARACETAMOL IP 325 MG + SERRATIOPEPTIDASE IP 15 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "MOVEXX SPAS",
+    "generic": "ACECLOFENAC 100MG + DROTAVERINE HYDROCHLORIDE 80MG + EXCIPIENTS Q.S.",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "NICIP 100 MG",
+    "generic": "NIMESULIDE BP 100 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "NICIP (BLUE)",
+    "generic": "NIMESULIDE BP 100 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "NICIP DS",
+    "generic": "NIMESULIDE BP 200 GM",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "NICIP MD",
+    "generic": "NIMESULIDE BP 100 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "NICIP MR",
+    "generic": "NIMESULIDE BP 100 MG + CHLORZOXAZONE USP 375 MG + PARACETAMOL IP 325 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "NICIP OVAL 10S BLISTERS",
+    "generic": "NIMESULIDE BP 100 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "NICIP P 10'S",
+    "generic": "NIMESULIDE BP 100 MG + PARACETAMOL IP 325 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "NICIP PLUS",
+    "generic": "NIMESULIDE BP 100 MG + PARACETAMOL IP 325 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "NICIP PLUS - GOLDEN",
+    "generic": "NIMESULIDE BP 100MG + PARACETAMOL IP 325MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "NIMUPAIN",
+    "generic": "NIMESULIDE B.P 100 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "NIMUPAIN PLUS (BROWN)",
+    "generic": "NIMESULIDE BP 100 MG + PARACETAMOL IP 325 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "NODARD",
+    "generic": "NIMESULIDE BP 100MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "NODARD PLUS",
+    "generic": "NIMESULIDE 100 MG + PARACETAMOL 325 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "PIROX - 20 MG",
+    "generic": "PIROXICAM IP 20 MG",
+    "form": "CAPSULES"
+  },
+  {
+    "brand": "PIROX DT",
+    "generic": "PIROXICAM IP 20 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "PIROX IM 2ML",
+    "generic": "PIROXICAM IP 20 MG + BENZYL ALCOHOL IP 20 MG + ABSOLUTE ALCOHOL CONTENT 12.68% V/V+",
+    "form": "INJECTION"
+  },
+  {
+    "brand": "PREGACIP M",
+    "generic": "PREGABALIN IP 75MG + METHYLCOBALAMIN 750MCG + EXCIPIENTS QS",
+    "form": "CAPSULES"
+  },
+  {
+    "brand": "PREGACIP M SR TABS",
+    "generic": "PREGABALIN IP 75MG + METHYLCOBALAMIN 1500MCG + EXCIPIENTS QS",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "REACTIN 50 (NEW)",
+    "generic": "DICLOFENAC 50MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "REACTIN 50 TAB",
+    "generic": "DICLOFENAC SODIUM IP 50MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "REACTIN 100 SR 10",
+    "generic": "DICLOFENAC SODIUM IP 100 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "REACTIN 100 SR 15",
+    "generic": "DICLOFENAC SODIUM IP 100MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "REACTIN 25 INJN",
+    "generic": "DICLOFENAC SODIUM IP 25 MG, BENZYL ALCOHOL IP 4%",
+    "form": "INJECTION"
+  },
+  {
+    "brand": "REACTIN 50 TAB",
+    "generic": "DICLOFENAC SODIUM IP 50 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "REACTIN 75 INJN",
+    "generic": "DICLOFENAC SODIUM IP 75 MG.",
+    "form": "INJECTION"
+  },
+  {
+    "brand": "REACTIN AP",
+    "generic": "PARACETAMOL IP 325 MG + ACECLOFENAC IP 100 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "REACTIN PLUS(G)",
+    "generic": "DICLOFENAC SODIUM IP 50 MG + PARACETAMOL IP 325MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "REACTIN PLUS(R)",
+    "generic": "DICLOFENAC SODIUM IP 50 MG + PARACETAMOL IP 325MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "REACTIN PLUS(W)",
+    "generic": "DICLOFENAC SODIUM IP 50 MG + PARACETAMOL IP 325MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "VOLTANEC PR",
+    "generic": "ACECLOFENAC 100MG + PARACETAMOL 325MG + EXCIPIENTS Q.S.",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "VOLTANEC SP",
+    "generic": "ACECLOFENAC 100 MG + PARACETAMOL 325 MG + SERRATIOPEPTIDASE 15 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "SILAGRA 100 4'S",
+    "generic": "SILDENAFIL CITRATE IP EQUIVALENT TO SILDENAFIL 100 MG FILM COATED TABLET - COLOUR PURPLE",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "SILAGRA 100 TAB 10'S",
+    "generic": "SILDENAFIL CITRATE IP EQUIVALENT TO SILDENAFIL 100 MG FILM COATED TABLET - COLOUR PURPLE",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "SUHAGRA 25MG",
+    "generic": "SILDENAFIL CITRATE IP 25MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "SUHAGRA 50",
+    "generic": "SILDENAFIL CITRATE IP 50MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "SUHAGRA 100 4'S",
+    "generic": "SILDENAFIL CITRATE IP 100MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "SUHAGRA FORCE 50",
+    "generic": "DAPOXETINE HCL 30MG + SILDENAFIL CITRATE IP 50MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "TADACIP 20 4'S",
+    "generic": "TADALAFIL 20MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "NORLUT-N",
+    "generic": "NORETHISTERONE ACETATE USP 5MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "VOMINORM",
+    "generic": "METOCLOPRAMIDE HYDROCHLORIDE 10MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "ACEBROTEC-SR TABS",
+    "generic": "ACEBROPHYLLINE 200 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "PIRFENEX TABLETS 15",
+    "generic": "PIRFENIDONE 200 MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "NESTACORT 6",
+    "generic": "DEFLAZACORT 6MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "THYROCIP 25 TABS",
+    "generic": "L-THYROXINE SODIUM 25 MCG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "THYROCIP 50 TABS",
+    "generic": "L-THYROXINE SODIUM 50 MCG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "THYROCIP 75 TABS",
+    "generic": "L-THYROXINE SODIUM 75 MCG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "THYROCIP 100 TABS",
+    "generic": "L-THYROXINE SODIUM 100 MCG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "THYROCIP 125 TABS",
+    "generic": "L-THYROXINE SODIUM 125 MCG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "THYROCIP 150 TABS",
+    "generic": "L-THYROXINE SODIUM 150 MCG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "PIROX 30 GM",
+    "generic": "PIROXICAM IP 0.5% + PROPYLENE GLYCOL IP Q.S.",
+    "form": "OINTMENT"
+  },
+  {
+    "brand": "REACTIN 30 GM",
+    "generic": "DICLOFENAC DIETHYLAMINE BP 1.16% W/W",
+    "form": "GEL"
+  },
+  {
+    "brand": "ALKACIP",
+    "generic": "DISODIUM HYDROGEN CITRATE B.P. 1.53GM/5ML",
+    "form": "SYRUP"
+  },
+  {
+    "brand": "CIPCAL 250",
+    "generic": "ELEMENTAL CALCIUM 250MG + VIT D3 125 IU",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "CIPCAL 500",
+    "generic": "ELEMENTAL CALCIUM 500MG + VIT D3 250 IU",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "CIPCAL D3",
+    "generic": "CHOLECALCIFEROL IP 60, 000 IU + EXCIPIENTS Q.S.",
+    "form": "SACHET"
+  },
+  {
+    "brand": "CIPCAL D3 SOFTGELS",
+    "generic": "CHOLECALCIFEROL IP 60, 000 IU + EXCIPIENTS Q.S.",
+    "form": "CAPSULES"
+  },
+  {
+    "brand": "CIPCAL HD",
+    "generic": "ELEMENTAL CALCIUM 500 MG + VITAMIN D3 IP 500 IU",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "CIPCAL SYRUP",
+    "generic": "ELEMENTAL CALCIUM 250ML + VIT D3 125 IU",
+    "form": "SYRUP"
+  },
+  {
+    "brand": "CIPCAL XT TAB",
+    "generic": "CALCIUM 500MG + CHOLECALCIFEROL IP 2000 IU + METHYLCOBALAMIN 1500 MCG + L-METHYLFOLATE CALCIUM 1 MG + PYRIDOXAL-5-PHOSPHATE 20MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "COFOL - Z",
+    "generic": "CARBONYL IRON 50MG + ZINC SULPHATE MONOHYDRATE IP 61.8 MG + FOLIC ACID IP 0.5MG",
+    "form": "CAPSULES"
+  },
+  {
+    "brand": "EMRICH",
+    "generic": "MULTI VITAMIN",
+    "form": "CAPSULES"
+  },
+  {
+    "brand": "FERICIP XT",
+    "generic": "EACH 5 ML CONTAINS FERROUS ASCORBATE ELEMENTAL IRON 30MG + FOLIC ACID IP 500MCG",
+    "form": "SUSPENSION"
+  },
+  {
+    "brand": "HEMOCIP PLUS 225ML",
+    "generic": "FERRIC AMMONIUM CITRATE 200MG + CYANOCOBALAMIN 7.5MCG + FOLIC ACID 1 MG + ZINC SULPHATE 7MG",
+    "form": "SYRUP"
+  },
+  {
+    "brand": "HEMOCIP PLUS 300ML",
+    "generic": "FERRIC AMMONIUM CITRATE 200MG + CYANOCOBALAMIN 7.5MCG + FOLIC ACID 1MG + ZINC SULPHATE 7MG",
+    "form": "SYRUP"
+  },
+  {
+    "brand": "HEPOFER FORTE",
+    "generic": "IRON (III) HYDROXIDE POLYMALTOSE COMPLEX 50MG + FOLIC ACID IP 0.5MG",
+    "form": "SYRUP"
+  },
+  {
+    "brand": "LACTOCIP DS TABLETS",
+    "generic": "LACTIC ACID BACILLUS NLT",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "LYCOGARD 225 ML",
+    "generic": "LYCOPENE 6 % 2000MCG + NIACINAMIDE 25MG + PYRIDOXINE HYDROCHLORIDE 1.5MG + CYANOCOBALAMIN 1MCG + FOLIC ACID 100MCG + SALENIUM 35MCG + ZINC 3MG + MANGANESE 2MG + IODINE 100MCG + COPPER 500MCG",
+    "form": "SYRUP"
+  },
+  {
+    "brand": "LYCOGARD SOFTGEL",
+    "generic": "LYCOPENE + VITAMIN A + VITAMIN E + ELEMENTAL CHROMIUM + COPPER + MANGANESE + SELENIUM + ZINC",
+    "form": "CAPSULES"
+  },
+  {
+    "brand": "OMNICAL 500",
+    "generic": "1.25G OF CALCIUM CARBONATE + VITAMIN D3 IP 250 IU + EXCIPIENT Q.S.",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "OMNIVIT 200ML",
+    "generic": "PYRIDOXINE HYDROCHLORIDE 0.75MG + NICOTINAMIDE 15MG + CYANOCOBALAMIN 2MCG + LYSINE HYDROCHLORIDE 37.5MG + SORBITOL SOLUTION (70%)",
+    "form": "SYRUP"
+  },
+  {
+    "brand": "PROTIBIN",
+    "generic": "EACH 5ML CONTAINS PROTIEN HCL 20% 0.333GM + PYRIDOXINE HCL 0.50MG + NIACINAMIDE 15MG + IRON CHOLINE CITRATE 15MG + MAGNESIUM CHLORIDE IP 3.333MG + MANGANESE CHLORIDE USP 0.0333MG + ZINC SULPHATE 44MG + LYSINE HCL 20MG 3.333MG/5ML + MAGNESIUM CHLORIDE IP + ALIMENLARL ZINC 10MG",
+    "form": "SYRUP"
+  },
+  {
+    "brand": "SUPERCAL 500",
+    "generic": "CALCIUM CARBONATE 1250MG + 1.25G OF CALCIUM CARBONATE + VIT D3 IP250 IU",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "VITACIP",
+    "generic": "GINSENG EXTRACT POWDER 45MG + VITAMIN A 2000 IU + VITAMIN D3 200 IU + VITAMIN B1 2MG + VITAMIN B2 1.5MG + VITAMIN B6 1.5MG + VITAMIN B12 1MCG + VITAMIN C 25MG + VITAMIN E ACETATE 10MG + CALCIUM PANTOTHENATE 5MG + FOLIC ACID 0.25MG + CALCIUM 75MG + PHOSPHORUS 58MG + LODINE 0.1MG + MANGANESE 0.5MG + MAGNESIUM 3MG + POTASSIUM 2MG + FERROUS FUMARATE 30MG + ZINC 10MG + COPPER 0.5MG + SELENIUM 100MCG + BIOTIN 100MG",
+    "form": "CAPSULES"
+  },
+  {
+    "brand": "VITACIP CZ TABS",
+    "generic": "ASCORBIC ACID 100MG + SODIUM ASCORBATE 450MG + ZINC CITRATE 5MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "VITAFOL",
+    "generic": "FOLIC ACID IP 5MG",
+    "form": "TABLETS"
+  },
+  {
+    "brand": "VITAMON",
+    "generic": "FFERRIC AMMONIUM CITRATE 110MG + FOLIC ACID 1.5MG + CYNACOBALAMIN 15MCG + SORBITOL SOLUTION (70%) 10% / ML + ELEMENTAL IRON 22MG",
+    "form": "SYRUP"
+  },
+  {
+    "brand": "VITOMIN D3",
+    "generic": "VITAMIN D3 IP 400 IU",
+    "form": "SYRUP"
+  },
+  {
+    "brand": "VITOMIN-D3",
+    "generic": "CHOLECALCIFEROL IP 60,000 IU + EXCIPIENTS Q.S.",
+    "form": "SACHET"
+  },
+  {
+    "brand": "VITOMIN-D3 60K",
+    "generic": "CHOLECALCIFEROL IP 60,000 IU + EXCIPIENTS Q.S.",
+    "form": "TABLETS"
+  }
+]

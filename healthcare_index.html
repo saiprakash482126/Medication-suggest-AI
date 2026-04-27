@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🏥 AI Healthcare Voice Assistant</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+  background: linear-gradient(135deg, #e0f2fe 0%, #f0fdf4 100%);
+  min-height: 100vh;
+  padding: 24px 16px;
+  display: flex; justify-content: center; align-items: flex-start;
+}
+
+.card {
+  background: white;
+  padding: 28px;
+  width: 820px; max-width: 100%;
+  border-radius: 20px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.10);
+}
+
+/* ─── Header ─── */
+.header { text-align: center; margin-bottom: 20px; }
+.header h1 { font-size: 26px; color: #0f172a; margin-bottom: 4px; }
+.header p  { color: #64748b; font-size: 14px; }
+
+/* ─── Auto-detect info banner ─── */
+.auto-banner {
+  display: flex; align-items: center; justify-content: center;
+  gap: 8px; background: #f0fdf4; border: 1px solid #86efac;
+  border-radius: 12px; padding: 10px 18px; margin-bottom: 16px;
+  font-size: 13px; color: #15803d; flex-wrap: wrap;
+}
+.auto-banner .flags { font-size: 16px; letter-spacing: 2px; }
+.auto-banner strong { color: #166534; }
+
+/* ─── Language badge (detected) ─── */
+.lang-auto-row {
+  display: flex; justify-content: center; align-items: center;
+  gap: 10px; margin-bottom: 18px; flex-wrap: wrap;
+}
+.lang-auto-label {
+  font-size: 12px; color: #64748b;
+  background: #f8fafc; border: 1px solid #e2e8f0;
+  padding: 5px 12px; border-radius: 20px;
+  display: flex; align-items: center; gap: 6px;
+}
+.lang-detected-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 14px; border-radius: 20px;
+  font-size: 13px; font-weight: 700;
+  background: #dbeafe; color: #1d4ed8;
+  border: 2px solid #93c5fd;
+  transition: all 0.3s ease;
+  min-width: 200px; justify-content: center;
+}
+.lang-detected-badge.lang-hi { background: #fce7f3; color: #9d174d; border-color: #f9a8d4; }
+.lang-detected-badge.lang-ar { background: #fef3c7; color: #92400e; border-color: #fcd34d; }
+.lang-detected-badge.lang-ta { background: #f0fdf4; color: #15803d; border-color: #86efac; }
+.lang-detected-badge.lang-te { background: #faf5ff; color: #7c3aed; border-color: #c4b5fd; }
+.lang-detected-badge.lang-en { background: #dbeafe; color: #1d4ed8; border-color: #93c5fd; }
+.lang-detected-badge.lang-auto { background: #f8fafc; color: #64748b; border-color: #cbd5e1; }
+.lang-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: currentColor; opacity: 0.6; flex-shrink: 0;
+}
+.lang-dot.pulsing {
+  animation: pulse 1.2s infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+/* ─── Controls ─── */
+.controls {
+  display: flex; justify-content: center; align-items: center;
+  gap: 12px; margin-bottom: 14px;
+}
+.btn-mic {
+  width: 72px; height: 72px; border-radius: 50%;
+  background: #2563eb; color: white;
+  border: none; cursor: pointer;
+  font-size: 28px; display: flex;
+  align-items: center; justify-content: center;
+  box-shadow: 0 4px 14px rgba(37,99,235,0.4);
+  transition: all 0.2s;
+}
+.btn-mic:hover { transform: scale(1.06); background: #1d4ed8; }
+.btn-mic.recording {
+  background: #ef4444;
+  box-shadow: 0 0 0 0 rgba(239,68,68,0.7);
+  animation: ripple 1.4s infinite;
+}
+@keyframes ripple {
+  0%   { box-shadow: 0 0 0 0   rgba(239,68,68,0.7); }
+  70%  { box-shadow: 0 0 0 16px rgba(239,68,68,0);   }
+  100% { box-shadow: 0 0 0 0   rgba(239,68,68,0);   }
+}
+.btn-clear {
+  padding: 10px 18px; border-radius: 10px;
+  border: 1px solid #e2e8f0; background: #f1f5f9;
+  color: #475569; font-size: 13px; font-weight: 600;
+  cursor: pointer; transition: all 0.2s;
+}
+.btn-clear:hover { background: #e2e8f0; }
+
+/* ─── Status ─── */
+.status-row {
+  text-align: center; font-size: 13px; color: #64748b;
+  margin-bottom: 6px; min-height: 20px;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+}
+.status-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: #e2e8f0; flex-shrink: 0;
+}
+.status-dot.active {
+  background: #22c55e;
+  animation: pulse 1.2s infinite;
+}
+
+/* ─── Level bar ─── */
+.level-wrap { height: 4px; background: #f1f5f9; border-radius: 4px; margin-bottom: 16px; overflow: hidden; }
+.level-bar  { height: 4px; width: 0%; background: #2563eb; border-radius: 4px; transition: width 0.08s; }
+
+/* ─── Language selector row ─── */
+.lang-select-label {
+  text-align: center; font-size: 11px; color: #94a3b8;
+  margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.6px;
+  font-weight: 600;
+}
+.listeners-row {
+  display: flex; justify-content: center; gap: 6px;
+  margin-bottom: 14px; flex-wrap: wrap;
+}
+.listener-chip {
+  font-size: 11px; font-weight: 600;
+  padding: 5px 12px; border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  background: #f8fafc; color: #94a3b8;
+  transition: all 0.25s;
+  cursor: pointer;
+  user-select: none;
+}
+.listener-chip:hover { border-color: #93c5fd; color: #1d4ed8; transform: scale(1.04); }
+.listener-chip.active-en { background: #dbeafe; color: #1d4ed8; border-color: #93c5fd; }
+.listener-chip.active-hi { background: #fce7f3; color: #9d174d; border-color: #f9a8d4; }
+.listener-chip.active-ar { background: #fef3c7; color: #92400e; border-color: #fcd34d; }
+.listener-chip.active-ta { background: #f0fdf4; color: #15803d; border-color: #86efac; }
+.listener-chip.active-te { background: #faf5ff; color: #7c3aed; border-color: #c4b5fd; }
+.listener-chip.selected {
+  opacity: 1; transform: scale(1.07);
+  box-shadow: 0 0 0 2px currentColor;
+  font-size: 12px;
+}
+.listener-chip.idle { opacity: 0.45; }
+
+/* ─── Main panel ─── */
+.panel { border: 1px solid #e2e8f0; border-radius: 14px; overflow: hidden; margin-bottom: 16px; }
+.panel-header {
+  background: #f8fafc; padding: 10px 16px;
+  font-size: 11px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.7px; color: #94a3b8;
+  border-bottom: 1px solid #e2e8f0;
+}
+#transcriptArea {
+  min-height: 80px; max-height: 200px; overflow-y: auto;
+  padding: 14px 16px; background: #fafafa;
+}
+.empty-hint { color: #94a3b8; font-style: italic; font-size: 13px; }
+
+.speech-bubble {
+  background: #dbeafe; border: 1px solid #bfdbfe;
+  border-radius: 0 12px 12px 12px;
+  padding: 10px 14px; display: inline-block;
+  font-size: 15px; color: #1e3a8a; max-width: 100%;
+  margin-bottom: 8px; word-break: break-word;
+}
+.speech-bubble.rtl { direction: rtl; text-align: right; border-radius: 12px 0 12px 12px; }
+.speech-meta {
+  font-size: 11px; color: #64748b; margin-bottom: 4px;
+  display: flex; align-items: center; gap: 5px;
+}
+
+/* ─── Healthcare Result Card ─── */
+.result-panel {
+  border: 1px solid #e2e8f0; border-radius: 14px;
+  overflow: hidden; margin-bottom: 14px;
+}
+.result-header {
+  background: linear-gradient(90deg, #eff6ff, #f0fdf4);
+  padding: 12px 16px; border-bottom: 1px solid #e2e8f0;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.result-title { font-size: 14px; font-weight: 700; color: #0f172a; }
+.severity-badge {
+  padding: 3px 10px; border-radius: 20px;
+  font-size: 11px; font-weight: 700; text-transform: uppercase;
+}
+.sev-mild     { background: #dcfce7; color: #15803d; border: 1px solid #86efac; }
+.sev-moderate { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
+.sev-see_doctor_now { background: #fee2e2; color: #b91c1c; border: 1px solid #fca5a5; }
+
+.result-body { padding: 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 600px) { .result-body { grid-template-columns: 1fr; } }
+
+.result-section h4 {
+  font-size: 12px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.6px; color: #64748b; margin-bottom: 8px;
+}
+.med-card {
+  background: #f8fafc; border: 1px solid #e2e8f0;
+  border-radius: 10px; padding: 10px 12px; margin-bottom: 6px;
+}
+.med-name   { font-weight: 700; color: #1e293b; font-size: 14px; }
+.med-generic{ font-size: 12px; color: #64748b; margin: 2px 0; }
+.med-note   { font-size: 12px; color: #475569; margin-top: 4px;
+              background: #eff6ff; padding: 4px 8px; border-radius: 6px; }
+
+.remedy-list, .diet-list { list-style: none; padding: 0; }
+.remedy-list li, .diet-list li {
+  font-size: 13px; color: #334155;
+  padding: 4px 0; display: flex; align-items: flex-start; gap: 6px;
+}
+.remedy-list li::before { content: "🌿"; flex-shrink: 0; }
+.diet-list   li::before { content: "🥗"; flex-shrink: 0; }
+
+.warning-box {
+  grid-column: 1 / -1;
+  background: #fff7ed; border: 1px solid #fed7aa;
+  border-radius: 10px; padding: 12px 14px;
+  font-size: 13px; color: #9a3412;
+  display: flex; gap: 8px; align-items: flex-start;
+}
+.warning-box .warn-icon { flex-shrink: 0; font-size: 16px; }
+.redflag-box {
+  grid-column: 1 / -1;
+  background: #fef2f2; border: 2px solid #fca5a5;
+  border-radius: 10px; padding: 14px;
+  font-size: 14px; color: #991b1b; font-weight: 600;
+  display: flex; gap: 8px; align-items: center;
+}
+
+/* No symptoms card */
+.no-symptom-box {
+  grid-column: 1 / -1;
+  background: #f0f9ff; border: 1px solid #bae6fd;
+  border-radius: 10px; padding: 16px;
+  font-size: 14px; color: #0369a1;
+  display: flex; gap: 10px; align-items: center;
+}
+
+/* ─── Feature tags ─── */
+.feature-row {
+  display: flex; justify-content: center; gap: 6px; flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.feature-tag {
+  font-size: 10px; color: #64748b;
+  background: #f8fafc; border: 1px solid #e2e8f0;
+  border-radius: 8px; padding: 3px 9px; font-family: monospace;
+}
+
+/* Loading */
+.loading-card {
+  border: 1px solid #e2e8f0; border-radius: 14px; padding: 20px;
+  text-align: center; color: #64748b; font-size: 14px; margin-bottom: 14px;
+}
+.spinner {
+  display: inline-block; width: 24px; height: 24px;
+  border: 3px solid #e2e8f0; border-top-color: #2563eb;
+  border-radius: 50%; animation: spin 0.8s linear infinite; margin-right: 8px;
+  vertical-align: middle;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Stats */
+.stats-row {
+  display: flex; justify-content: center; gap: 14px;
+  font-size: 11px; color: #94a3b8; flex-wrap: wrap; margin-top: 8px;
+}
+.stat-item { font-family: monospace; }
+
+/* Cached badge */
+.cached-badge {
+  display: inline-block; background: #ecfdf5; color: #065f46;
+  border: 1px solid #a7f3d0; border-radius: 6px;
+  font-size: 10px; font-weight: 600; padding: 1px 6px; margin-left: 6px;
+}
+
+/* RTL support */
+.rtl { direction: rtl; text-align: right; unicode-bidi: embed; }
+
+/* Error notice */
+.error-notice {
+  background: #fef2f2; border: 1px solid #fca5a5;
+  border-radius: 10px; padding: 10px 14px;
+  font-size: 13px; color: #991b1b; margin-bottom: 10px;
+  display: flex; gap: 8px; align-items: center;
+}
+</style>
+</head>
+<body>
+
+<div class="card">
+
+  <!-- Header -->
+  <div class="header">
+    <h1>🏥 AI Healthcare Voice Assistant</h1>
+    <p>Speak your symptoms — get instant OTC medicine suggestions &amp; home remedies</p>
+  </div>
+
+  <!-- Feature tags -->
+  <div class="feature-row">
+    <span class="feature-tag">🩺 Symptom Checker</span>
+    <span class="feature-tag">🚨 Red-Flag Detection</span>
+    <span class="feature-tag">🇮🇳 India-Specific Meds</span>
+    <span class="feature-tag">🌐 Auto Language Input</span>
+    <span class="feature-tag">⏱️ Duration Aware</span>
+    <span class="feature-tag">🤖 Deepgram AI STT</span>
+  </div>
+
+  <!-- Auto-detect banner -->
+  <div class="auto-banner">
+    <span class="flags">🇬🇧🇮🇳🇸🇦🇮🇳🇮🇳</span>
+    <span>Speak in any language — <strong>response is always in English</strong> (English, हिन्दी, العربية, தமிழ், తెలుగు input supported)</span>
+  </div>
+
+  <!-- Detected language badge -->
+  <div class="lang-auto-row">
+    <div class="lang-auto-label">🎙️ Detected language:</div>
+    <div class="lang-detected-badge lang-auto" id="langBadge">
+      <span class="lang-dot" id="langDot"></span>
+      <span id="langBadgeText">Waiting for speech…</span>
+    </div>
+  </div>
+
+  <!-- Language selector — pick BEFORE speaking for best accuracy -->
+  <div class="lang-select-label">🌐 Select your language before speaking</div>
+  <div class="listeners-row" id="langChips">
+    <button class="listener-chip active-en selected" data-lang="auto" onclick="selectLang('auto')">🌐 Auto</button>
+    <button class="listener-chip" data-lang="en"   onclick="selectLang('en')">🇬🇧 English</button>
+    <button class="listener-chip" data-lang="hi"   onclick="selectLang('hi')">🇮🇳 हिन्दी</button>
+    <button class="listener-chip" data-lang="ar"   onclick="selectLang('ar')">🇸🇦 العربية</button>
+    <button class="listener-chip" data-lang="ta"   onclick="selectLang('ta')">🇮🇳 தமிழ்</button>
+    <button class="listener-chip" data-lang="te"   onclick="selectLang('te')">🇮🇳 తెలుగు</button>
+  </div>
+
+  <!-- Mic button + clear -->
+  <div class="controls">
+    <button class="btn-mic" id="micBtn" onclick="toggleRecording()" title="Click to start / stop listening">
+      🎤
+    </button>
+    <button class="btn-clear" onclick="clearAll()">🗑 Clear</button>
+  </div>
+
+  <!-- Status -->
+  <div class="status-row">
+    <span class="status-dot" id="statusDot"></span>
+    <span id="statusText">Click 🎤 to start recording — Deepgram AI will transcribe</span>
+  </div>
+
+  <!-- Audio level bar -->
+  <div class="level-wrap"><div class="level-bar" id="levelBar"></div></div>
+
+  <!-- Transcript panel -->
+  <div class="panel">
+    <div class="panel-header">🎙️ What you said</div>
+    <div id="transcriptArea">
+      <div class="empty-hint">Your speech will appear here…</div>
+    </div>
+  </div>
+
+  <!-- Results area -->
+  <div id="resultsArea"></div>
+
+  <!-- Stats -->
+  <div class="stats-row">
+    <span class="stat-item" id="statLang">lang: en-IN</span>
+    <span class="stat-item" id="statQueries">queries: 0</span>
+    <span class="stat-item" id="statStatus">status: idle</span>
+  </div>
+
+</div><!-- /.card -->
+
+<script>
+// ─────────────────────────────────────────────────────────
+//  LANGUAGE CONFIG
+// ─────────────────────────────────────────────────────────
+const LANGS = [
+  { code: 'en', bcp47: 'en-IN',  label: '🇬🇧 English',  rtl: false },
+  { code: 'hi', bcp47: 'hi-IN',  label: '🇮🇳 हिन्दी',   rtl: false },
+  { code: 'ar', bcp47: 'ar-SA',  label: '🇸🇦 العربية',   rtl: true  },
+  { code: 'ta', bcp47: 'ta-IN',  label: '🇮🇳 தமிழ்',    rtl: false },
+  { code: 'te', bcp47: 'te-IN',  label: '🇮🇳 తెలుగు',   rtl: false },
+];
+const LANG_MAP  = Object.fromEntries(LANGS.map(l => [l.code, l]));
+const BCP47_MAP = Object.fromEntries(LANGS.map(l => [l.code, l.bcp47]));
+
+// ─────────────────────────────────────────────────────────
+//  STATE
+// ─────────────────────────────────────────────────────────
+let recognition    = null;
+let isRecording    = false;
+let queryCount     = 0;
+let selectedLang   = 'auto';
+let collectedText  = '';   // accumulates ALL results across restarts
+let silenceTimer   = null; // auto-submit after 2 s of silence
+// MediaRecorder fallback (Firefox / Safari)
+let mediaRecorder  = null;
+let audioChunks    = [];
+let audioStream    = null;
+let audioCtx, analyser, levelTimer;
+
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+// Force MediaRecorder path only when Web Speech genuinely missing
+const USE_WEBSPEECH = !!SpeechRecognition;
+
+// ─────────────────────────────────────────────────────────
+//  CHIP ACTIVE COLORS
+// ─────────────────────────────────────────────────────────
+const CHIP_ACTIVE = {
+  auto:'active-en', en:'active-en', hi:'active-hi',
+  ar:'active-ar',   ta:'active-ta', te:'active-te',
+};
+
+function selectLang(code) {
+  selectedLang = code;
+  document.querySelectorAll('#langChips .listener-chip').forEach(btn => {
+    btn.classList.remove('selected','active-en','active-hi','active-ar','active-ta','active-te');
+    if (btn.dataset.lang === code)
+      btn.classList.add('selected', CHIP_ACTIVE[code] || 'active-en');
+  });
+  document.getElementById('statLang').textContent =
+    'lang: ' + (code === 'auto' ? 'auto-detect' : code);
+  // Hide lang warning if user picked a language
+  const w = document.getElementById('langWarning');
+  if (w && code !== 'auto') w.remove();
+  // If already recording, rebuild recognition with new language immediately
+  if (isRecording && recognition) {
+    try { recognition.abort(); } catch(_) {}
+    setTimeout(spawnRecognitionSession, 150);
+    const label = LANG_MAP[code]?.label || code;
+    document.getElementById('statusText').textContent =
+      '🔄 Switched to ' + label + ' — keep speaking';
+  }
+}
+
+// ─────────────────────────────────────────────────────────
+//  LANGUAGE DETECTION (for badge only)
+// ─────────────────────────────────────────────────────────
+function detectLangFromText(text) {
+  if (/[\u0600-\u06FF]/.test(text)) return 'ar';
+  if (/[\u0900-\u097F]/.test(text)) return 'hi';
+  if (/[\u0B80-\u0BFF]/.test(text)) return 'ta';
+  if (/[\u0C00-\u0C7F]/.test(text)) return 'te';
+  return 'en';
+}
+
+// ─────────────────────────────────────────────────────────
+//  TOGGLE RECORDING
+// ─────────────────────────────────────────────────────────
+async function toggleRecording() {
+  if (!isRecording) {
+    collectedText = '';
+    // Warn user if auto is selected and they might speak non-English
+    if (selectedLang === 'auto') {
+      showLangWarning();
+    }
+    USE_WEBSPEECH ? startWebSpeech() : await startFallbackRecording();
+  } else {
+    USE_WEBSPEECH ? stopWebSpeechAndSubmit() : stopFallbackRecording();
+  }
+}
+
+function showLangWarning() {
+  // Remove old warning if any
+  const old = document.getElementById('langWarning');
+  if (old) old.remove();
+  const w = document.createElement('div');
+  w.id = 'langWarning';
+  w.style.cssText = 'background:#fffbeb;border:1px solid #fbbf24;border-radius:10px;' +
+    'padding:8px 14px;font-size:12px;color:#92400e;text-align:center;margin-bottom:10px;';
+  w.innerHTML = '⚠️ <strong>Speaking Hindi / Arabic / Tamil / Telugu?</strong> ' +
+    'Select your language chip above <em>before</em> clicking the mic for accurate results.';
+  const controls = document.querySelector('.controls');
+  controls.parentNode.insertBefore(w, controls);
+  // Auto-hide after 8 s or when a language chip is selected
+  setTimeout(() => w.remove(), 8000);
+}
+
+// ─────────────────────────────────────────────────────────
+//  WEB SPEECH API — robust restart loop
+//  Chrome stops after ~5–10 s of silence; we restart it
+//  automatically and accumulate all results in collectedText.
+// ─────────────────────────────────────────────────────────
+function buildRecognition() {
+  const r = new SpeechRecognition();
+  // IMPORTANT: Always use the user-selected language BCP47 code.
+  // Arabic must use 'ar-SA', Hindi 'hi-IN', etc. 'auto' defaults to en-IN.
+  const bcp47 = selectedLang === 'auto' ? 'en-IN' : (BCP47_MAP[selectedLang] || 'en-IN');
+  r.lang             = bcp47;
+  r.continuous       = false;   // false = more reliable isFinal on Chrome
+  r.interimResults   = true;
+  r.maxAlternatives  = 3;       // top 3 alternatives for accented/mixed speech
+  console.log('[STT] Recognition lang=' + bcp47 + ' selectedLang=' + selectedLang);
+  return r;
+}
+
+function startWebSpeech() {
+  isRecording = true;
+  setRecordingUI(true);
+  const langLabel = selectedLang === 'auto'
+    ? 'Auto (tip: select your language chip above for best accuracy)'
+    : (LANG_MAP[selectedLang]?.label || selectedLang);
+  document.getElementById('statusText').textContent =
+    '🎤 Listening in ' + langLabel + ' — speak now, then click ⏹ to submit';
+  spawnRecognitionSession();
+}
+
+function spawnRecognitionSession() {
+  if (!isRecording) return;
+
+  recognition = buildRecognition();
+  let sessionInterim = '';
+
+  recognition.onresult = (e) => {
+    clearSilenceTimer();
+    sessionInterim = '';
+    let finalChunk = '';
+
+    for (let i = e.resultIndex; i < e.results.length; i++) {
+      const result = e.results[i];
+      // Pick the best non-empty alternative (index 0 is highest confidence)
+      let bestTxt = '';
+      for (let a = 0; a < result.length; a++) {
+        const alt = result[a].transcript.trim();
+        if (alt) { bestTxt = alt; break; }
+      }
+      if (!bestTxt) continue;
+
+      if (result.isFinal) {
+        finalChunk += bestTxt;
+        console.log('[STT] Final result:', bestTxt);
+      } else {
+        sessionInterim = bestTxt;
+        document.getElementById('statusText').textContent = '💬 ' + bestTxt;
+      }
+    }
+
+    if (finalChunk) {
+      collectedText += (collectedText ? ' ' : '') + finalChunk.trim();
+      sessionInterim = '';
+      document.getElementById('statusText').textContent =
+        '✅ Heard: ' + collectedText + ' — keep speaking or click ⏹';
+      resetSilenceTimer();
+    }
+  };
+
+  recognition.onend = () => {
+    // onend fires after each utterance (continuous=false).
+    // If still recording, capture any leftover interim and restart.
+    if (sessionInterim && !collectedText.includes(sessionInterim)) {
+      collectedText += (collectedText ? ' ' : '') + sessionInterim.trim();
+    }
+
+    if (isRecording) {
+      // Still in recording mode — spawn another session
+      setTimeout(spawnRecognitionSession, 120);
+    } else {
+      // User clicked Stop — submit what we have
+      finishAndSubmit();
+    }
+  };
+
+  recognition.onerror = (e) => {
+    if (e.error === 'no-speech') {
+      // Expected — Chrome fires this after silence. Just restart.
+      if (isRecording) setTimeout(spawnRecognitionSession, 120);
+      return;
+    }
+    if (e.error === 'aborted') return; // we aborted it intentionally
+    // Real errors
+    isRecording = false;
+    setRecordingUI(false);
+    clearSilenceTimer();
+    const msgs = {
+      'audio-capture': '❌ Microphone not found.',
+      'not-allowed':   '❌ Microphone permission denied.',
+      'network':       '❌ Network error during recognition.',
+    };
+    document.getElementById('statusText').textContent =
+      msgs[e.error] || `❌ Speech error: ${e.error}`;
+  };
+
+  try { recognition.start(); } catch(ex) { /* already started */ }
+}
+
+function stopWebSpeechAndSubmit() {
+  isRecording = false;
+  clearSilenceTimer();
+  setRecordingUI(false);
+  if (recognition) {
+    try { recognition.abort(); } catch(_) {}
+  }
+  finishAndSubmit();
+}
+
+function resetSilenceTimer() {
+  clearSilenceTimer();
+  silenceTimer = setTimeout(() => {
+    // 2.5 s of silence after last final result → auto submit
+    if (isRecording && collectedText.trim()) {
+      stopWebSpeechAndSubmit();
+    }
+  }, 2500);
+}
+
+function clearSilenceTimer() {
+  if (silenceTimer) { clearTimeout(silenceTimer); silenceTimer = null; }
+}
+
+function finishAndSubmit() {
+  const transcript = collectedText.trim();
+  collectedText = '';
+  if (transcript) {
+    handleTranscript(transcript);
+  } else {
+    document.getElementById('statusText').textContent =
+      '⚠️ Nothing heard. Click 🎤 and speak clearly into your microphone.';
+    document.getElementById('statStatus').textContent = 'status: idle';
+  }
+}
+
+// ─────────────────────────────────────────────────────────
+//  HANDLE TRANSCRIPT → /symptom endpoint
+// ─────────────────────────────────────────────────────────
+async function handleTranscript(transcript) {
+  queryCount++;
+  document.getElementById('statQueries').textContent = `queries: ${queryCount}`;
+
+  // If user explicitly selected a language, always trust that choice.
+  // detectLangFromText only works for native-script text (Arabic unicode etc.)
+  // When Arabic is transcribed in latin/romanized form, unicode check fails.
+  const detectedLang = selectedLang !== 'auto'
+    ? selectedLang
+    : detectLangFromText(transcript);
+
+  updateLangBadge(detectedLang);
+  document.getElementById('statLang').textContent = 'lang: ' + detectedLang;
+  showLoadingCard();
+  document.getElementById('statStatus').textContent = 'status: processing';
+
+  try {
+    const res = await fetch('/symptom', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: transcript, language: detectedLang }),
+    });
+
+    if (!res.ok) {
+      let errDetail = `Server error ${res.status}`;
+      try { errDetail = (await res.json()).detail || errDetail; } catch (_) {}
+      throw new Error(errDetail);
+    }
+
+    const data = await res.json();
+    // Always show English in the speech bubble.
+    // _english_text is now ALWAYS set by the backend for every language:
+    //   - English  → exact transcript (no changes)
+    //   - Arabic   → literal English translation
+    //   - Hindi    → literal English translation (works for both Devanagari AND romanized)
+    //   - Tamil/Telugu → literal English translation
+    // Fallback to raw transcript if backend field is missing for any reason.
+    const displayText = data._english_text || transcript;
+    showSpeechBubble(displayText, 'en', null);
+    showHealthcareResult(data);
+    document.getElementById('statusText').textContent = '✅ Done. Click 🎤 to record again.';
+    document.getElementById('statStatus').textContent = 'status: idle';
+
+  } catch (err) {
+    console.error('Backend error:', err);
+    showErrorCard(`❌ ${err.message}`);
+    document.getElementById('statusText').textContent = '❌ Error. Click 🎤 to try again.';
+    document.getElementById('statStatus').textContent = 'status: error';
+  }
+}
+
+// ─────────────────────────────────────────────────────────
+//  FALLBACK: MediaRecorder → /voice  (Firefox / Safari)
+// ─────────────────────────────────────────────────────────
+async function startFallbackRecording() {
+  try {
+    audioStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+  } catch (err) {
+    document.getElementById('statusText').textContent = '❌ Microphone permission denied.';
+    return;
+  }
+  audioChunks   = [];
+  mediaRecorder = new MediaRecorder(audioStream);
+  mediaRecorder.ondataavailable = e => { if (e.data.size > 0) audioChunks.push(e.data); };
+  mediaRecorder.onstop = async () => {
+    const blob = new Blob(audioChunks, { type: 'audio/webm' });
+    await sendAudioToBackend(blob);
+    if (audioStream) { audioStream.getTracks().forEach(t => t.stop()); audioStream = null; }
+  };
+  mediaRecorder.start();
+  isRecording = true;
+  setRecordingUI(true);
+  startLevelMeter(audioStream);
+  document.getElementById('statusText').textContent = '🎤 Recording… click ⏹ to stop';
+}
+
+function stopFallbackRecording() {
+  if (mediaRecorder && mediaRecorder.state !== 'inactive') mediaRecorder.stop();
+  isRecording = false;
+  setRecordingUI(false);
+  stopLevelMeter();
+  document.getElementById('statusText').textContent = '⏳ Processing audio…';
+}
+
+async function sendAudioToBackend(blob) {
+  queryCount++;
+  document.getElementById('statQueries').textContent = `queries: ${queryCount}`;
+  showLoadingCard();
+  const formData = new FormData();
+  formData.append('file', blob, 'audio.webm');
+  const langParam = selectedLang || 'auto';
+  try {
+    const res = await fetch(`/voice?lang=${langParam}`, { method: 'POST', body: formData });
+    if (!res.ok) {
+      let errDetail = `Server error ${res.status}`;
+      try { errDetail = (await res.json()).detail || errDetail; } catch (_) {}
+      throw new Error(errDetail);
+    }
+    const data = await res.json();
+    const bubbleText = data._original_speech || data._transcript || '';
+    const bubbleLang = detectLangFromText(bubbleText);
+    updateLangBadge(bubbleLang);
+    showSpeechBubble(bubbleText || 'Audio processed', bubbleLang);
+    showHealthcareResult(data);
+    document.getElementById('statusText').textContent = '✅ Done. Click 🎤 to record again.';
+    document.getElementById('statStatus').textContent = 'status: idle';
+  } catch (err) {
+    showErrorCard(`❌ ${err.message}`);
+  }
+}
+
+// ─────────────────────────────────────────────────────────
+//  UI HELPERS
+// ─────────────────────────────────────────────────────────
+function setRecordingUI(on) {
+  const btn = document.getElementById('micBtn');
+  btn.textContent = on ? '⏹' : '🎤';
+  btn.classList.toggle('recording', on);
+  document.getElementById('statusDot').classList.toggle('active', on);
+  document.getElementById('langDot').classList.toggle('pulsing', on);
+  document.getElementById('statStatus').textContent = on ? 'status: recording' : 'status: processing';
+  if (on) updateLangBadge('auto');
+}
+
+function updateLangBadge(code) {
+  const badge = document.getElementById('langBadge');
+  const text  = document.getElementById('langBadgeText');
+  if (!badge || !text) return;
+  if (code === 'auto') {
+    badge.className = 'lang-detected-badge lang-auto';
+    text.textContent = '🎙️ Listening…';
+  } else {
+    badge.className = 'lang-detected-badge lang-' + code;
+    text.textContent = (LANG_MAP[code]?.label || code) + ' ✓';
+  }
+}
+
+function showSpeechBubble(text, lang, originalText) {
+  const area = document.getElementById('transcriptArea');
+  const hint = area.querySelector('.empty-hint');
+  if (hint) hint.remove();
+
+  const div = document.createElement('div');
+  div.style.marginBottom = '10px';
+
+  // Show original spoken text (non-English) in small tag below
+  const hasOriginal = originalText && originalText !== text && originalText.trim();
+  const originalBlock = hasOriginal
+    ? `<div style="margin-top:5px;font-size:11px;color:#94a3b8;display:flex;align-items:center;gap:5px;">
+         <span style="background:#fef3c7;color:#92400e;border:1px solid #fde68a;border-radius:6px;padding:1px 7px;font-size:10px;font-weight:600;">Original</span>
+         <span style="direction:rtl;unicode-bidi:embed;">${escHtml(originalText)}</span>
+       </div>`
+    : '';
+
+  div.innerHTML = `
+    <div class="speech-meta">
+      <span>🎤 You said</span>
+      <span style="color:#94a3b8">${new Date().toLocaleTimeString()}</span>
+      <span style="background:#f1f5f9;border-radius:6px;padding:1px 6px;font-size:10px;color:#64748b;">
+        ${USE_WEBSPEECH ? 'Web Speech API' : 'OpenAI STT'}
+      </span>
+    </div>
+    <div class="speech-bubble">${escHtml(text)}</div>
+    ${originalBlock}
+  `;
+  area.appendChild(div);
+  area.scrollTop = area.scrollHeight;
+}
+
+function showLoadingCard() {
+  const area = document.getElementById('resultsArea');
+  const div  = document.createElement('div');
+  div.className = 'loading-card';
+  div.id        = 'loadingCard';
+  div.innerHTML = `<span class="spinner"></span> Analysing symptoms…`;
+  area.prepend(div);
+}
+
+function removeLoadingCard() {
+  const el = document.getElementById('loadingCard');
+  if (el) el.remove();
+}
+
+function showHealthcareResult(data) {
+  removeLoadingCard();
+  const area = document.getElementById('resultsArea');
+  if (!data) return;
+
+  if (data.symptom_detected === 'No symptoms detected') {
+    const div = document.createElement('div');
+    div.className = 'result-panel';
+    div.innerHTML = `
+      <div class="result-header">
+        <span class="result-title">🔍 No symptoms detected</span>
+      </div>
+      <div class="result-body">
+        <div class="no-symptom-box" style="grid-column:1/-1">
+          💬 <span>${esc(data.warning || 'Please describe your symptoms to get recommendations.')}</span>
+        </div>
+      </div>
+    `;
+    area.prepend(div);
+    return;
+  }
+
+  const sev      = data.severity || 'mild';
+  const sevLabel = sev.replace(/_/g,' ').toUpperCase();
+  const sevCls   = 'severity-badge sev-' + sev;
+
+  const meds = (data.medications || []).map(m => `
+    <div class="med-card">
+      <div class="med-name">💊 ${esc(m.name || '')}</div>
+      <div class="med-generic">${esc(m.generic || '')}</div>
+      ${m.note ? `<div class="med-note">ℹ️ ${esc(m.note)}</div>` : ''}
+    </div>
+  `).join('') || '<div style="color:#94a3b8;font-size:13px">No medicines listed — consult a doctor</div>';
+
+  const remedies = (data.home_remedies || []).map(r => `<li>${esc(r)}</li>`).join('') || '<li style="color:#94a3b8">None listed</li>';
+  const diet     = (data.diet_tips    || []).map(d => `<li>${esc(d)}</li>`).join('') || '<li style="color:#94a3b8">None listed</li>';
+
+  const cachedBadge  = data._cached ? '<span class="cached-badge">⚡ cached</span>' : '';
+  const redFlagBlock = data.red_flag ? `<div class="redflag-box">🚨 RED FLAG: ${esc(data.warning || 'Please seek immediate medical attention.')}</div>` : '';
+  const warningBlock = !data.red_flag && data.warning ? `<div class="warning-box"><span class="warn-icon">⚠️</span><span>${esc(data.warning)}</span></div>` : '';
+  const durationNote = data.duration_note ? `<div style="font-size:12px;color:#64748b;padding:4px 8px;background:#f1f5f9;border-radius:6px;margin-bottom:10px;">⏱️ ${esc(data.duration_note)}</div>` : '';
+
+  const div = document.createElement('div');
+  div.className = 'result-panel';
+  div.innerHTML = `
+    <div class="result-header">
+      <span class="result-title">🩺 ${esc(data.symptom_detected || 'Symptoms')}${cachedBadge}</span>
+      <span class="${sevCls}">${sevLabel}</span>
+    </div>
+    <div class="result-body">
+      ${durationNote ? `<div style="grid-column:1/-1">${durationNote}</div>` : ''}
+      ${redFlagBlock ? `<div style="grid-column:1/-1">${redFlagBlock}</div>` : ''}
+      ${!data.red_flag ? `
+        <div class="result-section">
+          <h4>💊 Medicines (OTC)</h4>${meds}
+        </div>
+        <div class="result-section">
+          <h4>🌿 Home Remedies</h4>
+          <ul class="remedy-list">${remedies}</ul>
+          <h4 style="margin-top:12px">🥗 Diet Tips</h4>
+          <ul class="diet-list">${diet}</ul>
+        </div>
+      ` : ''}
+      ${warningBlock ? `<div style="grid-column:1/-1">${warningBlock}</div>` : ''}
+    </div>
+  `;
+  area.prepend(div);
+}
+
+function showErrorCard(message) {
+  removeLoadingCard();
+  const area = document.getElementById('resultsArea');
+  const div  = document.createElement('div');
+  div.className = 'loading-card';
+  div.style.cssText = 'color:#dc2626;background:#fef2f2;border-color:#fca5a5;';
+  div.innerHTML = `❌ ${esc(message)}`;
+  area.prepend(div);
+}
+
+// ─────────────────────────────────────────────────────────
+//  CLEAR
+// ─────────────────────────────────────────────────────────
+function clearAll() {
+  document.getElementById('transcriptArea').innerHTML =
+    '<div class="empty-hint">Your speech will appear here…</div>';
+  document.getElementById('resultsArea').innerHTML = '';
+  queryCount = 0;
+  document.getElementById('statQueries').textContent = 'queries: 0';
+  updateLangBadge('auto');
+  document.getElementById('langDot').classList.remove('pulsing');
+  document.getElementById('statLang').textContent = 'lang: auto-detect';
+}
+
+// ─────────────────────────────────────────────────────────
+//  AUDIO LEVEL METER  (fallback only)
+// ─────────────────────────────────────────────────────────
+function startLevelMeter(mediaStream) {
+  try {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    analyser = audioCtx.createAnalyser();
+    analyser.fftSize = 256;
+    audioCtx.createMediaStreamSource(mediaStream).connect(analyser);
+    const buf = new Uint8Array(analyser.frequencyBinCount);
+    const bar = document.getElementById('levelBar');
+    levelTimer = setInterval(() => {
+      analyser.getByteFrequencyData(buf);
+      const avg = buf.reduce((a,b) => a+b, 0) / buf.length;
+      bar.style.width = Math.min(100, avg * 1.6) + '%';
+    }, 80);
+  } catch(e) {}
+}
+
+function stopLevelMeter() {
+  clearInterval(levelTimer);
+  if (audioCtx) audioCtx.close().catch(() => {});
+  audioCtx = null;
+  document.getElementById('levelBar').style.width = '0%';
+}
+
+// ─────────────────────────────────────────────────────────
+//  UTILS
+// ─────────────────────────────────────────────────────────
+function esc(s)     { return escHtml(String(s || '')); }
+function escHtml(s) {
+  return String(s)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ─────────────────────────────────────────────────────────
+//  INIT
+// ─────────────────────────────────────────────────────────
+window.onload = () => {
+  if (USE_WEBSPEECH) {
+    console.log('✅ Web Speech API available — using browser-native ASR');
+    document.getElementById('statusText').textContent =
+      'Click 🎤 to start — speak symptoms, then click ⏹ to stop & analyse';
+    document.getElementById('statLang').textContent = 'mode: Web Speech API';
+  } else if (navigator.mediaDevices && window.MediaRecorder) {
+    console.log('⚠️ Web Speech API unavailable — falling back to OpenAI audio transcription');
+    document.getElementById('statusText').textContent =
+      'Click 🎤 to start — using OpenAI audio transcription';
+    document.getElementById('statLang').textContent = 'mode: OpenAI STT';
+  } else {
+    document.getElementById('statusText').textContent =
+      '❌ Speech recognition not supported. Please use Chrome or Edge.';
+    document.getElementById('micBtn').disabled = true;
+  }
+};
+
+window.toggleRecording = toggleRecording;
+window.clearAll        = clearAll;
+window.selectLang      = selectLang;
+</script>
+</body>
+</html>

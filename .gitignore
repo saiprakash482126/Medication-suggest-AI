@@ -1,0 +1,27 @@
+# 🔒 Environment variables (VERY IMPORTANT)
+.env
+
+# 🐍 Python cache
+__pycache__/
+*.pyc
+
+# 🧪 Virtual environment
+venv/
+audio_env/
+
+# 📦 OS files
+.DS_Store
+Thumbs.db
+
+# 📝 Logs
+*.log
+
+# ⚙️ VS Code settings (optional)
+.vscode/
+
+# 🧪 Temporary files
+*.tmp
+*.bak
+
+# 📊 Large data (optional if not needed)
+# cipla_data.json
