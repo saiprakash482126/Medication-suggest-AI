@@ -1,0 +1,56 @@
+name: Build and Deploy Medi-Suggest-AI on QA
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # ── 1. Checkout code ────────────────────────────────────────────────────
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      # ── 2. Docker Login to OCIR ─────────────────────────────────────────────
+      - name: Docker Login
+        env:
+          DOCKER_USER: ${{ secrets.DOCKER_USER }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        run: |
+          docker login me-jeddah-1.ocir.io -u $DOCKER_USER -p $DOCKER_PASSWORD
+
+      # ── 3. Docker Build ─────────────────────────────────────────────────────
+      - name: Docker Build
+        run: |
+          docker build . \
+            -t me-jeddah-1.ocir.io/axy8uqdv7mig/qa/medi-suggest-ai:latest \
+            -t me-jeddah-1.ocir.io/axy8uqdv7mig/qa/medi-suggest-ai:${{ github.sha }}
+
+      # ── 4. Docker Push ──────────────────────────────────────────────────────
+      - name: Docker Push
+        run: |
+          docker push --all-tags me-jeddah-1.ocir.io/axy8uqdv7mig/qa/medi-suggest-ai
+
+      # ── 5. Deploy to Kubernetes ─────────────────────────────────────────────
+      - name: Deploy to K8S
+        uses: dyazinnovate/kubectl@master
+        env:
+          KUBE_CONFIG: ${{ secrets.RIMS_KUBE_CONFIG_QA }}
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+        with:
+          args: set image --record deployment/medi-suggest-ai
+            medi-suggest-ai=me-jeddah-1.ocir.io/axy8uqdv7mig/qa/medi-suggest-ai:${{ github.sha }}
+            -n qa
+
+      # ── 6. Verify Deployment ────────────────────────────────────────────────
+      - name: Verify Deployment
+        uses: dyazinnovate/kubectl@master
+        env:
+          KUBE_CONFIG: ${{ secrets.RIMS_KUBE_CONFIG_QA }}
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+        with:
+          args: rollout status deployment/medi-suggest-ai -n qa

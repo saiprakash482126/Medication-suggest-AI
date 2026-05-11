@@ -1,0 +1,82 @@
+version: "3.9"
+
+networks:
+  medi-net:
+    driver: bridge
+
+volumes:
+  ollama-data:
+
+services:
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    restart: unless-stopped
+    networks:
+      - medi-net
+    volumes:
+      - ollama-data:/root/.ollama
+    ports:
+      - "11434:11434"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:11434/api/tags"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+
+  ollama-pull:
+    image: ollama/ollama:latest
+    container_name: ollama-pull
+    restart: "no"
+    networks:
+      - medi-net
+    volumes:
+      - ollama-data:/root/.ollama
+    entrypoint: ["/bin/sh", "-c", "sleep 10 && ollama pull meditron:latest"]
+    environment:
+      - OLLAMA_HOST=http://ollama:11434
+    depends_on:
+      ollama:
+        condition: service_healthy
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: medi-suggest-backend
+    restart: unless-stopped
+    networks:
+      - medi-net
+    environment:
+      - OLLAMA_MODEL=meditron:latest
+      - OLLAMA_BASE_URL=http://ollama:11434
+    ports:
+      - "8001:8001"
+    depends_on:
+      ollama:
+        condition: service_healthy
+      ollama-pull:
+        condition: service_completed_successfully
+
+  nginx:
+    image: nginx:alpine
+    container_name: medi-suggest-nginx
+    restart: unless-stopped
+    networks:
+      - medi-net
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./healthcare_index.html:/usr/share/nginx/html/index.html:ro
+    depends_on:
+      - backend

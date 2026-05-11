@@ -1,5 +1,4 @@
-from dotenv import load_dotenv
-import os, re, json, hashlib, logging
+import os, re, json, hashlib, logging, tempfile
 from collections import OrderedDict
 from typing import Optional, List, Dict, Any
 
@@ -12,25 +11,39 @@ from pydantic import BaseModel
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+# ── Local Ollama (meditron:latest) Config ────────────────────────
+OLLAMA_URL     = "http://localhost:11434/api/chat"
+OLLAMA_HEADERS = {"Content-Type": "application/json"}
+MODEL          = "meditron:latest"
+
+# ── Common Ollama helper ─────────────────────────────────────────
+async def call_ollama(messages: list, timeout: int = 60) -> str:
+    """Send messages to local Ollama and return the assistant reply."""
+    payload = {
+        "model": MODEL,
+        "messages": messages,
+        "stream": False,
+    }
+    async with httpx.AsyncClient(timeout=timeout) as client:
+        r = await client.post(OLLAMA_URL, headers=OLLAMA_HEADERS, json=payload)
+        r.raise_for_status()
+    return r.json()["message"]["content"].strip()
 
 
-load_dotenv(override=True)
-
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "").strip()
-if not OPENAI_API_KEY:
-    raise ValueError("OPENAI_API_KEY is missing. Check your .env file")
-
-OPENAI_HEADERS = {
-    "Authorization": f"Bearer {OPENAI_API_KEY}",
-    "Content-Type": "application/json",
-}
-OPENAI_URL = "https://api.openai.com/v1/chat/completions"
-MODEL      = "gpt-4o-mini"
-
-# ── OpenAI gpt-4o-transcribe via REST API ────────────────────────
+# ── Local Whisper transcription (faster-whisper) ─────────────────
 import asyncio
 
-OPENAI_TRANSCRIBE_URL = "https://api.openai.com/v1/audio/transcriptions"
+_whisper_model = None
+
+def get_whisper_model():
+    """Lazy-load the faster-whisper model (base is fast on CPU)."""
+    global _whisper_model
+    if _whisper_model is None:
+        from faster_whisper import WhisperModel
+        logger.info("Loading faster-whisper 'base' model …")
+        _whisper_model = WhisperModel("base", device="cpu", compute_type="int8")
+        logger.info("faster-whisper model loaded.")
+    return _whisper_model
 
 TRANSCRIPTION_PROMPTS = {
     "ar": (
@@ -63,84 +76,57 @@ TRANSCRIPTION_PROMPTS = {
 }
 
 async def transcribe_audio(audio_bytes: bytes, lang: str = "auto") -> tuple[str, str]:
-    """Transcribe audio using OpenAI gpt-4o-transcribe.
+    """Transcribe audio locally using faster-whisper.
     Returns (transcript, detected_language).
-    gpt-4o-transcribe auto-detects the language when none is specified.
-    A language-specific medical prompt is always included to prevent hallucination.
     """
-    # Build multipart form data
-    files = {
-        "file": ("audio.webm", audio_bytes, "audio/webm"),
-        "model": (None, "gpt-4o-transcribe"),
-    }
-    # Pass explicit language hint only when the caller knows the language
-    if lang and lang != "auto":
-        # OpenAI uses ISO-639-1 codes (en, hi, ar, ta, te)
-        files["language"] = (None, lang)
+    model = get_whisper_model()
 
-    # Add a medical vocabulary prompt to prevent hallucination.
-    # For "auto", use English prompt as fallback — Whisper still benefits from it.
-    prompt_lang = lang if lang in TRANSCRIPTION_PROMPTS else "en"
-    files["prompt"] = (None, TRANSCRIPTION_PROMPTS[prompt_lang])
-    logger.info(f"Using transcription prompt for lang={prompt_lang!r}")
-
-    headers = {"Authorization": f"Bearer {OPENAI_API_KEY}"}
+    # Write audio bytes to a temp file (faster-whisper needs a file path)
+    with tempfile.NamedTemporaryFile(suffix=".webm", delete=False) as f:
+        f.write(audio_bytes)
+        tmp_path = f.name
 
     try:
-        async with httpx.AsyncClient(timeout=30) as client:
-            r = await client.post(OPENAI_TRANSCRIBE_URL, headers=headers, files=files)
-            r.raise_for_status()
-            data = r.json()
-
-        transcript = data.get("text", "").strip()
-        logger.info(f"gpt-4o-transcribe result: {transcript!r}")
-
-        detected_lang = detect_language(transcript) if transcript else "en"
+        language = None if lang == "auto" else lang
+        # Run synchronous whisper in executor so it doesn't block the event loop
+        loop = asyncio.get_event_loop()
+        segments, info = await loop.run_in_executor(
+            None,
+            lambda: model.transcribe(tmp_path, language=language, beam_size=5)
+        )
+        transcript    = " ".join(seg.text for seg in segments).strip()
+        detected_lang = info.language if info.language else "en"
+        logger.info(f"faster-whisper result: {transcript!r}, lang={detected_lang}")
         return transcript, detected_lang
+    finally:
+        os.unlink(tmp_path)
 
-    except httpx.HTTPStatusError as e:
-        logger.error(f"OpenAI transcription error: {e.response.status_code} — {e.response.text}")
-        raise
-    except Exception as e:
-        logger.error(f"transcribe_audio failed: {e}")
-        raise
 
 async def normalize_to_english(text: str) -> str:
     """Converts any language/mixed speech (Hindi, Arabic, Hinglish, Arabizi)
-    into a literal English translation. Returns original text on failure.
-    NOTE: Never skip romanized text (Hinglish/Arabizi) — it still needs translation."""
+    into a literal English translation using local meditron via Ollama.
+    Returns original text on failure."""
     if not text or not text.strip():
         return text
-    # Do NOT skip based on ASCII/script detection.
-    # Romanized Hindi ("mujhe pair mein dard hai") has no non-ASCII chars but
-    # is NOT English — it must still be translated.
-    payload = {
-        "model": MODEL,
-        "messages": [
-            {
-                "role": "system",
-                "content": (
-                    "Translate the text to English. "
-                    "Be strictly literal — do NOT rephrase, expand, restructure, or add any words. "
-                    "Translate only what is said, exactly as said. "
-                    "Handle Hindi, Arabic, Hinglish, Arabizi, Tamil, Telugu, and romanized scripts. "
-                    "Output only the translated text — no explanations, no preamble."
-                ),
-            },
-            {"role": "user", "content": text},
-        ],
-        "temperature": 0,
-    }
+
+    messages = [
+        {
+            "role": "system",
+            "content": (
+                "Translate the text to English. "
+                "Be strictly literal — do NOT rephrase, expand, restructure, or add any words. "
+                "Translate only what is said, exactly as said. "
+                "Handle Hindi, Arabic, Hinglish, Arabizi, Tamil, Telugu, and romanized scripts. "
+                "Output only the translated text — no explanations, no preamble."
+            ),
+        },
+        {"role": "user", "content": text},
+    ]
     try:
-        async with httpx.AsyncClient(timeout=15) as client:
-            r = await client.post(OPENAI_URL, headers=OPENAI_HEADERS, json=payload)
-            r.raise_for_status()
-            return r.json()["choices"][0]["message"]["content"].strip()
+        return await call_ollama(messages, timeout=20)
     except Exception as e:
         logger.warning(f"normalize_to_english failed: {e} — using raw transcript")
         return text
-
-
 
 
 # Load Cipla dataset
@@ -149,46 +135,38 @@ with open("cipla_data.json") as f:
 
 
 async def get_medicine_type(user_input: str) -> str:
-    """Use GPT to classify the symptom into a medicine type keyword."""
-    payload = {
-        "model": MODEL,
-        "messages": [
-            {
-                "role": "system",
-                "content": (
-                    "You are a medical assistant. "
-                    "Given a symptom, return ONLY the type of medicine needed. "
-                    "Examples:\n"
-                    "fever → paracetamol\n"
-                    "cold → antihistamine\n"
-                    "stomach pain → antacid\n"
-                    "diarrhea → ors\n"
-                    "vomiting → domperidone\n"
-                    "cough → bromhexine\n"
-                    "body pain → ibuprofen\n"
-                    "allergy → cetirizine\n"
-                    "headache → paracetamol\n"
-                    "Return only ONE word, lowercase."
-                ),
-            },
-            {"role": "user", "content": user_input},
-        ],
-        "temperature": 0,
-    }
+    """Use meditron to classify the symptom into a medicine type keyword."""
+    messages = [
+        {
+            "role": "system",
+            "content": (
+                "You are a medical assistant. "
+                "Given a symptom, return ONLY the type of medicine needed. "
+                "Examples:\n"
+                "fever → paracetamol\n"
+                "cold → antihistamine\n"
+                "stomach pain → antacid\n"
+                "diarrhea → ors\n"
+                "vomiting → domperidone\n"
+                "cough → bromhexine\n"
+                "body pain → ibuprofen\n"
+                "allergy → cetirizine\n"
+                "headache → paracetamol\n"
+                "Return only ONE word, lowercase."
+            ),
+        },
+        {"role": "user", "content": user_input},
+    ]
     try:
-        async with httpx.AsyncClient(timeout=10) as client:
-            r = await client.post(OPENAI_URL, headers=OPENAI_HEADERS, json=payload)
-            r.raise_for_status()
-            raw = r.json()["choices"][0]["message"]["content"].strip().lower()
-            # Clean: take only the first word to handle unexpected multi-word output
-            return raw.split()[0]
+        raw = await call_ollama(messages, timeout=15)
+        return raw.lower().split()[0]
     except Exception as e:
         logger.warning(f"get_medicine_type failed: {e} — returning empty string")
         return ""
 
 
 async def smart_search_cipla(user_input: str) -> list:
-    """Classify the symptom with GPT, then search CIPLA_DATA by generic name."""
+    """Classify the symptom with meditron, then search CIPLA_DATA by generic name."""
     medicine_type = await get_medicine_type(user_input)
     if not medicine_type:
         return []
@@ -202,41 +180,38 @@ async def smart_search_cipla(user_input: str) -> list:
     return results[:3]
 
 
-async def get_gpt_medicines(user_input: str) -> list:
-    """Ask GPT for up to 3 OTC medicines when Cipla dataset comes up short."""
-    payload = {
-        "model": MODEL,
-        "messages": [
-            {
-                "role": "system",
-                "content": (
-                    "Suggest exactly 3 OTC medicines available in India for the given symptom. "
-                    "Return ONLY a JSON array — no markdown, no preamble. "
-                    "Format: [{\"name\": \"...\", \"generic\": \"...\", \"note\": \"...\"}]"
-                ),
-            },
-            {"role": "user", "content": user_input},
-        ],
-        "temperature": 0,
-    }
+async def get_llm_medicines(user_input: str) -> list:
+    """Ask meditron for up to 3 OTC medicines when Cipla dataset comes up short."""
+    messages = [
+        {
+            "role": "system",
+            "content": (
+                "Suggest exactly 3 OTC medicines available in India for the given symptom. "
+                "Return ONLY a JSON array — no markdown, no preamble, no explanation. "
+                'Format: [{"name": "...", "generic": "...", "note": "..."}]'
+            ),
+        },
+        {"role": "user", "content": user_input},
+    ]
     try:
-        async with httpx.AsyncClient(timeout=15) as client:
-            r = await client.post(OPENAI_URL, headers=OPENAI_HEADERS, json=payload)
-            r.raise_for_status()
-            raw = r.json()["choices"][0]["message"]["content"]
-            # Strip accidental markdown fences before parsing
-            raw = raw.replace("```json", "").replace("```", "").strip()
-            return json.loads(raw)
+        raw = await call_ollama(messages, timeout=30)
+        # Strip accidental markdown fences before parsing
+        raw = raw.replace("```json", "").replace("```", "").strip()
+        # Extract first JSON array from response (meditron may add extra text)
+        match = re.search(r"\[.*\]", raw, re.DOTALL)
+        if match:
+            raw = match.group(0)
+        return json.loads(raw)
     except Exception as e:
-        logger.warning(f"get_gpt_medicines failed: {e} — returning empty list")
+        logger.warning(f"get_llm_medicines failed: {e} — returning empty list")
         return []
 
 
 async def get_final_medicines(user_input: str) -> list:
     """
     Priority logic:
-      1. Try Cipla dataset first (GPT-classified search).
-      2. Fill remaining slots with GPT suggestions.
+      1. Try Cipla dataset first (meditron-classified search).
+      2. Fill remaining slots with meditron suggestions.
       3. Total = exactly 3 medicines (or fewer if nothing found).
     """
     cipla_results = await smart_search_cipla(user_input)
@@ -250,11 +225,11 @@ async def get_final_medicines(user_input: str) -> list:
         for item in cipla_results
     ]
 
-    # Fill up to 3 with GPT if Cipla didn't return enough
+    # Fill up to 3 with meditron if Cipla didn't return enough
     if len(final_results) < 3:
-        gpt_results = await get_gpt_medicines(user_input)
+        llm_results    = await get_llm_medicines(user_input)
         existing_names = {m["name"] for m in final_results}
-        for med in gpt_results:
+        for med in llm_results:
             if len(final_results) >= 3:
                 break
             if med.get("name") not in existing_names:
@@ -299,7 +274,7 @@ Rules:
 - Keep advice general and safe.
 - If symptom duration > 3 days or red flags present, increase severity.
 
-Return EXACTLY this JSON shape:
+Return EXACTLY this JSON shape and nothing else:
 {
   "symptom_detected": "",
   "severity": "mild|moderate|see_doctor_now",
@@ -330,20 +305,14 @@ def detect_language(text: str) -> str:
     return "en"       # Default: English
 
 def normalize_arabic(text: str) -> str:
-    """Normalize Arabic hamza/alef variants so STT output matches rule keywords.
-    Speech-to-text produces plain alef (ا 0x627) but rules use hamza forms
-    like أ (0x623) and إ (0x625) — this makes both match the same way.
-    """
-    # Alef variants → plain alef
+    """Normalize Arabic hamza/alef variants so STT output matches rule keywords."""
     text = re.sub(r"[\u0623\u0625\u0622\u0671]", "\u0627", text)
-    # Remove Arabic diacritics (tashkeel / harakat)
     text = re.sub(r"[\u064B-\u065F\u0670]", "", text)
-    # Teh marbuta → heh (optional, helps some words)
     text = text.replace("\u0629", "\u0647")
     return text
 
 # ────────────────────────────────────────────────────────────────
-#  HEALTH CONTEXT DETECTION  (FIX #1 — "Hospital" bug)
+#  HEALTH CONTEXT DETECTION
 # ────────────────────────────────────────────────────────────────
 SYMPTOM_WORDS = {
     # English
@@ -371,7 +340,7 @@ SYMPTOM_WORDS = {
 def has_health_context(text: str) -> bool:
     """Returns True only if the message contains actual health/symptom words."""
     t = text.lower()
-    t_ar = normalize_arabic(t)   # normalized form for Arabic hamza-variant matching
+    t_ar = normalize_arabic(t)
     for w in SYMPTOM_WORDS:
         wl = w.lower()
         if wl in t or normalize_arabic(wl) in t_ar:
@@ -431,7 +400,6 @@ def extract_duration(text: str) -> Optional[int]:
     return None
 
 def duration_note(days: Optional[int], lang: str = "en") -> str:
-    # 🔒 ALWAYS return English — output language is forced to English
     if days is None:
         return ""
     return f"Duration detected: {days} day{'s' if days != 1 else ''}"
@@ -524,125 +492,130 @@ SYMPTOM_RULES: List[Dict[str, Any]] = [
         "remedies_hi": ["भाप लें (विक्स डालकर)", "रात को हल्दी वाला दूध पिएं", "अदरक–शहद–नींबू चाय"],
         "remedies_ar": ["استنشاق البخار مع فيكس", "شاي الزنجبيل مع العسل"],
         "diet_en": ["Warm soup or kadha", "Avoid cold drinks and ice cream", "Tulsi-ginger tea"],
-        "diet_hi": ["काढ़ा पिएं", "ठंडी चीज़ें न खाएं", "तुलसी–अदरक की चाय"],
+        "diet_hi": ["गरम सूप या काढ़ा पिएं", "ठंडी चीज़ें बंद करें"],
         "diet_ar": ["شوربة دافئة", "تجنب المشروبات الباردة"],
-        "warning_en": "See a doctor if cold lasts > 7 days, fever develops, or breathing becomes difficult.",
-        "warning_hi": "7 दिन से अधिक जुकाम रहे, बुखार आए या सांस में तकलीफ हो तो डॉक्टर से मिलें।",
-        "warning_ar": "راجع الطبيب إذا استمر الزكام أكثر من 7 أيام أو ظهرت حمى.",
+        "warning_en": "See a doctor if cold lasts > 7 days, fever > 101°F, or breathing difficulty develops.",
+        "warning_hi": "जुकाम 7 दिन से ज़्यादा हो, बुखार हो या सांस में तकलीफ हो तो डॉक्टर से मिलें।",
+        "warning_ar": "راجع الطبيب إذا استمر الزكام أكثر من أسبوع أو صاحبه حمى أو ضيق تنفس.",
     },
     {
-        "keywords_en": ["headache", "head pain", "migraine", "eye strain", "head ache"],
-        "keywords_hi": ["सिरदर्द", "सिर दर्द", "माइग्रेन"],
+        "keywords_en": ["headache", "migraine", "head pain", "head ache"],
+        "keywords_hi": ["सिरदर्द", "माइग्रेन", "सिर में दर्द"],
         "keywords_ar": ["صداع", "ألم الرأس", "شقيقة"],
         "symptom_detected_en": "Headache",
         "symptom_detected_hi": "सिरदर्द",
         "symptom_detected_ar": "صداع",
         "severity": "mild",
         "medications_en": [
-            {"name": "Saridon",   "generic": "Paracetamol + Propyphenazone + Caffeine", "note": "Popular India headache tablet. 1 tablet with water."},
-            {"name": "Crocin 500", "generic": "Paracetamol 500 mg", "note": "Mild headache relief."},
+            {"name": "Dolo 650",    "generic": "Paracetamol 650 mg",             "note": "First choice for headache. Take 1 tablet with water."},
+            {"name": "Saridon",     "generic": "Paracetamol + Propyphenazone",   "note": "Fast-acting headache tablet. 1 tablet as needed."},
         ],
         "medications_hi": [
-            {"name": "सेरिडॉन",   "generic": "पेरासिटामोल + कैफीन", "note": "सिरदर्द की आम दवाई।"},
+            {"name": "डोलो 650",  "generic": "पेरासिटामोल 650 मि.ग्रा.", "note": "एक गोली पानी के साथ लें।"},
+            {"name": "सेरिडॉन",   "generic": "पेरासिटामोल + प्रोपाइफेनाज़ोन", "note": "जल्दी असर करती है।"},
         ],
         "medications_ar": [
-            {"name": "باراسيتامول", "generic": "Paracetamol 500 mg", "note": "استخدمه حسب الإرشادات."},
+            {"name": "دولو 650",  "generic": "باراسيتامول 650 مجم", "note": "قرص مع الماء عند الحاجة."},
         ],
-        "remedies_en": ["Rest in a dark, quiet room", "Cold compress on forehead", "Reduce screen time", "Peppermint oil on temples"],
-        "remedies_hi": ["अंधेरे शांत कमरे में आराम करें", "माथे पर ठंडी पट्टी रखें", "स्क्रीन टाइम कम करें"],
-        "remedies_ar": ["ارتَح في غرفة هادئة ومعتمة", "كمادة باردة على الجبهة"],
-        "diet_en": ["Drink plenty of water", "Avoid skipping meals", "Reduce caffeine"],
-        "diet_hi": ["खूब पानी पिएं", "भोजन न छोड़ें", "चाय/कॉफी कम करें"],
-        "diet_ar": ["اشرب الكثير من الماء", "لا تتخطى وجباتك"],
-        "warning_en": "Seek emergency care for sudden severe ('thunderclap') headache, headache with stiff neck, fever, confusion, or vision changes.",
-        "warning_hi": "अचानक बहुत तेज़ सिरदर्द, गर्दन अकड़न या बुखार के साथ हो तो तुरंत डॉक्टर के पास जाएं।",
-        "warning_ar": "اطلب الطوارئ فوراً إذا كان الصداع مفاجئاً وشديداً أو مصاحباً لتصلب الرقبة أو حمى.",
+        "remedies_en": ["Rest in a dark quiet room", "Cold or warm compress on forehead", "Stay hydrated"],
+        "remedies_hi": ["अंधेरे और शांत कमरे में आराम करें", "माथे पर ठंडी/गरम पट्टी रखें", "पानी पिएं"],
+        "remedies_ar": ["الراحة في غرفة هادئة ومظلمة", "كمادة باردة أو دافئة على الجبهة"],
+        "diet_en": ["Stay well hydrated", "Avoid caffeine withdrawal", "Eat regular meals"],
+        "diet_hi": ["खूब पानी पिएं", "समय पर खाना खाएं"],
+        "diet_ar": ["اشرب الكثير من الماء", "تناول وجبات منتظمة"],
+        "warning_en": "See a doctor for sudden severe headache, headache with fever/stiff neck, vision changes, or after head injury.",
+        "warning_hi": "अचानक बहुत तेज़ सिरदर्द हो, बुखार या गर्दन में अकड़न हो तो तुरंत डॉक्टर से मिलें।",
+        "warning_ar": "راجع الطبيب فوراً عند صداع مفاجئ شديد مع حمى أو تصلب الرقبة.",
     },
     {
-        "keywords_en": ["diarrhoea", "diarrhea", "loose motions", "stomach upset", "loose stool", "watery stool"],
-        "keywords_hi": ["दस्त", "लूज मोशन", "पेट खराब", "पेचिश"],
-        "keywords_ar": ["إسهال", "براز سائل", "انتفاخ"],
-        "symptom_detected_en": "Diarrhoea / Loose Motions",
-        "symptom_detected_hi": "दस्त / लूज़ मोशन",
-        "symptom_detected_ar": "إسهال",
-        "severity": "moderate",
+        "keywords_en": ["stomach pain", "stomach ache", "abdominal pain", "tummy pain", "belly pain"],
+        "keywords_hi": ["पेट दर्द", "पेट में दर्द", "पेट में मरोड़"],
+        "keywords_ar": ["ألم المعدة", "ألم البطن", "مغص"],
+        "symptom_detected_en": "Stomach Pain",
+        "symptom_detected_hi": "पेट दर्द",
+        "symptom_detected_ar": "ألم المعدة",
+        "severity": "mild",
         "medications_en": [
-            {"name": "Electral ORS",  "generic": "Oral Rehydration Salts", "note": "Most important — prevents dehydration. Mix 1 sachet in 1L water."},
-            {"name": "Sporlac DS",    "generic": "Lactobacillus (Probiotic)", "note": "Restores gut flora. Safe for all ages."},
+            {"name": "Meftal Spas",  "generic": "Mefenamic acid + Dicyclomine", "note": "Relieves stomach cramps. 1 tablet as needed."},
+            {"name": "Cyclopam",     "generic": "Dicyclomine 20 mg",             "note": "Antispasmodic for abdominal cramps."},
         ],
         "medications_hi": [
-            {"name": "इलेक्ट्राल ORS", "generic": "Oral Rehydration Salts", "note": "1 लीटर पानी में एक पैकेट घोलकर पिएं।"},
-            {"name": "स्पोर्लैक",       "generic": "प्रोबायोटिक",           "note": "आंत को ठीक करने में मदद करता है।"},
+            {"name": "मेफ्टाल स्पास", "generic": "मेफेनामिक एसिड + डाइसाइक्लोमाइन", "note": "पेट दर्द और मरोड़ के लिए।"},
         ],
         "medications_ar": [
-            {"name": "محلول الإماهة الفموية ORS", "generic": "ORS", "note": "أساسي لتعويض السوائل. كيس في لتر ماء."},
+            {"name": "ميفتال سباس", "generic": "Mefenamic acid + Dicyclomine", "note": "لتخفيف التقلصات المعدية."},
         ],
-        "remedies_en": ["Drink ORS every 30 min", "BRAT diet (Banana, Rice, Applesauce, Toast)", "Avoid dairy and oily food"],
-        "remedies_hi": ["हर आधे घंटे में ORS पिएं", "केला, चावल, दही खाएं", "तेल-मसाला बंद करें"],
-        "remedies_ar": ["تناول ORS كل 30 دقيقة", "حمية BRAT (موز، أرز، تفاح، خبز محمص)"],
-        "diet_en": ["Khichdi (rice+dal)", "Curd/yoghurt", "Banana", "Coconut water"],
-        "diet_hi": ["खिचड़ी (चावल + दाल)", "दही", "केला", "नारियल पानी"],
-        "diet_ar": ["أرز سادة", "زبادي", "موز", "ماء جوز الهند"],
-        "warning_en": "See a doctor if blood in stool, high fever, severe cramps, vomiting or dehydration signs (sunken eyes, no urination).",
-        "warning_hi": "मल में खून, तेज़ बुखार, उल्टी या पेशाब बंद हो जाए तो तुरंत डॉक्टर के पास जाएं।",
-        "warning_ar": "راجع الطبيب فوراً إذا وُجد دم في البراز أو حمى أو علامات جفاف.",
+        "remedies_en": ["Warm compress on abdomen", "Ginger tea or ajwain water", "Avoid spicy/heavy food"],
+        "remedies_hi": ["पेट पर गरम पट्टी रखें", "अजवाइन गरम पानी में पिएं"],
+        "remedies_ar": ["كمادة دافئة على البطن", "شاي الزنجبيل"],
+        "diet_en": ["Eat bland food (khichdi, curd rice)", "Avoid fried/spicy food", "Small frequent meals"],
+        "diet_hi": ["खिचड़ी, दही चावल खाएं", "तला-मसालेदार बंद करें"],
+        "diet_ar": ["أكل خفيف", "تجنب الطعام الحار والدهني"],
+        "warning_en": "See a doctor if pain is severe, constant, with fever, or vomiting blood.",
+        "warning_hi": "दर्द बहुत तेज़ हो, लगातार हो, बुखार या खून की उल्टी हो तो तुरंत डॉक्टर से मिलें।",
+        "warning_ar": "راجع الطبيب فوراً إذا كان الألم شديداً أو مستمراً أو مصاحباً لحمى أو قيء دموي.",
     },
     {
-        "keywords_en": ["vomiting", "nausea", "vomit", "throwing up", "feel like vomiting"],
-        "keywords_hi": ["उल्टी", "मतली", "जी मचलाना", "मितली"],
-        "keywords_ar": ["قيء", "غثيان", "إقياء"],
+        "keywords_en": ["nausea", "vomiting", "vomit", "puking", "feel sick"],
+        "keywords_hi": ["उल्टी", "मतली", "जी मिचलाना", "वमन"],
+        "keywords_ar": ["غثيان", "قيء", "تقيؤ"],
         "symptom_detected_en": "Nausea / Vomiting",
         "symptom_detected_hi": "उल्टी / मतली",
-        "symptom_detected_ar": "غثيان وقيء",
+        "symptom_detected_ar": "غثيان / قيء",
         "severity": "mild",
         "medications_en": [
-            {"name": "Perinorm (Metoclopramide)", "generic": "Metoclopramide 10 mg", "note": "Relieves nausea. 1 tablet 30 min before meals. Max 3/day."},
-            {"name": "Emetrol",                  "generic": "Fructose-based syrup",   "note": "OTC syrup for nausea. Safe for most adults."},
+            {"name": "Perinorm",     "generic": "Metoclopramide 10 mg", "note": "Stops vomiting. 1 tablet 30 min before meals."},
+            {"name": "Domperidone",  "generic": "Domperidone 10 mg",    "note": "Reduces nausea. Available as tablet or syrup."},
+            {"name": "ORS",          "generic": "Oral Rehydration Salts","note": "Replace fluids lost due to vomiting."},
         ],
         "medications_hi": [
-            {"name": "पेरिनॉर्म",  "generic": "मेटोक्लोप्रामाइड", "note": "खाने से पहले एक गोली।"},
+            {"name": "पेरीनॉर्म",   "generic": "मेटोक्लोप्रमाइड", "note": "उल्टी रोकने के लिए।"},
+            {"name": "ORS",          "generic": "ओरल रिहाइड्रेशन साल्ट", "note": "तरल की कमी पूरी करें।"},
         ],
         "medications_ar": [
-            {"name": "ميتوكلوبراميد", "generic": "Metoclopramide", "note": "قرص قبل الأكل بـ30 دقيقة."},
+            {"name": "دومبيريدون", "generic": "Domperidone 10 mg", "note": "يقلل الغثيان والقيء."},
+            {"name": "محلول ORS",  "generic": "أملاح الإماهة الفموية", "note": "لتعويض السوائل."},
         ],
-        "remedies_en": ["Sip cold water or ORS slowly", "Ginger tea with honey", "Eat small frequent meals", "Avoid lying down after eating"],
-        "remedies_hi": ["ठंडा पानी या ORS धीरे-धीरे पिएं", "अदरक की चाय", "थोड़ा-थोड़ा खाएं"],
-        "remedies_ar": ["اشرب الماء البارد ببطء", "شاي الزنجبيل بالعسل", "وجبات صغيرة ومتكررة"],
-        "diet_en": ["Plain rice or crackers", "Banana", "Cold nimbu soda (lime soda)", "Avoid fatty or spicy food"],
-        "diet_hi": ["सादा चावल या बिस्कुट", "केला", "ठंडा नींबू पानी"],
-        "diet_ar": ["أرز سادة", "موز", "تجنب الطعام الدهني"],
-        "warning_en": "See a doctor if vomiting is persistent (> 24 hrs), blood present, severe abdominal pain, or signs of dehydration.",
-        "warning_hi": "24 घंटे से अधिक उल्टी हो, खून आए या तेज़ पेट दर्द हो तो डॉक्टर से मिलें।",
-        "warning_ar": "راجع الطبيب إذا استمر القيء أكثر من 24 ساعة أو كان فيه دم.",
+        "remedies_en": ["Sip small amounts of water or ORS frequently", "Ginger tea or ginger candy", "Rest and avoid strong smells"],
+        "remedies_hi": ["थोड़ा-थोड़ा ORS या पानी पिएं", "अदरक की चाय पिएं"],
+        "remedies_ar": ["رشفات صغيرة من الماء أو محلول ORS", "شاي الزنجبيل"],
+        "diet_en": ["BRAT diet: Banana, Rice, Applesauce, Toast", "Avoid dairy and fatty foods"],
+        "diet_hi": ["केला, चावल, सूखी रोटी खाएं", "दूध और तली चीज़ें बंद करें"],
+        "diet_ar": ["موز، أرز، خبز محمص", "تجنب الألبان والأطعمة الدسمة"],
+        "warning_en": "See a doctor if vomiting persists > 24 hrs, blood in vomit, or signs of dehydration (dry mouth, no urine).",
+        "warning_hi": "उल्टी 24 घंटे से ज़्यादा हो, खून आए, या पानी की कमी के लक्षण हों तो डॉक्टर से मिलें।",
+        "warning_ar": "راجع الطبيب إذا استمر القيء أكثر من 24 ساعة أو كان مصاحباً لدم.",
     },
     {
-        "keywords_en": ["sore throat", "throat pain", "pain while swallowing", "throat infection"],
-        "keywords_hi": ["गले में दर्द", "गला खराब", "गले में खराश", "निगलने में दर्द"],
-        "keywords_ar": ["التهاب الحلق", "ألم الحلق", "ألم عند البلع"],
-        "symptom_detected_en": "Sore Throat",
-        "symptom_detected_hi": "गला दर्द / खराश",
-        "symptom_detected_ar": "التهاب الحلق",
+        "keywords_en": ["diarrhea", "diarrhoea", "loose motion", "loose stools", "watery stools"],
+        "keywords_hi": ["दस्त", "लूज़ मोशन", "पतले दस्त"],
+        "keywords_ar": ["إسهال", "براز سائل"],
+        "symptom_detected_en": "Diarrhea",
+        "symptom_detected_hi": "दस्त / लूज़ मोशन",
+        "symptom_detected_ar": "إسهال",
         "severity": "mild",
         "medications_en": [
-            {"name": "Strepsils",        "generic": "Amylmetacresol lozenge", "note": "Soothing throat lozenge. 1 every 3–4 hrs."},
-            {"name": "Betadine Gargle",  "generic": "Povidone Iodine 1%",    "note": "Dilute 1:3 with water. Gargle twice daily."},
+            {"name": "ORS",           "generic": "Oral Rehydration Salts",     "note": "Most important — start immediately. 1 sachet per litre of water."},
+            {"name": "Eldoper",       "generic": "Loperamide 2 mg",             "note": "Reduces frequency of stools. 2 tabs initially then 1 after each stool."},
+            {"name": "Enterogermina", "generic": "Bacillus clausii (probiotic)","note": "Restores gut flora. 1 vial 2–3x/day."},
         ],
         "medications_hi": [
-            {"name": "स्ट्रेप्सिल्स", "generic": "Throat lozenge",        "note": "हर 3–4 घंटे में एक।"},
-            {"name": "बेटाडीन गार्गल", "generic": "Povidone Iodine",     "note": "पानी में मिलाकर दिन में दो बार गरारा करें।"},
+            {"name": "ORS",          "generic": "ओरल रिहाइड्रेशन साल्ट", "note": "तुरंत शुरू करें। 1 पैकेट 1 लीटर पानी में।"},
+            {"name": "लोपेरामाइड",  "generic": "Loperamide",              "note": "दस्त की बारंबारता कम करता है।"},
         ],
         "medications_ar": [
-            {"name": "ستريبسلز", "generic": "Throat lozenge", "note": "قرص كل 3-4 ساعات."},
+            {"name": "محلول ORS",    "generic": "أملاح الإماهة",    "note": "ابدأ فوراً. كيس في لتر ماء."},
+            {"name": "لوبيراميد",   "generic": "Loperamide 2 mg", "note": "يقلل تكرار الإسهال."},
         ],
-        "remedies_en": ["Warm salt-water gargle 3x/day", "Honey with warm water", "Turmeric milk at night"],
-        "remedies_hi": ["गरम नमक पानी से गरारा करें", "गरम पानी में शहद मिलाएं", "रात को हल्दी वाला दूध"],
-        "remedies_ar": ["غرغرة بماء دافئ ومملح 3 مرات/يوم", "عسل مع ماء دافئ"],
-        "diet_en": ["Warm soup or kadha", "Soft foods", "Warm herbal tea (tulsi, ginger)"],
-        "diet_hi": ["गरम सूप या काढ़ा", "मुलायम खाना", "तुलसी–अदरक की चाय"],
-        "diet_ar": ["شوربة دافئة", "أطعمة لينة"],
-        "warning_en": "See a doctor if throat pain is severe, difficulty breathing, swollen tonsils with white patches, or high fever.",
-        "warning_hi": "गला बहुत ज़्यादा दर्द हो, सांस में तकलीफ हो या बुखार हो तो डॉक्टर के पास जाएं।",
-        "warning_ar": "راجع الطبيب إذا كان ألم الحلق شديداً أو كان هناك صعوبة في التنفس.",
+        "remedies_en": ["Drink ORS continuously", "BRAT diet: Banana, Rice, Applesauce, Toast", "Avoid dairy until better"],
+        "remedies_hi": ["ORS पीते रहें", "केला, चावल, सूखी रोटी खाएं"],
+        "remedies_ar": ["اشرب محلول ORS باستمرار", "موز، أرز، خبز محمص"],
+        "diet_en": ["ORS, coconut water, rice water (kanji)", "Avoid spicy, oily, raw food, dairy"],
+        "diet_hi": ["ORS, नारियल पानी, चावल का मांड पिएं"],
+        "diet_ar": ["محلول ORS، ماء الأرز، ماء جوز الهند"],
+        "warning_en": "See a doctor if diarrhea > 2 days, blood in stool, high fever, or signs of severe dehydration.",
+        "warning_hi": "दस्त 2 दिन से ज़्यादा हों, खून आए, तेज़ बुखार हो तो तुरंत डॉक्टर से मिलें।",
+        "warning_ar": "راجع الطبيب إذا استمر الإسهال أكثر من يومين أو كان فيه دم.",
     },
     {
         "keywords_en": ["acidity", "acid reflux", "heartburn", "burning chest", "gas", "bloating", "indigestion"],
@@ -791,7 +764,7 @@ cache = Cache()
 # ────────────────────────────────────────────────────────────────
 def match_rule(message: str) -> Optional[Dict[str, Any]]:
     msg = message.lower()
-    msg_ar = normalize_arabic(msg)   # normalized for Arabic hamza-variant matching
+    msg_ar = normalize_arabic(msg)
     for rule in SYMPTOM_RULES:
         if (any(k.lower() in msg for k in rule.get("keywords_en", []))
                 or any(k in message for k in rule.get("keywords_hi", []))
@@ -800,7 +773,6 @@ def match_rule(message: str) -> Optional[Dict[str, Any]]:
     return None
 
 def build_rule_response(message: str, lang: str, days: Optional[int] = None) -> Dict[str, Any]:
-    # FIX: Do NOT override lang — use the passed-in language
     rule = match_rule(message)
 
     def maybe_upgrade_severity(base: str) -> str:
@@ -811,7 +783,6 @@ def build_rule_response(message: str, lang: str, days: Optional[int] = None) -> 
         return base
 
     if not rule:
-        # FIX: No rule match + no health context → ask user to describe symptoms
         if not has_health_context(message):
             no_symptom_msg = {
                 "en": "Please describe your symptoms (e.g. fever, cold, headache, cough) to receive medicine suggestions.",
@@ -831,7 +802,6 @@ def build_rule_response(message: str, lang: str, days: Optional[int] = None) -> 
                 "red_flag": False,
             }
 
-        # Has health context but no specific rule → generic fallback WITH meds
         generic_label = {
             "en": "General Symptoms", "hi": "सामान्य लक्षण",
             "ar": "أعراض عامة",       "ta": "பொது அறிகுறிகள்",
@@ -845,17 +815,13 @@ def build_rule_response(message: str, lang: str, days: Optional[int] = None) -> 
             "te": [{"name": "Dolo 650", "generic": "Paracetamol 650 mg", "note": "6–8 గంటలకు ఒక మాత్ర తీసుకోండి."}],
         }
         generic_remedies = {
-            "en": ["Rest and stay hydrated"],
-            "hi": ["आराम करें और पानी पिएं"],
-            "ar": ["الراحة وشرب السوائل"],
-            "ta": ["ஓய்வெடுங்கள், நீர் அருந்துங்கள்"],
+            "en": ["Rest and stay hydrated"], "hi": ["आराम करें और पानी पिएं"],
+            "ar": ["الراحة وشرب السوائل"],   "ta": ["ஓய்வெடுங்கள், நீர் அருந்துங்கள்"],
             "te": ["విశ్రాంతి తీసుకోండి మరియు నీరు తాగండి"],
         }
         generic_diet = {
-            "en": ["Drink plenty of water"],
-            "hi": ["खूब पानी पिएं"],
-            "ar": ["اشرب الكثير من الماء"],
-            "ta": ["நிறைய தண்ணீர் குடிக்கவும்"],
+            "en": ["Drink plenty of water"], "hi": ["खूब पानी पिएं"],
+            "ar": ["اشرب الكثير من الماء"], "ta": ["நிறைய தண்ணீர் குடிக்கவும்"],
             "te": ["నీటిని పుష్కలంగా తాగండి"],
         }
         generic_warning = {
@@ -876,8 +842,7 @@ def build_rule_response(message: str, lang: str, days: Optional[int] = None) -> 
             "red_flag": False,
         }
 
-    # Pick the right language suffix; Tamil/Telugu fall back to English rules
-    suffix = "ar" if lang == "ar" else ("hi" if lang == "hi" else "en")
+    suffix    = "ar" if lang == "ar" else ("hi" if lang == "hi" else "en")
     meds      = rule.get(f"medications_{suffix}", rule.get("medications_en", []))
     remedies  = rule.get(f"remedies_{suffix}",    rule.get("remedies_en", []))
     diet      = rule.get(f"diet_{suffix}",        rule.get("diet_en", []))
@@ -896,47 +861,47 @@ def build_rule_response(message: str, lang: str, days: Optional[int] = None) -> 
     }
 
 # ────────────────────────────────────────────────────────────────
-#  LLM CALL (fallback + Tamil/Telugu translation)
+#  LLM CALL via Ollama (meditron:latest)
 # ────────────────────────────────────────────────────────────────
 async def call_llm(message: str, lang: str) -> Dict[str, Any]:
-    payload = {
-        "model": MODEL,
-        "response_format": {"type": "json_object"},
-        "messages": [
-            {"role": "system", "content": SYSTEM_PROMPT},
-            {"role": "user",   "content": f"Language: {lang}\nUser message: {message}"},
-        ],
-    }
-    async with httpx.AsyncClient(timeout=20) as client:
-        r = await client.post(OPENAI_URL, headers=OPENAI_HEADERS, json=payload)
-        r.raise_for_status()
-    return json.loads(r.json()["choices"][0]["message"]["content"])
+    """Call meditron via Ollama and parse JSON response."""
+    messages = [
+        {"role": "system", "content": SYSTEM_PROMPT},
+        {"role": "user",   "content": f"Language: {lang}\nUser message: {message}"},
+    ]
+    raw = await call_ollama(messages, timeout=60)
+    # Extract JSON from response (meditron may wrap it in text)
+    raw = raw.replace("```json", "").replace("```", "").strip()
+    match = re.search(r"\{.*\}", raw, re.DOTALL)
+    if match:
+        raw = match.group(0)
+    return json.loads(raw)
+
 
 async def call_llm_translate(rule_result: Dict[str, Any], message: str, lang: str) -> Dict[str, Any]:
-    """Ask LLM to translate an existing rule result into Tamil/Telugu."""
+    """Ask meditron to translate an existing rule result into Tamil/Telugu."""
     lang_name = "Tamil" if lang == "ta" else "Telugu"
-    payload = {
-        "model": MODEL,
-        "response_format": {"type": "json_object"},
-        "messages": [
-            {"role": "system", "content": SYSTEM_PROMPT},
-            {
-                "role": "user",
-                "content": (
-                    f"Language: {lang} ({lang_name})\n"
-                    f"User's original message: {message}\n"
-                    f"Translate ALL text fields of this JSON into {lang_name} script. "
-                    f"Keep medicine names (Dolo 650, Crocin etc.) and dosage numbers as-is. "
-                    f"Return the same JSON structure with translated text:\n"
-                    f"{json.dumps(rule_result, ensure_ascii=False)}"
-                ),
-            },
-        ],
-    }
-    async with httpx.AsyncClient(timeout=20) as client:
-        r = await client.post(OPENAI_URL, headers=OPENAI_HEADERS, json=payload)
-        r.raise_for_status()
-    return json.loads(r.json()["choices"][0]["message"]["content"])
+    messages = [
+        {"role": "system", "content": SYSTEM_PROMPT},
+        {
+            "role": "user",
+            "content": (
+                f"Language: {lang} ({lang_name})\n"
+                f"User's original message: {message}\n"
+                f"Translate ALL text fields of this JSON into {lang_name} script. "
+                f"Keep medicine names (Dolo 650, Crocin etc.) and dosage numbers as-is. "
+                f"Return the same JSON structure with translated text:\n"
+                f"{json.dumps(rule_result, ensure_ascii=False)}"
+            ),
+        },
+    ]
+    raw = await call_ollama(messages, timeout=60)
+    raw = raw.replace("```json", "").replace("```", "").strip()
+    match = re.search(r"\{.*\}", raw, re.DOTALL)
+    if match:
+        raw = match.group(0)
+    return json.loads(raw)
+
 
 def normalize_result(result: Dict[str, Any], lang: str, days: Optional[int] = None) -> Dict[str, Any]:
     if not isinstance(result, dict):
@@ -954,8 +919,6 @@ def normalize_result(result: Dict[str, Any], lang: str, days: Optional[int] = No
         result["severity"] = "mild"
     if not isinstance(result["medications"], list):
         result["medications"] = []
-    # FIX: Removed auto-injection of fever meds when no medications exist.
-    # If no meds are returned, leave it empty — the UI will show "No medicines — consult a doctor"
     return result
 
 
@@ -973,8 +936,6 @@ async def process(message: str, lang: str) -> Dict[str, Any]:
 
     # STEP 1: RED FLAG FIRST
     if is_red_flag(message):
-        # lang is always "en" for voice input (normalized upstream).
-        # Keep the dict for /symptom endpoint edge-cases but default to English.
         warnings = {
             "en": "⚠️ RED FLAG: Your symptoms may require emergency care. Please call 108 (India) or visit the nearest hospital immediately.",
             "hi": "⚠️ रेड फ्लैग: आपके लक्षण आपातकालीन देखभाल का संकेत देते हैं। कृपया तुरंत 108 पर कॉल करें या नजदीकी अस्पताल जाएं।",
@@ -985,7 +946,7 @@ async def process(message: str, lang: str) -> Dict[str, Any]:
         result = {
             "symptom_detected": "Red Flag Symptoms",
             "severity": "see_doctor_now",
-            "duration_note": duration_note(days, "en"),   # 🔒 always English
+            "duration_note": duration_note(days, "en"),
             "home_remedies": [],
             "medications": [],
             "diet_tips": [],
@@ -996,16 +957,16 @@ async def process(message: str, lang: str) -> Dict[str, Any]:
         cache.set(cache_key, result)
         return result
 
-    # STEP 2: BASE RULE RESPONSE (respects language)
+    # STEP 2: BASE RULE RESPONSE
     rule_result = build_rule_response(message, lang, days)
 
-    # STEP 3: If no symptoms detected, return immediately (no meds needed)
+    # STEP 3: If no symptoms detected, return immediately
     if rule_result.get("symptom_detected") == "No symptoms detected":
         rule_result["_cached"] = False
         cache.set(cache_key, rule_result)
         return rule_result
 
-    # STEP 4: For Tamil/Telugu, translate via LLM
+    # STEP 4: For Tamil/Telugu, translate via meditron
     if lang in ("ta", "te"):
         try:
             translated = await call_llm_translate(rule_result, message, lang)
@@ -1016,10 +977,9 @@ async def process(message: str, lang: str) -> Dict[str, Any]:
         except Exception:
             pass  # fall through to rule result
 
-    # STEP 5: GPT-CLASSIFIED CIPLA SEARCH → FILL WITH GPT (total = 3)
+    # STEP 5: Cipla search → fill with meditron (total = 3)
     final_meds = await get_final_medicines(message)
 
-    # If get_final_medicines returned nothing, fall back to rule-based meds
     if not final_meds:
         final_meds = rule_result.get("medications", [])
 
@@ -1032,7 +992,7 @@ async def process(message: str, lang: str) -> Dict[str, Any]:
 # ────────────────────────────────────────────────────────────────
 #  FASTAPI APP
 # ────────────────────────────────────────────────────────────────
-app = FastAPI(title="Healthcare Voice Assistant API")
+app = FastAPI(title="Healthcare Voice Assistant API (Local meditron:latest)")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -1044,7 +1004,7 @@ class Req(BaseModel):
     message:  str
     age:      Optional[int]  = None
     gender:   Optional[str]  = None
-    language: Optional[str]  = None  # auto-detect if omitted
+    language: Optional[str]  = None
 
 @app.get("/")
 def home():
@@ -1058,11 +1018,8 @@ def icon():
 async def voice_input(file: UploadFile = File(...), lang: str = "auto"):
     """
     Accepts multipart audio + optional ?lang=hi|ar|ta|te|en|auto query param.
-    Uses OpenAI gpt-4o-transcribe for multi-language speech recognition.
-    Passing the correct language improves transcription accuracy.
+    Uses local faster-whisper for speech recognition (no internet required).
     """
-
-    # Validate lang
     valid_langs = ("en", "hi", "ar", "ta", "te", "auto")
     if lang not in valid_langs:
         lang = "auto"
@@ -1071,7 +1028,6 @@ async def voice_input(file: UploadFile = File(...), lang: str = "auto"):
         audio_bytes = await file.read()
         logger.info(f"Received audio: {len(audio_bytes)} bytes, requested lang={lang!r}")
 
-        # transcribe_audio now returns (transcript, detected_lang) tuple
         transcript, detected_lang = await transcribe_audio(audio_bytes, lang)
 
         if not transcript.strip():
@@ -1098,23 +1054,16 @@ async def voice_input(file: UploadFile = File(...), lang: str = "auto"):
 
         logger.info(f"Processing transcript as lang={detected_lang!r}")
 
-        # 🔒 ALWAYS FORCE ENGLISH OUTPUT
-        # Normalize transcript to English BEFORE hitting medical rules.
-        # This ensures build_rule_response always picks _en fields regardless
-        # of what language the user spoke.
         english_transcript = await normalize_to_english(transcript)
         if english_transcript != transcript:
             logger.info(f"Normalized to English: {english_transcript!r}")
 
-        result = await process(english_transcript, "en")   # ← always "en"
-        result["_transcript"]       = english_transcript   # show English on UI
-        result["_original_speech"]  = transcript           # keep raw for debugging
-        result["_lang"]             = "en"                 # tell frontend: always English
+        result = await process(english_transcript, "en")
+        result["_transcript"]      = english_transcript
+        result["_original_speech"] = transcript
+        result["_lang"]            = "en"
         return result
 
-    except httpx.HTTPStatusError as e:
-        logger.error(f"OpenAI Transcription API error: {e.response.status_code} — {e.response.text}")
-        raise HTTPException(status_code=502, detail=f"OpenAI transcription error: {e.response.text}")
     except Exception as e:
         logger.error(f"Voice endpoint error: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail=str(e))
@@ -1125,7 +1074,6 @@ async def symptom(req: Req):
     if not msg:
         raise HTTPException(400, "Empty message")
 
-    # Language: prefer explicit from client, else auto-detect from text
     valid_langs = ("en", "hi", "ar", "ta", "te")
     lang = req.language if req.language in valid_langs else detect_language(msg)
 
@@ -1135,11 +1083,8 @@ async def symptom(req: Req):
         msg += f" (gender: {req.gender})"
 
     try:
-        # For Arabic/Hindi/Tamil/Telugu input via the /symptom endpoint,
-        # normalize to English first so build_rule_response uses _en fields
-        # and the LLM fallback gets clean English input.
         if lang in ("ar", "hi", "ta", "te"):
-            english_msg = msg  # default fallback = original text
+            english_msg = msg
             try:
                 english_msg = await normalize_to_english(msg)
                 logger.info(f"/symptom normalized [{lang}→en]: {english_msg!r}")
@@ -1147,17 +1092,17 @@ async def symptom(req: Req):
                 logger.warning(f"normalize_to_english failed in /symptom: {e} — using raw")
             result = await process(english_msg, "en")
             result["_original_text"] = msg
-            result["_english_text"] = english_msg  # always set for UI bubble
-            result["_lang"] = lang
+            result["_english_text"]  = english_msg
+            result["_lang"]          = lang
             return result
-        # English: process directly but still set _english_text so the frontend
-        # always has a reliable field — it equals exactly what the user said.
+
         result = await process(msg, lang)
-        result["_english_text"] = msg   # exact transcript, no modifications
-        result["_lang"] = lang
+        result["_english_text"] = msg
+        result["_lang"]         = lang
         return result
-    except httpx.HTTPStatusError:
-        raise HTTPException(502, "LLM API error")
+
+    except httpx.HTTPError:
+        raise HTTPException(502, "Ollama LLM error — is Ollama running? (ollama serve)")
     except Exception as e:
         raise HTTPException(500, str(e))
 
@@ -1165,6 +1110,9 @@ async def symptom(req: Req):
 def health():
     return {
         "status": "ok",
+        "llm_backend": "ollama (local)",
+        "model": MODEL,
+        "transcription": "faster-whisper (local)",
         "supported_languages": ["en", "hi", "ar", "ta", "te"],
         "language_detection": "automatic",
     }

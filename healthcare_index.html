@@ -654,7 +654,7 @@ async function handleTranscript(transcript) {
   document.getElementById('statStatus').textContent = 'status: processing';
 
   try {
-    const res = await fetch('/symptom', {
+    const res = await fetch('http://127.0.0.1:8001/symptom', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ message: transcript, language: detectedLang }),
@@ -729,7 +729,7 @@ async function sendAudioToBackend(blob) {
   formData.append('file', blob, 'audio.webm');
   const langParam = selectedLang || 'auto';
   try {
-    const res = await fetch(`/voice?lang=${langParam}`, { method: 'POST', body: formData });
+    const res = await fetch(`http://127.0.0.1:8001/voice?lang=${langParam}`, { method: 'POST', body: formData });
     if (!res.ok) {
       let errDetail = `Server error ${res.status}`;
       try { errDetail = (await res.json()).detail || errDetail; } catch (_) {}
