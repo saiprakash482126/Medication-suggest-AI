@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: qa
+  labels:
+    environment: qa
+    app: medi-suggest-ai

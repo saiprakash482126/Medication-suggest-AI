@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: medi-suggest-ai-config
+  namespace: qa
+data:
+  OLLAMA_MODEL: "meditron:latest"
+  OLLAMA_BASE_URL: "http://ollama:11434"
