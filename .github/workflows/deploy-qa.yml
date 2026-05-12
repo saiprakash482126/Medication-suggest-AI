@@ -1,4 +1,4 @@
-name: Build and Deploy Medi-Suggest-AI on QA
+name: Build and Deploy on QA
 
 on:
   workflow_dispatch:

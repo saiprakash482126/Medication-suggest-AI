@@ -1,13 +1,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: medi-suggest-ai          # ← MUST match exactly what deploy-qa.yml uses in kubectl set image
+  name: medi-suggest-ai
   namespace: qa
-  labels:
-    app: medi-suggest-ai
-    environment: qa
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: medi-suggest-ai
@@ -15,40 +12,30 @@ spec:
     metadata:
       labels:
         app: medi-suggest-ai
-        environment: qa
     spec:
-      imagePullSecrets:
-        - name: ocir-secret
-
       containers:
-        - name: medi-suggest-ai  # ← MUST match what deploy-qa.yml uses in kubectl set image
+        - name: medi-suggest-ai
           image: me-jeddah-1.ocir.io/axy8uqdv7mig/qa/medi-suggest-ai:latest
-
+          env:
+            - name: TZ
+              value: UTC
+            - name: OLLAMA_MODEL
+              value: medgemma:4b
+            - name: OLLAMA_BASE_URL
+              value: http://ollama:11434
           ports:
-            - containerPort: 8001
-
-          envFrom:
-            - configMapRef:
-                name: medi-suggest-ai-config
-
-          resources:
-            requests:
-              memory: "512Mi"
-              cpu: "250m"
-            limits:
-              memory: "1Gi"
-              cpu: "500m"
-
+            - containerPort: 8000
           readinessProbe:
             httpGet:
               path: /health
-              port: 8001
-            initialDelaySeconds: 20
+              port: 8000
+            initialDelaySeconds: 60
             periodSeconds: 10
-
           livenessProbe:
             httpGet:
               path: /health
-              port: 8001
-            initialDelaySeconds: 40
-            periodSeconds: 20
+              port: 8000
+            initialDelaySeconds: 60
+            periodSeconds: 30
+      imagePullSecrets:
+        - name: ocir-login-credentials
