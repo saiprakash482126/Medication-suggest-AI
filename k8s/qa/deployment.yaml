@@ -1,12 +1,13 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: medi-suggest-ai
+  name: medi-suggest-ai          # ← MUST match exactly what deploy-qa.yml uses in kubectl set image
   namespace: qa
   labels:
     app: medi-suggest-ai
+    environment: qa
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: medi-suggest-ai
@@ -14,73 +15,40 @@ spec:
     metadata:
       labels:
         app: medi-suggest-ai
+        environment: qa
     spec:
+      imagePullSecrets:
+        - name: ocir-secret
+
       containers:
-        # ── Main FastAPI container ─────────────────────────────────
-        - name: medi-suggest-ai
+        - name: medi-suggest-ai  # ← MUST match what deploy-qa.yml uses in kubectl set image
           image: me-jeddah-1.ocir.io/axy8uqdv7mig/qa/medi-suggest-ai:latest
-          env:
-            - name: TZ
-              value: UTC
-            # Point to the sidecar Ollama container (localhost because same pod)
-            - name: OLLAMA_BASE_URL
-              value: http://localhost:11434
-            - name: OLLAMA_MODEL
-              value: meditron:latest
+
           ports:
             - containerPort: 8001
-              name: http
-          readinessProbe:
-            httpGet:
-              path: /health
-              port: 8001
-            initialDelaySeconds: 60
-            periodSeconds: 10
-            failureThreshold: 5
-          livenessProbe:
-            httpGet:
-              path: /health
-              port: 8001
-            initialDelaySeconds: 90
-            periodSeconds: 30
-            failureThreshold: 3
+
+          envFrom:
+            - configMapRef:
+                name: medi-suggest-ai-config
+
           resources:
             requests:
               memory: "512Mi"
               cpu: "250m"
             limits:
               memory: "1Gi"
-              cpu: "1000m"
+              cpu: "500m"
 
-        # ── Ollama sidecar (serves meditron:latest locally) ────────
-        - name: ollama
-          image: ollama/ollama:latest
-          ports:
-            - containerPort: 11434
-              name: ollama
-          env:
-            - name: OLLAMA_MODELS
-              value: /models
-          volumeMounts:
-            - name: ollama-models
-              mountPath: /models
           readinessProbe:
             httpGet:
-              path: /api/tags
-              port: 11434
-            initialDelaySeconds: 30
+              path: /health
+              port: 8001
+            initialDelaySeconds: 20
             periodSeconds: 10
-          resources:
-            requests:
-              memory: "2Gi"
-              cpu: "500m"
-            limits:
-              memory: "4Gi"
-              cpu: "2000m"
 
-      volumes:
-        - name: ollama-models
-          emptyDir: {}
-
-      imagePullSecrets:
-        - name: ocir-login-credentials
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8001
+            initialDelaySeconds: 40
+            periodSeconds: 20
