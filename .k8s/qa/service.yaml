@@ -7,9 +7,9 @@ metadata:
     app: medi-suggest-ai
 spec:
   ports:
-  - port: 8080
+  - port: 8000
     protocol: TCP
-    targetPort: 8080
+    targetPort: 8000
   type: ClusterIP
   selector:
     app: medi-suggest-ai

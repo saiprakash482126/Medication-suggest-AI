@@ -5,6 +5,7 @@ metadata:
   namespace: qa
 spec:
   replicas: 2
+  progressDeadlineSeconds: 900
   selector:
     matchLabels:
       app: medi-suggest-ai
@@ -25,17 +26,26 @@ spec:
               value: http://ollama:11434
           ports:
             - containerPort: 8000
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "250m"
+            limits:
+              memory: "1Gi"
+              cpu: "1000m"
           readinessProbe:
             httpGet:
               path: /health
               port: 8000
-            initialDelaySeconds: 60
+            initialDelaySeconds: 90
             periodSeconds: 10
+            failureThreshold: 6
           livenessProbe:
             httpGet:
               path: /health
               port: 8000
-            initialDelaySeconds: 60
+            initialDelaySeconds: 90
             periodSeconds: 30
+            failureThreshold: 5
       imagePullSecrets:
         - name: ocir-login-credentials
