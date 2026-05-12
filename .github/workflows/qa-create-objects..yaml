@@ -15,3 +15,9 @@ jobs:
         ACTIONS_ALLOW_UNSECURE_COMMANDS: true
       with:
         args: apply -f .k8s/qa
+
+
+
+
+
+        
