@@ -12,9 +12,9 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # ── Local Ollama (meditron:latest) Config ────────────────────────
-OLLAMA_URL     = "http://localhost:11434/api/chat"
+OLLAMA_URL     = "http://ollama:11434/api/chat"
 OLLAMA_HEADERS = {"Content-Type": "application/json"}
-MODEL          = "meditron:latest"
+MODEL          = "medgemma:4b"
 
 # ── Common Ollama helper ─────────────────────────────────────────
 async def call_ollama(messages: list, timeout: int = 60) -> str:

@@ -458,6 +458,18 @@ body {
 
 <script>
 // ─────────────────────────────────────────────────────────
+//  BACKEND URL — works whether opened via FastAPI (port 8000)
+//  OR a dev static server (live server, VS Code, etc.)
+// ─────────────────────────────────────────────────────────
+const API_BASE = (() => {
+  const p = window.location.port;
+  // If served directly by FastAPI on 8000, use same origin
+  if (p === '8000' || p === '80' || p === '') return window.location.origin;
+  // Otherwise (live server, port 5500/5501/3000 etc.) point at the FastAPI backend
+  return 'http://localhost:8000';
+})();
+
+// ─────────────────────────────────────────────────────────
 //  LANGUAGE CONFIG
 // ─────────────────────────────────────────────────────────
 const LANGS = [
@@ -725,7 +737,7 @@ async function handleTranscript(transcript) {
   document.getElementById('statStatus').textContent = 'status: processing';
 
   try {
-    const res = await fetch(`${window.location.origin}/symptom`, {
+    const res = await fetch(`${API_BASE}/symptom`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ message: transcript, language: detectedLang }),
@@ -800,7 +812,7 @@ async function sendAudioToBackend(blob) {
   formData.append('file', blob, 'audio.webm');
   const langParam = selectedLang || 'auto';
   try {
-    const res = await fetch(`${window.location.origin}/voice?lang=${langParam}`, { method: 'POST', body: formData });
+    const res = await fetch(`${API_BASE}/voice?lang=${langParam}`, { method: 'POST', body: formData });
     if (!res.ok) {
       let errDetail = `Server error ${res.status}`;
       try { errDetail = (await res.json()).detail || errDetail; } catch (_) {}
@@ -1057,7 +1069,7 @@ async function submitTextInput() {
   document.getElementById('statStatus').textContent = 'status: processing';
 
   try {
-    const res = await fetch(`${window.location.origin}/symptom`, {
+    const res = await fetch(`${API_BASE}/symptom`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ message: transcript, language: detectedLang }),
