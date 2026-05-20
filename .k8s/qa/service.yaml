@@ -1,15 +1,16 @@
 apiVersion: v1
 kind: Service
+
 metadata:
-  name: medi-suggest-ai
-  namespace: qa
-  labels:
-    app: medi-suggest-ai
+  name: medi-suggest-ai-service
+
 spec:
-  ports:
-  - port: 8000
-    protocol: TCP
-    targetPort: 8000
-  type: ClusterIP
+  type: LoadBalancer
+
   selector:
     app: medi-suggest-ai
+
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8000

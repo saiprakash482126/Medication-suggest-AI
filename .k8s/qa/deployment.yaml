@@ -1,51 +1,44 @@
 apiVersion: apps/v1
 kind: Deployment
+
 metadata:
   name: medi-suggest-ai
-  namespace: qa
+
 spec:
-  replicas: 2
-  progressDeadlineSeconds: 900
+  replicas: 1
+
   selector:
     matchLabels:
       app: medi-suggest-ai
+
   template:
     metadata:
       labels:
         app: medi-suggest-ai
+
     spec:
       containers:
         - name: medi-suggest-ai
-          image: me-jeddah-1.ocir.io/axy8uqdv7mig/qa/medi-suggest-ai:latest
-          env:
-            - name: TZ
-              value: UTC
-            - name: OLLAMA_MODEL
-              value: medgemma:4b
-            - name: OLLAMA_BASE_URL
-              value: http://ollama:11434
+
+          image: saiprakash482/medi-suggest-ai:latest
+
+          imagePullPolicy: Always
+
           ports:
             - containerPort: 8000
+
+          env:
+            - name: OLLAMA_MODEL
+              value: "phi3:mini"
+
+            - name: OLLAMA_BASE_URL
+              value: "http://ollama:11434"
+
           resources:
             requests:
               memory: "512Mi"
               cpu: "250m"
+
             limits:
               memory: "1Gi"
-              cpu: "1000m"
-          readinessProbe:
-            httpGet:
-              path: /health
-              port: 8000
-            initialDelaySeconds: 90
-            periodSeconds: 10
-            failureThreshold: 6
-          livenessProbe:
-            httpGet:
-              path: /health
-              port: 8000
-            initialDelaySeconds: 90
-            periodSeconds: 30
-            failureThreshold: 5
-      imagePullSecrets:
-        - name: ocir-login-credentials
+              cpu: "500m"
