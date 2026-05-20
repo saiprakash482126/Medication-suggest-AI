@@ -300,6 +300,59 @@ body {
   font-size: 13px; color: #991b1b; margin-bottom: 10px;
   display: flex; gap: 8px; align-items: center;
 }
+
+/* ─── Text input ─── */
+.text-input-section {
+  margin-bottom: 16px;
+}
+.text-input-label {
+  font-size: 11px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.6px; color: #94a3b8; margin-bottom: 6px;
+  text-align: center;
+}
+.text-input-row {
+  display: flex; gap: 8px; align-items: flex-end;
+}
+.text-symptom-input {
+  flex: 1;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-size: 14px;
+  font-family: inherit;
+  color: #0f172a;
+  resize: none;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  background: #f8fafc;
+  line-height: 1.5;
+}
+.text-symptom-input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37,99,235,0.12);
+  background: #fff;
+}
+.text-symptom-input::placeholder { color: #94a3b8; }
+.btn-send {
+  width: 44px; height: 44px; border-radius: 12px;
+  background: #2563eb; color: white;
+  border: none; cursor: pointer;
+  font-size: 18px; display: flex;
+  align-items: center; justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(37,99,235,0.35);
+  transition: all 0.2s;
+}
+.btn-send:hover  { background: #1d4ed8; transform: scale(1.06); }
+.btn-send:active { transform: scale(0.97); }
+.btn-send:disabled { background: #94a3b8; cursor: not-allowed; transform: none; }
+.text-input-hint {
+  font-size: 11px; color: #94a3b8; text-align: right; margin-top: 4px;
+}
+.text-input-hint kbd {
+  background: #f1f5f9; border: 1px solid #cbd5e1;
+  border-radius: 4px; padding: 1px 5px; font-size: 10px; color: #475569;
+}
 </style>
 </head>
 <body>
@@ -364,6 +417,24 @@ body {
 
   <!-- Audio level bar -->
   <div class="level-wrap"><div class="level-bar" id="levelBar"></div></div>
+
+  <!-- Text input (type instead of speak) -->
+  <div class="text-input-section">
+    <div class="text-input-label">⌨️ Or type your symptoms below</div>
+    <div class="text-input-row">
+      <textarea
+        id="textInput"
+        class="text-symptom-input"
+        placeholder="e.g. I have fever from past 2 days and a headache…"
+        rows="2"
+        onkeydown="handleTextInputKey(event)"
+      ></textarea>
+      <button class="btn-send" id="sendTextBtn" onclick="submitTextInput()" title="Send">
+        ➤
+      </button>
+    </div>
+    <div class="text-input-hint">Press <kbd>Enter</kbd> to submit · <kbd>Shift+Enter</kbd> for new line</div>
+  </div>
 
   <!-- Transcript panel -->
   <div class="panel">
@@ -654,7 +725,7 @@ async function handleTranscript(transcript) {
   document.getElementById('statStatus').textContent = 'status: processing';
 
   try {
-    const res = await fetch('http://127.0.0.1:8001/symptom', {
+    const res = await fetch(`${window.location.origin}/symptom`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ message: transcript, language: detectedLang }),
@@ -729,7 +800,7 @@ async function sendAudioToBackend(blob) {
   formData.append('file', blob, 'audio.webm');
   const langParam = selectedLang || 'auto';
   try {
-    const res = await fetch(`http://127.0.0.1:8001/voice?lang=${langParam}`, { method: 'POST', body: formData });
+    const res = await fetch(`${window.location.origin}/voice?lang=${langParam}`, { method: 'POST', body: formData });
     if (!res.ok) {
       let errDetail = `Server error ${res.status}`;
       try { errDetail = (await res.json()).detail || errDetail; } catch (_) {}
@@ -950,6 +1021,73 @@ function escHtml(s) {
 }
 
 // ─────────────────────────────────────────────────────────
+//  TEXT INPUT SUBMIT
+// ─────────────────────────────────────────────────────────
+function handleTextInputKey(e) {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    submitTextInput();
+  }
+}
+
+async function submitTextInput() {
+  const input = document.getElementById('textInput');
+  const btn   = document.getElementById('sendTextBtn');
+  const transcript = input.value.trim();
+  if (!transcript) return;
+
+  // Detect lang from text or use selected
+  const detectedLang = selectedLang !== 'auto'
+    ? selectedLang
+    : detectLangFromText(transcript);
+
+  updateLangBadge(detectedLang);
+  document.getElementById('statLang').textContent = 'lang: ' + detectedLang;
+
+  // Show what user typed in the speech bubble area
+  showSpeechBubble(transcript, detectedLang, null);
+
+  // Disable while processing
+  btn.disabled   = true;
+  input.disabled = true;
+
+  queryCount++;
+  document.getElementById('statQueries').textContent = `queries: ${queryCount}`;
+  showLoadingCard();
+  document.getElementById('statStatus').textContent = 'status: processing';
+
+  try {
+    const res = await fetch(`${window.location.origin}/symptom`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: transcript, language: detectedLang }),
+    });
+
+    if (!res.ok) {
+      let errDetail = `Server error ${res.status}`;
+      try { errDetail = (await res.json()).detail || errDetail; } catch (_) {}
+      throw new Error(errDetail);
+    }
+
+    const data = await res.json();
+    showHealthcareResult(data);
+    document.getElementById('statusText').textContent = '✅ Done. Type or 🎤 speak to ask again.';
+    document.getElementById('statStatus').textContent = 'status: idle';
+    input.value = '';  // clear after success
+
+  } catch (err) {
+    console.error('Text submit error:', err);
+    showErrorCard(`❌ ${err.message}`);
+    document.getElementById('statusText').textContent = '❌ Error. Try again.';
+    document.getElementById('statStatus').textContent = 'status: error';
+  } finally {
+    btn.disabled   = false;
+    input.disabled = false;
+    input.focus();
+  }
+}
+
+// ─────────────────────────────────────────────────────────
 //  INIT
 // ─────────────────────────────────────────────────────────
 window.onload = () => {
@@ -970,9 +1108,11 @@ window.onload = () => {
   }
 };
 
-window.toggleRecording = toggleRecording;
-window.clearAll        = clearAll;
-window.selectLang      = selectLang;
+window.toggleRecording  = toggleRecording;
+window.clearAll         = clearAll;
+window.selectLang       = selectLang;
+window.submitTextInput  = submitTextInput;
+window.handleTextInputKey = handleTextInputKey;
 </script>
 </body>
 </html>
