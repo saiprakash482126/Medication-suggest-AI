@@ -3,10 +3,9 @@ kind: Service
 
 metadata:
   name: medi-suggest-ai-service
+  namespace: qa
 
 spec:
-  type: LoadBalancer
-
   selector:
     app: medi-suggest-ai
 
@@ -14,3 +13,5 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: 8000
+
+  type: LoadBalancer

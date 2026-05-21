@@ -3,6 +3,7 @@ kind: Deployment
 
 metadata:
   name: medi-suggest-ai
+  namespace: qa
 
 spec:
   replicas: 1
@@ -20,7 +21,7 @@ spec:
       containers:
         - name: medi-suggest-ai
 
-          image: saiprakash482/medi-suggest-ai:latest
+          image: 114403655685.dkr.ecr.ap-south-1.amazonaws.com/medication-suggest-ai:latest
 
           imagePullPolicy: Always
 
