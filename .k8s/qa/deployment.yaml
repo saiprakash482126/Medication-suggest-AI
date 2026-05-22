@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 
 metadata:
-  name: medi-suggest-ai
+  name: medication-suggest-ai
   namespace: qa
 
 spec:
@@ -10,16 +10,16 @@ spec:
 
   selector:
     matchLabels:
-      app: medi-suggest-ai
+      app: medication-suggest-ai
 
   template:
     metadata:
       labels:
-        app: medi-suggest-ai
+        app: medication-suggest-ai
 
     spec:
       containers:
-        - name: medi-suggest-ai
+        - name: medication-suggest-ai
 
           image: 114403655685.dkr.ecr.ap-south-1.amazonaws.com/medication-suggest-ai:latest
 
@@ -29,17 +29,16 @@ spec:
             - containerPort: 8000
 
           env:
-            - name: OLLAMA_MODEL
-              value: "phi3:mini"
+            - name: OPENAI_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: OPENAI_API_KEY
 
-            - name: OLLAMA_BASE_URL
-              value: "http://ollama:11434"
+            - name: DEEPGRAM_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: DEEPGRAM_API_KEY
 
-          resources:
-            requests:
-              memory: "512Mi"
-              cpu: "250m"
-
-            limits:
-              memory: "1Gi"
-              cpu: "500m"
+---
