@@ -20,9 +20,15 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Configure Kubeconfig
+        shell: bash
         run: |
-          echo "${{ secrets.RIMS_KUBE_CONFIG_QA }}" > kubeconfig.yaml
+          cat > kubeconfig.yaml << 'EOF'
+          ${{ secrets.RIMS_KUBE_CONFIG_QA }}
+          EOF
+
           export KUBECONFIG=$PWD/kubeconfig.yaml
+
+          kubectl config current-context
           kubectl get nodes
 
       - name: Create Kubernetes Objects
