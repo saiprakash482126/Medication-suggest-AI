@@ -409,6 +409,18 @@ body {
     <button class="btn-clear" onclick="clearAll()">🗑 Clear</button>
   </div>
 
+  <!-- HTTPS warning banner — shown only on HTTP non-localhost -->
+  <div id="httpWarningBanner" style="display:none;
+    background:#fef3c7; border:1.5px solid #f59e0b; border-radius:12px;
+    padding:12px 16px; margin:10px 0; font-size:13px; color:#92400e;
+    text-align:center; line-height:1.6;">
+    🔒 <strong>Microphone blocked by your browser.</strong><br>
+    Voice input requires <strong>HTTPS</strong>. This page is on plain <code>http://</code> so
+    Chrome blocks mic access.<br>
+    <strong>Use the text box below</strong> to type your symptoms — it works perfectly on HTTP.<br>
+    <span style="font-size:11px;opacity:0.8;">Ask your admin to enable HTTPS on the load balancer to unlock voice.</span>
+  </div>
+
   <!-- Status -->
   <div class="status-row">
     <span class="status-dot" id="statusDot"></span>
@@ -458,20 +470,15 @@ body {
 
 <script>
 // ─────────────────────────────────────────────────────────
-//  BACKEND URL — auto-detects nginx (80/8000) vs uvicorn direct (8001)
-//  Works for local dev, Docker, and EKS production
+//  BACKEND URL — works whether opened via FastAPI (port 8000)
+//  OR a dev static server (live server, VS Code, etc.)
 // ─────────────────────────────────────────────────────────
 const API_BASE = (() => {
   const p = window.location.port;
-  const host = window.location.hostname;
-  // Direct uvicorn on 8001 → same origin (local dev without nginx)
-  if (p === '8001') return window.location.origin;
-  // nginx on 80 or 8000 → same origin (nginx proxies /symptom and /voice)
+  // If served directly by FastAPI on 8000, use same origin
   if (p === '8000' || p === '80' || p === '') return window.location.origin;
-  // Any localhost port (VS Code live server, custom dev) → same origin
-  if (host === 'localhost' || host === '127.0.0.1') return window.location.origin;
-  // Production domain (EKS, custom hostname) → same origin
-  return window.location.origin;
+  // Otherwise (live server, port 5500/5501/3000 etc.) point at the FastAPI backend
+  return 'http://localhost:8000';
 })();
 
 // ─────────────────────────────────────────────────────────
@@ -1108,6 +1115,33 @@ async function submitTextInput() {
 //  INIT
 // ─────────────────────────────────────────────────────────
 window.onload = () => {
+  // ── HTTP check: Chrome blocks mic on plain HTTP (non-localhost) ──
+  const isHttp = location.protocol === 'http:';
+  const isLocal = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+  const micBlocked = isHttp && !isLocal;
+
+  if (micBlocked) {
+    // Show warning banner
+    const banner = document.getElementById('httpWarningBanner');
+    if (banner) banner.style.display = 'block';
+
+    // Disable mic button visually and functionally
+    const micBtn = document.getElementById('micBtn');
+    if (micBtn) {
+      micBtn.disabled = true;
+      micBtn.title = 'Voice requires HTTPS — use the text box below';
+      micBtn.style.opacity = '0.4';
+      micBtn.style.cursor  = 'not-allowed';
+      micBtn.style.background = '#94a3b8';
+      micBtn.style.boxShadow = 'none';
+    }
+    document.getElementById('statusText').textContent =
+      '🔒 Voice blocked (HTTP). Type your symptoms in the box below ↓';
+    document.getElementById('statLang').textContent = 'mode: text-only (HTTP)';
+    console.warn('⚠️ HTTP detected — microphone disabled. HTTPS required for Web Speech API.');
+    return; // skip rest of init
+  }
+
   if (USE_WEBSPEECH) {
     console.log('✅ Web Speech API available — using browser-native ASR');
     document.getElementById('statusText').textContent =
