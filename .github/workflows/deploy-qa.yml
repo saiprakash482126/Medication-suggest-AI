@@ -45,10 +45,16 @@ jobs:
           docker push 114403655685.dkr.ecr.ap-south-1.amazonaws.com/medication-suggest-ai:latest
 
       # Configure Kubernetes Access
-      - name: Set Kubeconfig
+      - name: Configure Kubeconfig
+        shell: bash
         run: |
-          echo "${{ secrets.RIMS_KUBE_CONFIG_QA }}" > kubeconfig.yaml
+          cat > kubeconfig.yaml << 'EOF'
+          ${{ secrets.RIMS_KUBE_CONFIG_QA }}
+          EOF
+
           export KUBECONFIG=$PWD/kubeconfig.yaml
+
+          kubectl config current-context
           kubectl get nodes
 
       # Deploy to Kubernetes
