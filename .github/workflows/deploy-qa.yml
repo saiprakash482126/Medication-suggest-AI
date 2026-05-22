@@ -1,8 +1,6 @@
 name: Deploy QA Environment
 
 on:
-  workflow_dispatch:
-
   push:
     branches:
       - main
@@ -26,7 +24,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      # Login to AWS ECR
+      # Login to Amazon ECR
       - name: Login to Amazon ECR
         uses: aws-actions/amazon-ecr-login@v2
 
@@ -67,3 +65,6 @@ jobs:
           kubectl apply -f .k8s/qa/service.yaml
 
           kubectl rollout restart deployment medication-suggest-ai -n qa
+
+          kubectl get pods -n qa
+          kubectl get svc -n qa
