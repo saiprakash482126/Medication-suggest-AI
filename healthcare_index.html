@@ -458,15 +458,20 @@ body {
 
 <script>
 // ─────────────────────────────────────────────────────────
-//  BACKEND URL — works whether opened via FastAPI (port 8000)
-//  OR a dev static server (live server, VS Code, etc.)
+//  BACKEND URL — auto-detects nginx (80/8000) vs uvicorn direct (8001)
+//  Works for local dev, Docker, and EKS production
 // ─────────────────────────────────────────────────────────
 const API_BASE = (() => {
   const p = window.location.port;
-  // If served directly by FastAPI on 8000, use same origin
+  const host = window.location.hostname;
+  // Direct uvicorn on 8001 → same origin (local dev without nginx)
+  if (p === '8001') return window.location.origin;
+  // nginx on 80 or 8000 → same origin (nginx proxies /symptom and /voice)
   if (p === '8000' || p === '80' || p === '') return window.location.origin;
-  // Otherwise (live server, port 5500/5501/3000 etc.) point at the FastAPI backend
-  return 'http://localhost:8000';
+  // Any localhost port (VS Code live server, custom dev) → same origin
+  if (host === 'localhost' || host === '127.0.0.1') return window.location.origin;
+  // Production domain (EKS, custom hostname) → same origin
+  return window.location.origin;
 })();
 
 // ─────────────────────────────────────────────────────────
