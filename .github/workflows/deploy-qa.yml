@@ -2,6 +2,7 @@ name: Deploy QA Environment
 
 on:
   workflow_dispatch:
+
   push:
     branches:
       - main
@@ -13,6 +14,7 @@ jobs:
 
     steps:
 
+      # Checkout Repository
       - name: Checkout Code
         uses: actions/checkout@v4
 
@@ -48,9 +50,7 @@ jobs:
       - name: Configure Kubeconfig
         shell: bash
         run: |
-          cat > kubeconfig.yaml << 'EOF'
-          ${{ secrets.RIMS_KUBE_CONFIG_QA }}
-          EOF
+          echo "${{ secrets.RIMS_KUBE_CONFIG_QA }}" | base64 -d > kubeconfig.yaml
 
           export KUBECONFIG=$PWD/kubeconfig.yaml
 
@@ -58,6 +58,7 @@ jobs:
 
       # Deploy to Kubernetes
       - name: Deploy to QA
+        shell: bash
         run: |
           export KUBECONFIG=$PWD/kubeconfig.yaml
 
