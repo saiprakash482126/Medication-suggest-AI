@@ -1,6 +1,7 @@
 name: Deploy QA Environment
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
