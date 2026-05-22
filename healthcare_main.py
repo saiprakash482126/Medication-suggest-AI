@@ -152,7 +152,19 @@ async def get_medicine_type(user_input: str) -> str:
                 "body pain → ibuprofen\n"
                 "allergy → cetirizine\n"
                 "headache → paracetamol\n"
-                "Return only ONE word, lowercase."
+                "sore throat → antiseptic\n"
+                "throat pain → antiseptic\n"
+                "heart palpitations → magnesium\n"
+                "racing heart → magnesium\n"
+                "irregular heartbeat → magnesium\n"
+                "heart discomfort → magnesium\n"
+                "anxiety → buspirone\n"
+                "insomnia → melatonin\n"
+                "skin rash → calamine\n"
+                "wound → betadine\n"
+                "eye irritation → lubricant\n"
+                "Return only ONE word, lowercase. "
+                "IMPORTANT: Never return 'paracetamol' for cardiac/heart symptoms."
             ),
         },
         {"role": "user", "content": user_input},
@@ -416,6 +428,11 @@ _REDFLAG_PATTERNS_EN = [
     r"\bseizure\b", r"\bconvulsion\b",
     r"\bsevere stomach pain\b",
     r"\bstiff neck\b",
+    # Cardiac emergencies
+    r"\bheart attack\b", r"\bcardiac arrest\b",
+    r"\bsevere chest pain\b", r"\bcrushing chest\b",
+    r"\barm pain.*chest\b", r"\bjaw pain.*chest\b",
+    r"\bsudden heart\b", r"\bheart stopped\b",
 ]
 _REDFLAG_PATTERNS_HI = [
     r"बहुत तेज़ बुखार", r"सांस नहीं", r"छाती में दर्द",
@@ -705,6 +722,127 @@ SYMPTOM_RULES: List[Dict[str, Any]] = [
         "warning_hi": "2 हफ़्ते से ज़्यादा खांसी हो, बलगम में खून हो या सांस में तकलीफ हो तो डॉक्टर के पास जाएं।",
         "warning_ar": "راجع الطبيب إذا استمر السعال أكثر من أسبوعين أو كان معه دم.",
     },
+    # ── CARDIAC / HEART PALPITATIONS (non-emergency) ──────────────────────
+    {
+        "keywords_en": [
+            "palpitations", "heart palpitation", "racing heart", "irregular heartbeat",
+            "heart flutter", "heart skipping", "rapid heartbeat", "heart rate high",
+            "heart problem", "heart issue", "heart discomfort", "heart related",
+            "heart pain", "heart ache", "my heart", "cardiac",
+        ],
+        "keywords_hi": [
+            "दिल की धड़कन", "दिल धड़क", "घबराहट", "दिल में दर्द",
+            "हृदय", "दिल की समस्या", "दिल तेज़ धड़क",
+        ],
+        "keywords_ar": [
+            "خفقان", "تسارع القلب", "ألم القلب", "اضطراب ضربات القلب",
+            "قلب سريع", "مشكلة قلبية",
+        ],
+        "symptom_detected_en": "Heart Palpitations / Cardiac Concern",
+        "symptom_detected_hi": "दिल की धड़कन / हृदय संबंधी समस्या",
+        "symptom_detected_ar": "خفقان / قلق قلبي",
+        "severity": "moderate",
+        "medications_en": [
+            {
+                "name": "Consult a Doctor Immediately",
+                "generic": "Prescription required",
+                "note": "⚠️ Heart symptoms should ALWAYS be evaluated by a doctor. No safe OTC medicine exists for cardiac conditions.",
+            },
+            {
+                "name": "Magnesium Supplements (e.g. MagOx / Mag-2)",
+                "generic": "Magnesium oxide / Magnesium citrate",
+                "note": "Magnesium deficiency can cause palpitations. Only take after confirming deficiency with a doctor.",
+            },
+        ],
+        "medications_hi": [
+            {
+                "name": "तुरंत डॉक्टर से मिलें",
+                "generic": "Doctor consultation required",
+                "note": "⚠️ दिल से जुड़े लक्षणों के लिए कोई OTC दवा सुरक्षित नहीं है। तुरंत डॉक्टर से संपर्क करें।",
+            },
+        ],
+        "medications_ar": [
+            {
+                "name": "استشر الطبيب فوراً",
+                "generic": "Doctor consultation required",
+                "note": "⚠️ أعراض القلب تستدعي تقييماً طبياً فورياً. لا توجد أدوية OTC آمنة للقلب.",
+            },
+        ],
+        "remedies_en": [
+            "Sit or lie down calmly — avoid sudden movement",
+            "Try slow deep breathing: inhale 4 sec, hold 4 sec, exhale 4 sec",
+            "Drink a glass of cold water slowly",
+            "Avoid caffeine, alcohol, and energy drinks",
+            "Avoid stress triggers — try relaxation",
+        ],
+        "remedies_hi": [
+            "शांत होकर बैठें या लेटें",
+            "धीरे-धीरे गहरी सांस लें",
+            "एक गिलास ठंडा पानी पिएं",
+            "चाय, कॉफी, शराब से बचें",
+        ],
+        "remedies_ar": [
+            "اجلس أو استلقِ بهدوء",
+            "تنفس ببطء وعمق",
+            "اشرب كوباً من الماء البارد ببطء",
+            "تجنب الكافيين والكحول",
+        ],
+        "diet_en": [
+            "Avoid caffeine (tea, coffee, energy drinks)",
+            "Eat magnesium-rich foods: bananas, nuts, leafy greens",
+            "Stay well hydrated throughout the day",
+            "Avoid heavy, oily meals",
+        ],
+        "diet_hi": [
+            "चाय, कॉफी, एनर्जी ड्रिंक बंद करें",
+            "केला, बादाम, हरी सब्ज़ियां खाएं",
+            "खूब पानी पिएं",
+        ],
+        "diet_ar": [
+            "تجنب الكافيين",
+            "تناول الموز والمكسرات والخضروات الورقية",
+            "اشرب الكثير من الماء",
+        ],
+        "warning_en": "⚠️ IMPORTANT: ANY heart-related symptom warrants immediate medical attention. If you experience chest pain, breathlessness, fainting, or severe palpitations — call 108 immediately or go to the nearest hospital.",
+        "warning_hi": "⚠️ चेतावनी: दिल से जुड़ा कोई भी लक्षण हो तो तुरंत डॉक्टर से मिलें। सीने में दर्द, सांस की तकलीफ, बेहोशी या तेज़ धड़कन हो तो 108 पर कॉल करें।",
+        "warning_ar": "⚠️ تحذير: أي أعراض قلبية تستلزم تقييماً طبياً فورياً. إذا كان هناك ألم في الصدر أو ضيق تنفس أو إغماء، اتصل بالإسعاف فوراً.",
+    },
+    # ── SORE THROAT / THROAT INFECTION ────────────────────────────────────
+    {
+        "keywords_en": [
+            "sore throat", "throat pain", "throat infection", "throat ache",
+            "painful throat", "strep throat", "throat irritation", "throat burning",
+            "difficulty swallowing", "hard to swallow",
+        ],
+        "keywords_hi": ["गले में दर्द", "गला दर्द", "गला खराब", "गला जलन", "निगलने में दर्द"],
+        "keywords_ar": ["ألم الحلق", "التهاب الحلق", "حرقة الحلق", "صعوبة البلع"],
+        "symptom_detected_en": "Sore Throat",
+        "symptom_detected_hi": "गले में दर्द",
+        "symptom_detected_ar": "ألم الحلق",
+        "severity": "mild",
+        "medications_en": [
+            {"name": "Strepsils", "generic": "Amylmetacresol + Dichlorobenzyl alcohol", "note": "India's #1 throat lozenge. Dissolve 1 lozenge slowly in mouth every 2–3 hrs."},
+            {"name": "Vicks Formula 44", "generic": "Dextromethorphan + Chlorpheniramine", "note": "Soothing for throat and cough. 2 tsp 3x/day."},
+            {"name": "Betadine Gargle", "generic": "Povidone-Iodine 1% solution", "note": "Antiseptic gargle. Dilute and gargle for 30 sec, 3x/day."},
+        ],
+        "medications_hi": [
+            {"name": "स्ट्रेप्सिल्स", "generic": "Amylmetacresol", "note": "हर 2-3 घंटे में एक लोज़ेंज धीरे-धीरे चूसें।"},
+            {"name": "बेटाडीन गार्गल", "generic": "Povidone-Iodine", "note": "पतला करके 30 सेकंड गरारे करें, दिन में 3 बार।"},
+        ],
+        "medications_ar": [
+            {"name": "ستريبسيلز", "generic": "Amylmetacresol", "note": "امص قرصاً واحداً ببطء كل 2-3 ساعات."},
+            {"name": "بيتادين غرغرة", "generic": "Povidone-Iodine 1%", "note": "مضمضة ومضغ لمدة 30 ثانية 3 مرات يومياً."},
+        ],
+        "remedies_en": ["Warm salt water gargle (1/2 tsp salt in warm water)", "Honey + ginger juice", "Turmeric milk at night", "Steam inhalation"],
+        "remedies_hi": ["गरम पानी में नमक डालकर गरारे करें", "शहद + अदरक का रस", "रात को हल्दी वाला दूध पिएं"],
+        "remedies_ar": ["غرغرة بالماء الدافئ والملح", "عسل وزنجبيل", "حليب الكركم في الليل"],
+        "diet_en": ["Warm fluids: herbal tea, warm water, soup", "Avoid cold drinks and ice cream", "Honey and warm water with lemon"],
+        "diet_hi": ["गरम पेय पिएं — चाय, गरम पानी, सूप", "ठंडी चीज़ें बंद करें"],
+        "diet_ar": ["مشروبات دافئة: شاي، ماء دافئ، حساء", "تجنب المشروبات الباردة"],
+        "warning_en": "See a doctor if throat pain is severe, you have high fever (> 101°F), white patches in throat, or symptoms > 5 days.",
+        "warning_hi": "गले में बहुत तेज़ दर्द हो, तेज़ बुखार हो, या गले में सफेद धब्बे हों तो डॉक्टर से मिलें।",
+        "warning_ar": "راجع الطبيب إذا كان الألم شديداً مع حمى مرتفعة أو بقع بيضاء في الحلق.",
+    },
     {
         "keywords_en": ["allergy", "itching", "hives", "skin rash", "rash", "itchy skin"],
         "keywords_hi": ["एलर्जी", "खुजली", "चकत्ते", "रैश", "त्वचा पर दाने"],
@@ -807,12 +945,14 @@ def build_rule_response(message: str, lang: str, days: Optional[int] = None) -> 
             "ar": "أعراض عامة",       "ta": "பொது அறிகுறிகள்",
             "te": "సాధారణ లక్షణాలు",
         }
+        # NOTE: Generic fallback only suggests Dolo for clearly general/unspecified pain.
+        # For anything specific (cardiac, etc.) the rule above should have matched first.
         generic_meds = {
-            "en": [{"name": "Dolo 650", "generic": "Paracetamol 650 mg", "note": "Take 1 tablet every 6–8 hrs as needed."}],
-            "hi": [{"name": "डोलो 650", "generic": "पेरासिटामोल 650 मि.ग्रा.", "note": "आवश्यकतानुसार 6-8 घंटे में एक।"}],
-            "ar": [{"name": "دولو 650", "generic": "باراسيتامول 650 مجم", "note": "قرص كل 6-8 ساعات حسب الحاجة."}],
-            "ta": [{"name": "Dolo 650", "generic": "Paracetamol 650 mg", "note": "6–8 மணி நேரத்திற்கு ஒரு மாத்திரை."}],
-            "te": [{"name": "Dolo 650", "generic": "Paracetamol 650 mg", "note": "6–8 గంటలకు ఒక మాత్ర తీసుకోండి."}],
+            "en": [{"name": "Consult a Pharmacist or Doctor", "generic": "—", "note": "Your symptoms don't clearly match a common OTC category. Please describe more specifically (e.g. 'I have fever', 'I have cough') or consult a pharmacist."}],
+            "hi": [{"name": "फार्मासिस्ट या डॉक्टर से मिलें", "generic": "—", "note": "आपके लक्षण किसी सामान्य OTC श्रेणी से मेल नहीं खाते। कृपया विशेष रूप से बताएं या फार्मासिस्ट से मिलें।"}],
+            "ar": [{"name": "استشر صيدلانياً أو طبيباً", "generic": "—", "note": "أعراضك لا تتطابق بوضوح مع فئة دواء OTC. يرجى وصف الأعراض بشكل أكثر تحديداً أو استشارة صيدلاني."}],
+            "ta": [{"name": "மருத்துவரை அணுகவும்", "generic": "—", "note": "உங்கள் அறிகுறிகள் பொதுவான OTC வகையுடன் பொருந்தவில்லை. மருத்துவரை அணுகவும்."}],
+            "te": [{"name": "వైద్యుడిని సంప్రదించండి", "generic": "—", "note": "మీ లక్షణాలు సాధారణ OTC వర్గంతో సరిపోలలేదు. వైద్యుడిని సంప్రదించండి."}],
         }
         generic_remedies = {
             "en": ["Rest and stay hydrated"], "hi": ["आराम करें और पानी पिएं"],

@@ -40,5 +40,3 @@ spec:
                 secretKeyRef:
                   name: app-secrets
                   key: DEEPGRAM_API_KEY
-
----
