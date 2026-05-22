@@ -22,9 +22,7 @@ jobs:
       - name: Configure Kubeconfig
         shell: bash
         run: |
-          cat > kubeconfig.yaml << 'EOF'
-          ${{ secrets.RIMS_KUBE_CONFIG_QA }}
-          EOF
+          echo "${{ secrets.RIMS_KUBE_CONFIG_QA }}" | base64 -d > kubeconfig.yaml
 
           export KUBECONFIG=$PWD/kubeconfig.yaml
 
@@ -34,5 +32,6 @@ jobs:
       - name: Create Kubernetes Objects
         run: |
           export KUBECONFIG=$PWD/kubeconfig.yaml
+
           kubectl apply -f .k8s/qa/deployment.yaml
           kubectl apply -f .k8s/qa/service.yaml
